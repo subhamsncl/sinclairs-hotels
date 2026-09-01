@@ -9,8 +9,14 @@ TypeScript. Replaces the previous WordPress + Elementor site.
 - Next.js (App Router), TypeScript (strict), Tailwind CSS
 - pnpm, Biome (lint + format)
 - Prisma + PostgreSQL (enquiry form submissions)
+- Radix UI (Select, Popover) + react-day-picker for themed form controls —
+  see `components/ui/`
 - Vitest + React Testing Library, Playwright (e2e smoke)
-- Deployed on Vercel
+- Deployed on Vercel — live at https://sinclairs-hotels.vercel.app
+
+See **Design system** in `CLAUDE.md` before adding or restyling any page/component —
+it documents the established hero, card, CTA, and form-control patterns so new work
+stays consistent instead of drifting.
 
 ## Getting started
 

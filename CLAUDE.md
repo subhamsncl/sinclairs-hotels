@@ -47,6 +47,74 @@ current phase.
   dependencies with real scrutiny. No secrets in the repo, ever — use `.env.local`
   (gitignored) and Vercel env vars in production.
 
+## Design system
+
+The site follows a "5-star heritage hotel" visual language (Taj/Lemon Tree/Oberoi
+tier), established across the homepage, `/hotels`, hotel detail pages, `/weddings`,
+and `/meetings-events`. New pages/components should match it, not reinvent it.
+
+**Tokens** (`app/globals.css`, exposed as Tailwind utilities): `forest` (#16352a),
+`forest-dark` (#0d2119), `gold` (#bd9455), `gold-light` (#dcc08a), `cream` (#faf7f1,
+the body background), `ink` (#1c1c1a). `font-display` (Playfair Display) for all
+headings, `font-sans`/Inter for body text. Two shared keyframe utilities:
+`animate-hero-zoom` (slow 16s Ken Burns zoom on hero images) and `animate-fade-up`
+(entrance fade for hero text).
+
+**Hero pattern** (homepage, `/hotels`, `/weddings`, `/meetings-events`, hotel detail):
+full-bleed image wrapped in `animate-hero-zoom`, a `bg-gradient-to-t from-forest-dark/95
+via-forest-dark/50 to-forest-dark/15` overlay for contrast, eyebrow line in
+`text-cream drop-shadow-md` (never `text-gold-light` on a photo — gold-on-gold-toned
+images is illegible), and heading/CTA in an `animate-fade-up` block anchored to the
+bottom. Do **not** add a second gradient layer to fade the hero into the page
+background — a `from-cream` fade band stacked on top of the dark overlay produces a
+muddy double-blend wherever anything (a floating stat card, etc.) overlaps it. The
+homepage's single-image hero works because nothing overlaps its fade zone; on every
+other page just end the hero on the dark overlay.
+
+**Floating stat/booking card**: a white `rounded-xl shadow-2xl` card overlapping the
+hero's bottom edge via negative margin (`-mt-8` to `-mt-10`), showing 3–4 computed
+stats (room types, dining venues, event spaces — pull these from `content/hotels`
+data, never hardcode a count). Leave a full section of plain background between this
+card and the next tinted section (see `pt-16` on the Weddings editorial section) —
+butting a tinted section directly against the card reads as a layout bug.
+
+**Closing CTA band**: every page ends the same way — a ~36vh image band
+(`animate-hero-zoom` + `bg-forest-dark/75` overlay), centered heading + one-line copy
++ a gold `Enquire Now` button linking to `/enquiry` (with `?property=slug` on hotel
+pages). Don't embed `<EnquiryForm>` inline on marketing pages (Weddings, Meetings) —
+redirect to `/enquiry` instead, consistent with every other closing CTA.
+
+**Cards**: `HotelCard` (tall photography card, name/location/stats overlaid on the
+image via gradient — kept compact, aspect `4/3.4`, not `4/5`, so several fit on
+screen without zooming out), `VenueTable` (compact horizontal card: thumbnail + top-3
+venues + link to the property), `EditorialRow` (`components/editorial-row.tsx` —
+alternating image/text block, reused wherever a real photo needs a proper caption
+treatment: Weddings, homepage's Cuisine section). All interactive cards get
+`shadow-sm transition hover:shadow-lg` (or `-xl`/`-2xl` + a hover lift
+`hover:-translate-y-1`) — never a bare `border` with no shadow.
+
+**Form controls — do not use native `<select>` or `<input type="date">`.** Those
+open OS-controlled popups that can't be restyled and look out of place next to
+everything else. Use `components/ui/select.tsx` and `components/ui/date-picker.tsx`
+(Radix Select / Popover + react-day-picker, fully themed) instead — see
+`components/booking-widget.tsx` and `components/enquiry-form.tsx` for the pattern
+(controlled state + a hidden `<input>` so the value still posts via native FormData
+for the server action). The date picker drives its own month/year via controlled
+`Select`s — never re-enable react-day-picker's built-in `captionLayout="dropdown"`
+alongside custom `classNames`, it renders the month/year twice (once as its own
+select, once as a plain-text caption).
+
+**Scroll reveal**: `components/reveal.tsx` — a lightweight IntersectionObserver
+fade-up, used sparingly on homepage section intros. Skip it on anything that sits
+right below the fold (e.g. the stats strip right under the hero) — it reads as
+broken/half-loaded rather than animated when there's no scroll distance to trigger it.
+
+**Icons**: no icon library — small hand-drawn inline SVGs, one file per concern
+(`components/service-icons.tsx` for wedding services, `components/amenity-icon.tsx`
+with a keyword-matching `getAmenityIcon(label)` for the varied real amenity strings
+across all 9 properties). Follow that pattern for new icon needs rather than adding
+`lucide-react` or similar.
+
 ## Testing
 
 - Every content template component (hotel page, room card, nav dropdown) gets
@@ -64,9 +132,24 @@ current phase.
 
 ## Commands
 
-Populated once the scaffold exists (see `PLAN.md` Phase 0). Expect the usual:
-`pnpm dev`, `pnpm build`, `pnpm lint` (Biome), `pnpm test` (Vitest),
-`pnpm test:e2e` (Playwright), `pnpm prisma migrate dev`.
+- `pnpm dev` — local dev server (http://localhost:3000)
+- `pnpm build` / `pnpm start` — production build / serve
+- `pnpm lint` / `pnpm lint:fix` — Biome check / check + write
+- `pnpm typecheck` — `tsc --noEmit`
+- `pnpm test` / `pnpm test:watch` — Vitest
+- `pnpm test:e2e` — Playwright smoke suite
+- `pnpm prisma:generate` / `pnpm prisma:migrate` — Prisma client / migrations
+
+Run `pnpm typecheck && pnpm lint:fix && pnpm test` after any content or component
+change, before considering it done — this is the standard verification loop used
+throughout this project's history, not optional polish.
+
+Deployed via `vercel deploy` (add `--prod` for production) from
+`subham-5497`'s Vercel account, project `sinclairs-hotels` — live at
+https://sinclairs-hotels.vercel.app. The GitHub repo (`subhamsncl/sinclairs-hotels`)
+is not yet connected for auto-deploy-on-push (`vercel git connect` fails until the
+Vercel account has a GitHub login connection — a one-time manual step in the Vercel
+dashboard); until then, ship by running `vercel deploy` after pushing.
 
 ## Source content
 
