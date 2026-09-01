@@ -10,9 +10,14 @@ export const metadata: Metadata = {
 export default async function EnquiryPage({
   searchParams,
 }: {
-  searchParams: Promise<{ property?: string }>;
+  searchParams: Promise<{
+    property?: string;
+    checkIn?: string;
+    checkOut?: string;
+    guests?: string;
+  }>;
 }) {
-  const { property } = await searchParams;
+  const { property, checkIn, checkOut, guests } = await searchParams;
 
   return (
     <div className="mx-auto max-w-2xl px-6 py-16">
@@ -23,7 +28,13 @@ export default async function EnquiryPage({
           Share your travel dates and requirements, and our reservations team will be in touch.
         </p>
       </div>
-      <EnquiryForm hotels={hotels} defaultProperty={property} />
+      <EnquiryForm
+        hotels={hotels}
+        defaultProperty={property}
+        defaultCheckIn={checkIn}
+        defaultCheckOut={checkOut}
+        defaultGuests={guests}
+      />
     </div>
   );
 }

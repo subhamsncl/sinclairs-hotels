@@ -9,9 +9,15 @@ const initialState = { status: 'idle' as const };
 export function EnquiryForm({
   hotels,
   defaultProperty,
+  defaultCheckIn,
+  defaultCheckOut,
+  defaultGuests,
 }: {
   hotels: Hotel[];
   defaultProperty?: string;
+  defaultCheckIn?: string;
+  defaultCheckOut?: string;
+  defaultGuests?: string;
 }) {
   const [state, formAction, pending] = useActionState(submitEnquiry, initialState);
 
@@ -87,13 +93,33 @@ export function EnquiryForm({
           </select>
         </Field>
         <Field label="Check-in" name="checkIn">
-          <input id="checkIn" type="date" name="checkIn" className="input" />
+          <input
+            id="checkIn"
+            type="date"
+            name="checkIn"
+            defaultValue={defaultCheckIn}
+            className="input"
+          />
         </Field>
         <Field label="Check-out" name="checkOut">
-          <input id="checkOut" type="date" name="checkOut" className="input" />
+          <input
+            id="checkOut"
+            type="date"
+            name="checkOut"
+            defaultValue={defaultCheckOut}
+            className="input"
+          />
         </Field>
         <Field label="Guests" name="guests">
-          <input id="guests" type="number" name="guests" min={1} max={20} className="input" />
+          <input
+            id="guests"
+            type="number"
+            name="guests"
+            min={1}
+            max={20}
+            defaultValue={defaultGuests}
+            className="input"
+          />
         </Field>
       </div>
 

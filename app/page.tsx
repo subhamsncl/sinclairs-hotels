@@ -1,46 +1,75 @@
+import { AwardsSection } from '@/components/awards-section';
+import { BookingWidget } from '@/components/booking-widget';
+import { ExperiencesCarousel } from '@/components/experiences-carousel';
 import { HotelCard } from '@/components/hotel-card';
+import { awards } from '@/content/awards';
+import { experiences } from '@/content/experiences';
 import { hotels } from '@/content/hotels';
 import Image from 'next/image';
 import Link from 'next/link';
 
 export default function HomePage() {
-  const heroHotel = hotels[0];
+  const [primary, secondaryTop, secondaryBottom] = hotels;
 
   return (
     <>
-      <section className="relative flex h-[80vh] min-h-[520px] items-end">
-        {heroHotel && (
-          <Image
-            src={heroHotel.heroImage}
-            alt=""
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover"
-          />
-        )}
-        <div className="absolute inset-0 bg-gradient-to-t from-forest-dark/90 via-forest-dark/20 to-transparent" />
-        <div className="relative mx-auto w-full max-w-7xl px-6 pb-16 text-cream">
-          <p className="text-sm uppercase tracking-[0.3em] text-gold-light">
-            Business &amp; Leisure, Across India
-          </p>
-          <h1 className="mt-4 max-w-2xl font-display text-4xl leading-tight sm:text-5xl md:text-6xl">
-            Your Oasis of Relaxation Awaits
-          </h1>
-          <div className="mt-8 flex gap-4">
-            <Link
-              href="/hotels"
-              className="rounded bg-gold px-6 py-3 text-sm uppercase tracking-wider text-forest-dark transition hover:bg-gold-light"
-            >
-              Explore Our Hotels
-            </Link>
-            <Link
-              href="/enquiry"
-              className="rounded border border-cream/40 px-6 py-3 text-sm uppercase tracking-wider transition hover:border-cream"
-            >
-              Enquire Now
-            </Link>
+      <section className="relative">
+        <div className="grid h-[70vh] min-h-[480px] grid-cols-1 gap-1 sm:grid-cols-3">
+          {primary && (
+            <div className="relative col-span-1 sm:col-span-2">
+              <Image
+                src={primary.heroImage}
+                alt={primary.name}
+                fill
+                priority
+                sizes="(min-width: 640px) 66vw, 100vw"
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-forest-dark/90 via-forest-dark/10 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 p-6 text-cream sm:p-10">
+                <p className="text-sm uppercase tracking-[0.3em] text-gold-light">
+                  Business &amp; Leisure, Across India
+                </p>
+                <h1 className="mt-4 max-w-xl font-display text-4xl leading-tight sm:text-5xl">
+                  Your Oasis of Relaxation Awaits
+                </h1>
+                <Link
+                  href="/hotels"
+                  className="mt-6 inline-block rounded bg-gold px-6 py-3 text-sm uppercase tracking-wider text-forest-dark transition hover:bg-gold-light"
+                >
+                  Explore Our Hotels
+                </Link>
+              </div>
+            </div>
+          )}
+          <div className="hidden grid-rows-2 gap-1 sm:grid">
+            {secondaryTop && (
+              <div className="relative">
+                <Image
+                  src={secondaryTop.heroImage}
+                  alt={secondaryTop.name}
+                  fill
+                  sizes="33vw"
+                  className="object-cover"
+                />
+              </div>
+            )}
+            {secondaryBottom && (
+              <div className="relative">
+                <Image
+                  src={secondaryBottom.heroImage}
+                  alt={secondaryBottom.name}
+                  fill
+                  sizes="33vw"
+                  className="object-cover"
+                />
+              </div>
+            )}
           </div>
+        </div>
+
+        <div className="relative z-10 mx-auto -mt-8 w-full max-w-5xl px-4 sm:-mt-10">
+          <BookingWidget hotels={hotels} />
         </div>
       </section>
 
@@ -75,29 +104,101 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="bg-brand-cream border-y border-forest/10 py-20">
-        <div className="mx-auto max-w-4xl px-6 text-center">
-          <p className="text-xs uppercase tracking-[0.3em] text-gold">Plan Your Stay</p>
+      <section className="border-y border-forest/10 bg-white py-20">
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="mb-10 text-center">
+            <p className="text-xs uppercase tracking-[0.3em] text-gold">Signature Experiences</p>
+            <h2 className="mt-4 font-display text-3xl text-forest sm:text-4xl">
+              Memories that last a lifetime
+            </h2>
+            <p className="mx-auto mt-4 max-w-xl text-sm text-ink/70">
+              From misty mountain railways to island sunsets — unforgettable experiences await.
+            </p>
+          </div>
+          <ExperiencesCarousel experiences={experiences} />
+        </div>
+      </section>
+
+      <section className="bg-forest/5 py-20">
+        <div className="mx-auto max-w-3xl px-6 text-center">
+          <p className="text-xs uppercase tracking-[0.3em] text-gold">Stellar Cuisine</p>
           <h2 className="mt-4 font-display text-3xl text-forest sm:text-4xl">
-            Meetings, Weddings &amp; Celebrations
+            A Journey of Delectable Flavours
           </h2>
           <p className="mt-4 text-sm text-ink/70">
-            From boardrooms to banquet halls, our properties host business gatherings and
-            once-in-a-lifetime celebrations with equal care.
+            At Sinclairs Hotels, dining is not just a meal — it&apos;s an experience. Whether
+            you&apos;re seeking a casual bite or dishes immersed in local flavour, our culinary
+            offerings promise to delight every palate.
           </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <Link
-              href="/meetings-events"
-              className="rounded border border-forest px-6 py-3 text-sm uppercase tracking-wider text-forest transition hover:bg-forest hover:text-cream"
-            >
-              Meetings &amp; Events
-            </Link>
-            <Link
-              href="/weddings"
-              className="rounded border border-forest px-6 py-3 text-sm uppercase tracking-wider text-forest transition hover:bg-forest hover:text-cream"
-            >
-              Weddings
-            </Link>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-6 py-20">
+        <div className="mb-10 text-center">
+          <h2 className="font-display text-3xl text-forest sm:text-4xl">
+            Unforgettable Events and Weddings Await You
+          </h2>
+        </div>
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <div className="overflow-hidden rounded-lg border border-forest/10">
+            <div className="relative aspect-[4/3]">
+              {secondaryTop && (
+                <Image
+                  src={secondaryTop.heroImage}
+                  alt="Events and conferences at Sinclairs"
+                  fill
+                  sizes="(min-width: 640px) 50vw, 100vw"
+                  className="object-cover"
+                />
+              )}
+            </div>
+            <div className="bg-forest/5 p-6">
+              <h3 className="font-display text-xl text-forest">Events &amp; Conferences</h3>
+              <p className="mt-2 text-sm text-ink/70">
+                From planning to execution, our teams support you every step of the way.
+              </p>
+              <Link
+                href="/meetings-events"
+                className="mt-4 inline-block rounded bg-forest px-5 py-2 text-xs uppercase tracking-wider text-cream transition hover:bg-forest-dark"
+              >
+                Learn More
+              </Link>
+            </div>
+          </div>
+          <div className="overflow-hidden rounded-lg border border-forest/10">
+            <div className="relative aspect-[4/3]">
+              <Image
+                src="/images/hotels/kalimpong/Kalimpong-wedding-in-natural-settings.jpg"
+                alt="Weddings at Sinclairs"
+                fill
+                sizes="(min-width: 640px) 50vw, 100vw"
+                className="object-cover"
+              />
+            </div>
+            <div className="bg-forest/5 p-6">
+              <h3 className="font-display text-xl text-forest">Weddings</h3>
+              <p className="mt-2 text-sm text-ink/70">
+                Host your dream wedding at our hotel — we&apos;ll handle the details so you can
+                enjoy your day.
+              </p>
+              <Link
+                href="/weddings"
+                className="mt-4 inline-block rounded bg-forest px-5 py-2 text-xs uppercase tracking-wider text-cream transition hover:bg-forest-dark"
+              >
+                Learn More
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-forest/5 py-20">
+        <div className="mx-auto max-w-6xl px-6">
+          <h2 className="text-center font-display text-3xl text-forest sm:text-4xl">
+            Awards and Recognitions
+          </h2>
+          <div className="mt-10">
+            <AwardsSection awards={awards} />
           </div>
         </div>
       </section>

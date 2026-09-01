@@ -39,37 +39,37 @@ export const portBlairHotel: Hotel = {
       name: 'Premier Room',
       description:
         'The all new Premier room affords a stunning view of the sea. Tastefully furnished, the rooms have all that makes luxury accommodation.',
-      image: '/images/hotels/port-blair/placeholder-premier-room.jpg',
+      image: '/images/hotels/port-blair/Sinclairs-bayview-Port-Blair-Sea-view.jpg',
     },
     {
       name: 'The Valentine Room',
       description:
         'The Andaman Islands are a paradise for honeymooners. These corner rooms offer privacy and an unbelievable view of the sea from two sides, furnished to ensure that the newly wed spend time in a romantic setting.',
-      image: '/images/hotels/port-blair/placeholder-valentine-room.jpg',
+      image: '/images/hotels/port-blair/Sinclairs-bayview-Port-Blair-Sea-view.jpg',
     },
     {
       name: 'Premier Family Room',
       description:
         'A spacious room where a family of four can spend their vacation together in great comfort, equipped with one king and one queen size bed. The attached three-fixture toilet is ideal for the family.',
-      image: '/images/hotels/port-blair/placeholder-premier-family-room.jpg',
+      image: '/images/hotels/port-blair/Sinclairs-bayview-Port-Blair-Sea-view.jpg',
     },
     {
       name: 'Premier Family Suite',
       description:
         'The family suite combines the luxury of space and fine décor. With an arresting view of the sea, the spacious suite enables the family to stay together in comfort and style, with an attached three-fixture toilet.',
-      image: '/images/hotels/port-blair/placeholder-premier-family-suite.jpg',
+      image: '/images/hotels/port-blair/Sinclairs-bayview-Port-Blair-Sea-view.jpg',
     },
     {
       name: 'Premier Family Attic Room',
       description:
         'A family room with an attic where children can have good fun. With two queen size beds, the room is ideal for a family of four to stay together comfortably, with an attached three-fixture toilet.',
-      image: '/images/hotels/port-blair/placeholder-premier-family-attic-room.jpg',
+      image: '/images/hotels/port-blair/Sinclairs-bayview-Port-Blair-Sea-view.jpg',
     },
     {
       name: 'Premier Family Suite with Attic',
       description:
         'A spacious, elegant and functional suite where you can relax to the sound of the waves below. The wooden attic is perfect for children travelling with the family, giving them their own private space.',
-      image: '/images/hotels/port-blair/placeholder-premier-family-suite-attic.jpg',
+      image: '/images/hotels/port-blair/Sinclairs-bayview-Port-Blair-Sea-view.jpg',
     },
   ],
   dining: [

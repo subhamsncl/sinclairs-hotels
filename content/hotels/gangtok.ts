@@ -35,31 +35,31 @@ export const gangtokHotel: Hotel = {
       name: 'Deluxe Room',
       description:
         'The well-appointed rooms in wood finish are spacious and comfortable, blending well with the intimate and tranquil atmosphere of the hotel. Rooms overlook the forest or road side and feature a king-size bed or two twin beds, at 335 sq. ft.',
-      image: '/images/hotels/gangtok/rooms/deluxe-room.jpg',
+      image: '/images/hotels/gangtok/Sinclairs-Gangtok-with-Pool.jpg',
     },
     {
       name: 'Deluxe Family Room',
       description:
         'The ideal solution for privacy while keeping family members close in complete comfort and style, the Family Room consists of two adjoining double rooms with two toilets, together spanning 554 sq. ft.',
-      image: '/images/hotels/gangtok/rooms/deluxe-family-room.jpg',
+      image: '/images/hotels/gangtok/Sinclairs-Gangtok-with-Pool.jpg',
     },
     {
       name: 'Premier Room',
       description:
         'These well-appointed rooms face the mountain range and Gangtok town, offering a relaxed stay for couples, with a private standing balcony affording a panoramic view of the town against the mountains. Some rooms have a triple bed, ideal for an extra adult, at 340 sq. ft.',
-      image: '/images/hotels/gangtok/rooms/premier-room.jpg',
+      image: '/images/hotels/gangtok/Sinclairs-Gangtok-with-Pool.jpg',
     },
     {
       name: 'Premier Suite',
       description:
         'This spacious 535 sq. ft. suite has a bedroom and a separate living room with sofa seating, wooden floors and rich furnishings that reflect the typical hill style of the hotel, along with a private balcony facing the valley.',
-      image: '/images/hotels/gangtok/rooms/premier-suite.jpg',
+      image: '/images/hotels/gangtok/Sinclairs-Gangtok-with-Pool.jpg',
     },
     {
       name: 'Valentine Room',
       description:
         'Specially designed for honeymooners and couples celebrating an anniversary, the alluring view, mood lighting and special accessories all add up to a romantic setting, complete with a complimentary platter of goodies, at 340 sq. ft.',
-      image: '/images/hotels/gangtok/rooms/valentine-room.jpg',
+      image: '/images/hotels/gangtok/Sinclairs-Gangtok-with-Pool.jpg',
     },
   ],
   dining: [

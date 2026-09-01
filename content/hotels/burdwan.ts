@@ -38,19 +38,19 @@ export const burdwanHotel: Hotel = {
       name: 'Premier Room',
       description:
         'A twin bedroom with an ensuite bathroom and shower. The twin beds are of a larger than normal size for greater comfort, and the room comes with direct dial telephones, mini bar, tea and coffee maker, satellite television, electronic safe and in-room dining.',
-      image: '/images/hotels/burdwan/rooms/premier-room.jpg',
+      image: '/images/hotels/burdwan/Sinclairs-Burdwan-with-Pool-view.jpg',
     },
     {
       name: 'Junior Suite',
       description:
         'A spacious air-conditioned bedroom with a large bed and an attached toilet, along with a spacious seating lounge with TV. Rooms feature direct dial telephones, tea and coffee maker, satellite television, electronic safe and in-room dining.',
-      image: '/images/hotels/burdwan/rooms/junior-suite.jpg',
+      image: '/images/hotels/burdwan/Sinclairs-Burdwan-with-Pool-view.jpg',
     },
     {
       name: 'Maharaja Suite',
       description:
         'The suite has a bedroom and a living room, each with an ensuite bathroom and shower. The decor recreates the ornate lifestyle of the erstwhile maharajas, complemented by direct dial telephones, mini bar, tea and coffee maker, satellite television, electronic safe and in-room dining.',
-      image: '/images/hotels/burdwan/rooms/maharaja-suite.jpg',
+      image: '/images/hotels/burdwan/Sinclairs-Burdwan-with-Pool-view.jpg',
     },
   ],
   dining: [

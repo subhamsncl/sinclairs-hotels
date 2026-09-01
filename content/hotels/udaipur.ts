@@ -24,25 +24,25 @@ export const udaipurHotel: Hotel = {
       name: 'Premier Room',
       description:
         'Step into comfort and elegance in our Premier Room, designed to blend traditional Rajasthani charm with modern amenities. Enjoy spacious interiors, plush bedding, and thoughtful touches that create a relaxing retreat after a day exploring Haldighati. Room size: 334 sq. ft., with an attached bath with hot and cold shower, king-size bed, in-room dining, and mini fridge.',
-      image: '/images/hotels/udaipur/placeholder-premier-room.jpg',
+      image: '/images/hotels/udaipur/Sinclairs-Palace-Retreat-Udaipur-Night-View.jpg',
     },
     {
       name: 'Premier Plus Room',
       description:
         'The Premier Plus Room offers an enhanced experience with added space and premium furnishings. Bask in tasteful decor inspired by local heritage, complemented by upgraded amenities for a truly memorable stay. Room size: 363 sq. ft., with an attached bath with hot and cold shower, king-size bed, in-room dining, and mini fridge.',
-      image: '/images/hotels/udaipur/placeholder-premier-plus-room.jpg',
+      image: '/images/hotels/udaipur/Sinclairs-Palace-Retreat-Udaipur-Night-View.jpg',
     },
     {
       name: 'Premier Suite',
       description:
         "Our Premier Suite elevates luxury with separate living and sleeping areas, perfect for families or guests seeking extra comfort. Revel in exquisite interiors, rich textures, and panoramic views that capture the spirit of Udaipur's royal legacy. Room size: 457 sq. ft., with an attached bath with hot and cold shower, king-size bed, in-room dining, and mini fridge.",
-      image: '/images/hotels/udaipur/placeholder-premier-suite.jpg',
+      image: '/images/hotels/udaipur/Sinclairs-Palace-Retreat-Udaipur-Night-View.jpg',
     },
     {
       name: 'Villa',
       description:
         'Experience the pinnacle of opulence in our Villa, a private haven featuring expansive living spaces, elegant decor, and exclusive amenities. Ideal for discerning guests, the villa offers unparalleled privacy along with the warmth of traditional Rajasthani hospitality. Room size: 400 sq. ft., with an attached bath with hot and cold shower, a large wardrobe and luggage rack, queen-size bed, in-room dining, and mini fridge.',
-      image: '/images/hotels/udaipur/placeholder-villa.jpg',
+      image: '/images/hotels/udaipur/Sinclairs-Palace-Retreat-Udaipur-Night-View.jpg',
     },
   ],
   dining: [
