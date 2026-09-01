@@ -54,8 +54,16 @@ export const burdwanHotel: Hotel = {
     },
   ],
   dining: [
-    "The Palm Terrace - the resort's all-day multicuisine restaurant serving breakfast, lunch and dinner with views of the poolside and gardens, plus a bar stocked with premium drinks.",
-    'O3 Lounge Bar - a stylish lounge bar with colourful interiors and chic design, offering alcoholic and non-alcoholic beverages and cocktails, ideal for unwinding over drinks and snacks.',
+    {
+      name: 'The Palm Terrace',
+      description:
+        "the resort's all-day multicuisine restaurant serving breakfast, lunch and dinner with views of the poolside and gardens, plus a bar stocked with premium drinks.",
+    },
+    {
+      name: 'O3 Lounge Bar',
+      description:
+        'a stylish lounge bar with colourful interiors and chic design, offering alcoholic and non-alcoholic beverages and cocktails, ideal for unwinding over drinks and snacks.',
+    },
   ],
   gallery: [
     {

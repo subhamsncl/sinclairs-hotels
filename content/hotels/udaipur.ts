@@ -46,7 +46,11 @@ export const udaipurHotel: Hotel = {
     },
   ],
   dining: [
-    'The Gharana — a vegetarian, multicuisine restaurant serving a daily fresh selection of Indian and local specialties for breakfast, lunch, and dinner (7 AM to 11 PM, casual dress code)',
+    {
+      name: 'The Gharana',
+      description:
+        'a vegetarian, multicuisine restaurant serving a daily fresh selection of Indian and local specialties for breakfast, lunch, and dinner (7 AM to 11 PM, casual dress code)',
+    },
   ],
   gallery: [
     {

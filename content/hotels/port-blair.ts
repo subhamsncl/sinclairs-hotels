@@ -73,9 +73,20 @@ export const portBlairHotel: Hotel = {
     },
   ],
   dining: [
-    "The Bayview - the hotel's sea-facing multicuisine restaurant, with an open view of the garden surrounded by palm trees.",
-    'Alto Espirito - a bar with a relaxed old-world ambience, offering snacks and drinks.',
-    'The Terrace - a covered sea-facing deck where meals can be served on request, with the sea breeze and the sound of waves.',
+    {
+      name: 'The Bayview',
+      description:
+        "the hotel's sea-facing multicuisine restaurant, with an open view of the garden surrounded by palm trees.",
+    },
+    {
+      name: 'Alto Espirito',
+      description: 'a bar with a relaxed old-world ambience, offering snacks and drinks.',
+    },
+    {
+      name: 'The Terrace',
+      description:
+        'a covered sea-facing deck where meals can be served on request, with the sea breeze and the sound of waves.',
+    },
   ],
   gallery: [
     {

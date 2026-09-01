@@ -63,8 +63,16 @@ export const gangtokHotel: Hotel = {
     },
   ],
   dining: [
-    "Magnolia — the hotel's multi-cuisine restaurant, a floor above the lobby, serving a daily fresh selection of Indian, Continental and Oriental dishes for breakfast, lunch and dinner (7 AM–11 PM); special Jain preparations available.",
-    "Guras Bar & Lounge — a spacious bar named for Sikkim's Rhododendron trees, with an orchestra deck and private seating area offering panoramic views of Gangtok against the Kanchenjunga range, serving whisky, lager and craft cocktails with chef-inspired snacks (11 AM–11 PM).",
+    {
+      name: 'Magnolia',
+      description:
+        "the hotel's multi-cuisine restaurant, a floor above the lobby, serving a daily fresh selection of Indian, Continental and Oriental dishes for breakfast, lunch and dinner (7 AM–11 PM); special Jain preparations available.",
+    },
+    {
+      name: 'Guras Bar & Lounge',
+      description:
+        "a spacious bar named for Sikkim's Rhododendron trees, with an orchestra deck and private seating area offering panoramic views of Gangtok against the Kanchenjunga range, serving whisky, lager and craft cocktails with chef-inspired snacks (11 AM–11 PM).",
+    },
   ],
   gallery: [
     {

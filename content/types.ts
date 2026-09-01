@@ -14,6 +14,12 @@ export interface GalleryImage {
   alt: string;
 }
 
+export interface DiningVenue {
+  name: string;
+  description: string;
+  image?: string;
+}
+
 export interface Hotel {
   slug: string;
   name: string;
@@ -25,7 +31,7 @@ export interface Hotel {
   thumbnailImage: string;
   amenities: string[];
   rooms: RoomType[];
-  dining: string[];
+  dining: DiningVenue[];
   gallery: GalleryImage[];
   sightseeing: string[];
   mapEmbedUrl?: string;

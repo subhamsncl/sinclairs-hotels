@@ -86,13 +86,30 @@ export default async function HotelPage({ params }: { params: Promise<Params> })
         <section className="border-y border-forest/10 bg-white py-16">
           <div className="mx-auto max-w-5xl px-6">
             <h2 className="font-display text-2xl text-forest">Dining</h2>
-            <ul className="mt-6 space-y-2">
+            <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
               {hotel.dining.map((venue) => (
-                <li key={venue} className="text-sm text-ink/80">
-                  {venue}
-                </li>
+                <div
+                  key={venue.name}
+                  className="overflow-hidden rounded-lg border border-forest/10"
+                >
+                  {venue.image && (
+                    <div className="relative aspect-[4/3]">
+                      <Image
+                        src={venue.image}
+                        alt={venue.name}
+                        fill
+                        sizes="(min-width: 640px) 50vw, 100vw"
+                        className="object-cover"
+                      />
+                    </div>
+                  )}
+                  <div className="p-5">
+                    <h3 className="font-display text-lg text-forest">{venue.name}</h3>
+                    <p className="mt-2 text-sm text-ink/70">{venue.description}</p>
+                  </div>
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
         </section>
       )}

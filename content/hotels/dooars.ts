@@ -44,9 +44,19 @@ export const dooarsHotel: Hotel = {
     },
   ],
   dining: [
-    "The Palm Terrace – the resort's multicuisine restaurant, serving Indian, Chinese, Continental and regional dishes made from fresh, home-grown fare, with views over the Gorumara valley (7 AM to 11 PM).",
-    'Thematic Bar – overlooks the Gorumara sanctuary, ideal for unwinding in the evening.',
-    'Café – an epicurean delight for casual bites through the day.',
+    {
+      name: 'The Palm Terrace',
+      description:
+        "the resort's multicuisine restaurant, serving Indian, Chinese, Continental and regional dishes made from fresh, home-grown fare, with views over the Gorumara valley (7 AM to 11 PM).",
+    },
+    {
+      name: 'Thematic Bar',
+      description: 'overlooks the Gorumara sanctuary, ideal for unwinding in the evening.',
+    },
+    {
+      name: 'Café',
+      description: 'an epicurean delight for casual bites through the day.',
+    },
   ],
   gallery: [
     {

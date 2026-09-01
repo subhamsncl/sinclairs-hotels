@@ -51,7 +51,11 @@ export const siliguriHotel: Hotel = {
     },
   ],
   dining: [
-    'The Palms — Serves classic favourites in international and local cuisine, with soothing views of the poolside and gardens and a bar offering a variety of premium drinks. Multicuisine, casual dress code, open 7.30 AM to 10.30 PM.',
+    {
+      name: 'The Palms',
+      description:
+        'Serves classic favourites in international and local cuisine, with soothing views of the poolside and gardens and a bar offering a variety of premium drinks. Multicuisine, casual dress code, open 7.30 AM to 10.30 PM.',
+    },
   ],
   gallery: [
     {

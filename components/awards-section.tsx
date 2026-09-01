@@ -9,13 +9,13 @@ export function AwardsSection({ awards }: { awards: Award[] }) {
           key={award.propertySlug}
           className="overflow-hidden rounded-md border border-forest/10"
         >
-          <div className="relative aspect-square">
+          <div className="relative aspect-[4/5] bg-white">
             <Image
               src={award.badgeImage}
               alt={`${award.propertyName} — Tripadvisor Travellers' Choice 2026`}
               fill
               sizes="200px"
-              className="object-cover"
+              className="object-contain"
             />
           </div>
         </div>

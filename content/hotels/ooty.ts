@@ -67,8 +67,16 @@ export const ootyHotel: Hotel = {
     },
   ],
   dining: [
-    "Pine n' Petals — Located on the lobby level of the hotel, this multicuisine restaurant offers a varied selection for breakfast, lunch and dinner in a cozy ambience with family-friendly, warm service. Open 7:30 AM to 10:30 PM.",
-    'Alto Espirito — A stylish Spanish bar with catchy Spanish tunes, delectable Spanish snacks and dapper cocktails. Open 11 AM to 10:30 PM.',
+    {
+      name: "Pine n' Petals",
+      description:
+        'Located on the lobby level of the hotel, this multicuisine restaurant offers a varied selection for breakfast, lunch and dinner in a cozy ambience with family-friendly, warm service. Open 7:30 AM to 10:30 PM.',
+    },
+    {
+      name: 'Alto Espirito',
+      description:
+        'A stylish Spanish bar with catchy Spanish tunes, delectable Spanish snacks and dapper cocktails. Open 11 AM to 10:30 PM.',
+    },
   ],
   gallery: [
     {

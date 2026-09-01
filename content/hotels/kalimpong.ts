@@ -68,9 +68,21 @@ export const kalimpongHotel: Hotel = {
     },
   ],
   dining: [
-    'The Golden Oak — All-day dining restaurant a floor below the lobby, serving daily fresh Indian, Continental and Oriental dishes for breakfast, lunch and dinner, with open-terrace seating looking out over the mountains. Timings: 12:30 PM to 3 PM | 7:30 PM to 10 PM.',
-    'Alto Espirito — A debonair bar created on a Spanish theme, serving whisky, lager and artfully made cocktails alongside chef-inspired snacks and nibbles. Timings: 12 Noon to 11 PM.',
-    'The Birch — A cosy coffee shop with a smart selection of coffee and breads, with the option of indoor or outdoor seating. Timings: 10 AM to 10:30 PM.',
+    {
+      name: 'The Golden Oak',
+      description:
+        'All-day dining restaurant a floor below the lobby, serving daily fresh Indian, Continental and Oriental dishes for breakfast, lunch and dinner, with open-terrace seating looking out over the mountains. Timings: 12:30 PM to 3 PM | 7:30 PM to 10 PM.',
+    },
+    {
+      name: 'Alto Espirito',
+      description:
+        'A debonair bar created on a Spanish theme, serving whisky, lager and artfully made cocktails alongside chef-inspired snacks and nibbles. Timings: 12 Noon to 11 PM.',
+    },
+    {
+      name: 'The Birch',
+      description:
+        'A cosy coffee shop with a smart selection of coffee and breads, with the option of indoor or outdoor seating. Timings: 10 AM to 10:30 PM.',
+    },
   ],
   gallery: [
     {

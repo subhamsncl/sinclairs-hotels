@@ -68,9 +68,21 @@ export const darjeelingHotel: Hotel = {
     },
   ],
   dining: [
-    'The Kanchenjunga — Overlooking a beautiful garden, this multicuisine restaurant serves delicious local, Indian or Continental cuisine customized to your preferences. Open 7 AM to 11 PM.',
-    'The Dorjee Lounge — A colonial style bar with an unhindered view of the Himalayan mountain range, ideal for a game of pool or relaxing with a book. Open 11 AM to 11 PM.',
-    'Mount View Café — An outdoor café serving freshly prepared snacks and a cup of hot Darjeeling tea while you take in the gorgeous mountain views. Open 10 AM to 7:30 PM.',
+    {
+      name: 'The Kanchenjunga',
+      description:
+        'Overlooking a beautiful garden, this multicuisine restaurant serves delicious local, Indian or Continental cuisine customized to your preferences. Open 7 AM to 11 PM.',
+    },
+    {
+      name: 'The Dorjee Lounge',
+      description:
+        'A colonial style bar with an unhindered view of the Himalayan mountain range, ideal for a game of pool or relaxing with a book. Open 11 AM to 11 PM.',
+    },
+    {
+      name: 'Mount View Café',
+      description:
+        'An outdoor café serving freshly prepared snacks and a cup of hot Darjeeling tea while you take in the gorgeous mountain views. Open 10 AM to 7:30 PM.',
+    },
   ],
   gallery: [
     {
