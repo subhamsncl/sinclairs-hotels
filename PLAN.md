@@ -23,8 +23,12 @@ Decisions already made (2026-09-01):
 ## Phases
 
 ### Phase 0 — Scaffold (foundation, do first, sequential)
-- `create-next-app` with TypeScript, App Router, Tailwind, ESLint
+- `create-next-app` with TypeScript (strict), App Router, Tailwind, pnpm
+- Swap ESLint/Prettier for **Biome** (`biome.json`); wire `pnpm lint`
 - Prisma init, `Enquiry` model, local Postgres via Docker Compose for dev
+- Test tooling: Vitest + React Testing Library configured, Playwright
+  installed with one smoke test as a template
+- GitHub Actions CI: lint, unit tests, build on every push/PR
 - Base layout: nav (with Hotels dropdown), footer, design tokens (colors,
   type scale) matching Sinclairs' brand (deep green + gold accent, serif
   display type — see current site screenshots)

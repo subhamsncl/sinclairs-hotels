@@ -6,17 +6,19 @@ TypeScript. Replaces the previous WordPress + Elementor site.
 
 ## Stack
 
-- Next.js (App Router), TypeScript, Tailwind CSS
+- Next.js (App Router), TypeScript (strict), Tailwind CSS
+- pnpm, Biome (lint + format)
 - Prisma + PostgreSQL (enquiry form submissions)
+- Vitest + React Testing Library, Playwright (e2e smoke)
 - Deployed on Vercel
 
 ## Getting started
 
 ```bash
-npm install
+pnpm install
 cp .env.example .env.local   # fill in DATABASE_URL and any secrets
-npx prisma migrate dev
-npm run dev
+pnpm prisma migrate dev
+pnpm dev
 ```
 
 Open http://localhost:3000.
@@ -34,10 +36,12 @@ public/images/        hotel photography, exported once from the old WP site
 
 ## Scripts
 
-- `npm run dev` — local dev server
-- `npm run build` / `npm start` — production build
-- `npm run lint` — ESLint
-- `npx prisma studio` — inspect the enquiries table locally
+- `pnpm dev` — local dev server
+- `pnpm build` / `pnpm start` — production build
+- `pnpm lint` — Biome check
+- `pnpm test` — Vitest unit/component tests
+- `pnpm test:e2e` — Playwright smoke suite
+- `pnpm prisma studio` — inspect the enquiries table locally
 
 See `PLAN.md` for the full migration/execution plan and `CLAUDE.md` for
 project conventions.

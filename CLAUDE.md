@@ -13,9 +13,16 @@ current phase.
 
 ## Stack
 
-- **Next.js (App Router) + TypeScript**, strict mode on
+- **Next.js (App Router) + TypeScript**, strict mode on (see `tsconfig.json` —
+  `strict`, `noUncheckedIndexedAccess`, `noImplicitOverride` all on)
+- **pnpm** as the package manager — never `npm`/`yarn`. Commit `pnpm-lock.yaml`.
+- **Biome** for linting + formatting (replaces ESLint + Prettier). One tool,
+  one config (`biome.json`), fast, no plugin sprawl.
 - **Tailwind CSS** for styling
 - **Prisma + PostgreSQL** for the one piece of real state: enquiry / contact form submissions
+- **Vitest + React Testing Library** for unit/component tests; **Playwright**
+  for a small e2e smoke suite (nav, hotel page render, enquiry form submit).
+  See "Testing" below.
 - Deployed on **Vercel**; Postgres hosted separately (Neon/Supabase — see `PLAN.md`)
 - Pages are statically generated (SSG) with **ISR** where content may change without a redeploy (e.g. an admin-curated "offers" banner, if added later). Everything else is plain SSG.
 
@@ -40,10 +47,26 @@ current phase.
   dependencies with real scrutiny. No secrets in the repo, ever — use `.env.local`
   (gitignored) and Vercel env vars in production.
 
+## Testing
+
+- Every content template component (hotel page, room card, nav dropdown) gets
+  a Vitest + RTL render test — it renders with representative data, no crash,
+  key content/links present.
+- The enquiry form gets thorough coverage: valid submit, server-side
+  validation rejects bad input (zod), spam-guard blocks bot submissions, DB
+  row is created correctly (test against a real local Postgres, not a mock —
+  Prisma's own type safety is not a substitute for testing the actual query).
+- Playwright smoke suite covers the golden paths: home → hotel page → enquiry
+  form submit end-to-end, nav dropdown works, 404s don't happen on any nav link.
+- Run tests locally before every push: `pnpm test` (Vitest) and
+  `pnpm test:e2e` (Playwright). CI (GitHub Actions) runs both plus `pnpm lint`
+  and `pnpm build` on every PR.
+
 ## Commands
 
 Populated once the scaffold exists (see `PLAN.md` Phase 0). Expect the usual:
-`npm run dev`, `npm run build`, `npm run lint`, `npx prisma migrate dev`.
+`pnpm dev`, `pnpm build`, `pnpm lint` (Biome), `pnpm test` (Vitest),
+`pnpm test:e2e` (Playwright), `pnpm prisma migrate dev`.
 
 ## Source content
 
