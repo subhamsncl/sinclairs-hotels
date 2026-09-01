@@ -1,5 +1,6 @@
 import { Footer } from '@/components/footer';
 import { Nav } from '@/components/nav';
+import { WhatsAppButton } from '@/components/whatsapp-button';
 import { siteConfig } from '@/content/site';
 import type { Metadata } from 'next';
 import { Inter, Playfair_Display } from 'next/font/google';
@@ -31,6 +32,7 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
         <Nav />
         <main className="flex-1">{children}</main>
         <Footer />
+        <WhatsAppButton />
       </body>
     </html>
   );

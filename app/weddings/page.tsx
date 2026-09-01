@@ -1,4 +1,12 @@
 import { EnquiryForm } from '@/components/enquiry-form';
+import {
+  CakeIcon,
+  CameraIcon,
+  CateringIcon,
+  FlowerIcon,
+  HeartIcon,
+  MusicIcon,
+} from '@/components/service-icons';
 import { VenueTable } from '@/components/venue-table';
 import { hotels } from '@/content/hotels';
 import type { Metadata } from 'next';
@@ -41,12 +49,12 @@ const occasions = [
 ];
 
 const services = [
-  'Photos and Video',
-  'Wedding Floral Décor',
-  'Catering',
-  'Live Music and DJ',
-  'Wedding Cake',
-  'Honeymoon Planning',
+  { label: 'Photos and Video', icon: CameraIcon },
+  { label: 'Wedding Floral Décor', icon: FlowerIcon },
+  { label: 'Catering', icon: CateringIcon },
+  { label: 'Live Music and DJ', icon: MusicIcon },
+  { label: 'Wedding Cake', icon: CakeIcon },
+  { label: 'Honeymoon Planning', icon: HeartIcon },
 ];
 
 export default function WeddingsPage() {
@@ -150,10 +158,11 @@ export default function WeddingsPage() {
         <div className="mx-auto mt-6 flex max-w-3xl flex-wrap justify-center gap-3">
           {services.map((service) => (
             <span
-              key={service}
-              className="rounded-full bg-forest/5 px-4 py-1.5 text-sm text-ink/80"
+              key={service.label}
+              className="flex items-center gap-2 rounded-full bg-forest/5 px-4 py-1.5 text-sm text-ink/80"
             >
-              {service}
+              <service.icon className="h-4 w-4 stroke-current fill-none stroke-2 text-gold" />
+              {service.label}
             </span>
           ))}
         </div>
