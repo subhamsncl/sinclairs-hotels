@@ -45,12 +45,12 @@ export default function MeetingsEventsPage() {
             className="object-cover"
           />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-t from-forest-dark/95 via-forest-dark/25 to-forest-dark/10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-forest-dark/95 via-forest-dark/50 to-forest-dark/15" />
         <div className="relative mx-auto w-full max-w-7xl px-6 pb-16 text-cream">
           <div className="animate-fade-up">
             <div className="flex items-center gap-3">
               <span className="h-px w-10 bg-gold" />
-              <p className="text-xs uppercase tracking-[0.4em] text-gold-light">
+              <p className="text-xs uppercase tracking-[0.4em] text-cream drop-shadow-md">
                 Business &amp; Events
               </p>
             </div>

@@ -26,7 +26,7 @@ export function BookingWidget({ hotels }: { hotels: Hotel[] }) {
   return (
     <form
       onSubmit={handleSearch}
-      className="flex flex-col gap-3 rounded-lg bg-white p-4 shadow-xl sm:flex-row sm:items-end sm:gap-0 sm:divide-x sm:divide-forest/10 sm:p-0"
+      className="flex flex-col gap-3 overflow-hidden rounded-lg bg-white p-4 shadow-2xl sm:flex-row sm:items-stretch sm:gap-0 sm:divide-x sm:divide-forest/10 sm:p-0"
     >
       <label className="flex-1 px-4 py-2 sm:py-3">
         <span className="block text-xs uppercase tracking-wider text-ink/50">Select Property</span>
@@ -79,7 +79,7 @@ export function BookingWidget({ hotels }: { hotels: Hotel[] }) {
 
       <button
         type="submit"
-        className="mx-4 my-2 rounded bg-forest px-8 py-3 text-sm uppercase tracking-wider text-cream transition hover:bg-forest-dark sm:mx-0 sm:my-0 sm:h-full sm:rounded-none"
+        className="rounded bg-forest px-8 py-3 text-sm uppercase tracking-wider text-cream transition hover:bg-forest-dark sm:rounded-none sm:px-10"
       >
         Search
       </button>

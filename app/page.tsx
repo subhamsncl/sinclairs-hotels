@@ -3,14 +3,16 @@ import { BookingWidget } from '@/components/booking-widget';
 import { EditorialRow } from '@/components/editorial-row';
 import { ExperiencesCarousel } from '@/components/experiences-carousel';
 import { HotelCard } from '@/components/hotel-card';
+import { Reveal } from '@/components/reveal';
 import { awards } from '@/content/awards';
 import { experiences } from '@/content/experiences';
-import { hotels } from '@/content/hotels';
+import { getHotelBySlug, hotels } from '@/content/hotels';
 import Image from 'next/image';
 import Link from 'next/link';
 
 export default function HomePage() {
   const [primary, secondaryTop, secondaryBottom] = hotels;
+  const heroProperty = getHotelBySlug('udaipur') ?? primary;
   const states = new Set(hotels.map((h) => h.state)).size;
   const totalDining = hotels.reduce((sum, h) => sum + h.dining.length, 0);
   const totalEventSpaces = hotels.reduce((sum, h) => sum + (h.eventSpaces?.venues.length ?? 0), 0);
@@ -24,74 +26,49 @@ export default function HomePage() {
 
   return (
     <>
-      <section className="relative overflow-hidden">
-        <div className="grid h-[78vh] min-h-[560px] grid-cols-1 gap-1 sm:grid-cols-3">
-          {primary && (
-            <div className="relative col-span-1 overflow-hidden sm:col-span-2">
-              <div className="absolute inset-0 animate-hero-zoom">
-                <Image
-                  src={primary.heroImage}
-                  alt={primary.name}
-                  fill
-                  priority
-                  sizes="(min-width: 640px) 66vw, 100vw"
-                  className="object-cover"
-                />
-              </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-forest-dark/95 via-forest-dark/20 to-forest-dark/10" />
-              <div className="absolute inset-x-0 bottom-0 p-6 text-cream sm:p-12">
-                <div className="animate-fade-up">
-                  <div className="flex items-center gap-3">
-                    <span className="h-px w-10 bg-gold" />
-                    <p className="text-xs uppercase tracking-[0.4em] text-gold-light">
-                      Business &amp; Leisure, Across India
-                    </p>
-                  </div>
-                  <h1 className="mt-5 max-w-xl font-display text-5xl leading-[1.05] sm:text-6xl">
-                    Your Oasis of Relaxation Awaits
-                  </h1>
-                  <Link
-                    href="/hotels"
-                    className="mt-7 inline-block rounded bg-gold px-7 py-3 text-sm uppercase tracking-wider text-forest-dark transition hover:bg-gold-light"
-                  >
-                    Explore Our Hotels
-                  </Link>
-                </div>
-              </div>
+      <section className="relative h-[85vh] min-h-[620px] overflow-hidden">
+        {heroProperty && (
+          <>
+            <div className="absolute inset-0 animate-hero-zoom">
+              <Image
+                src={heroProperty.heroImage}
+                alt={heroProperty.name}
+                fill
+                priority
+                sizes="100vw"
+                className="object-cover"
+              />
             </div>
-          )}
-          <div className="hidden grid-rows-2 gap-1 sm:grid">
-            {secondaryTop && (
-              <div className="group relative overflow-hidden">
-                <Image
-                  src={secondaryTop.heroImage}
-                  alt={secondaryTop.name}
-                  fill
-                  sizes="33vw"
-                  className="object-cover transition duration-700 group-hover:scale-105"
-                />
-              </div>
-            )}
-            {secondaryBottom && (
-              <div className="group relative overflow-hidden">
-                <Image
-                  src={secondaryBottom.heroImage}
-                  alt={secondaryBottom.name}
-                  fill
-                  sizes="33vw"
-                  className="object-cover transition duration-700 group-hover:scale-105"
-                />
-              </div>
-            )}
+            <div className="absolute inset-0 bg-gradient-to-t from-forest-dark/95 via-forest-dark/50 to-forest-dark/15" />
+            <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-cream to-transparent sm:h-56" />
+          </>
+        )}
+        <div className="absolute inset-x-0 bottom-0 pb-24 sm:pb-32">
+          <div className="animate-fade-up mx-auto w-full max-w-7xl px-6 text-cream">
+            <div className="flex items-center gap-3">
+              <span className="h-px w-10 bg-gold" />
+              <p className="text-xs uppercase tracking-[0.4em] text-cream drop-shadow-md">
+                Business &amp; Leisure, Across India
+              </p>
+            </div>
+            <h1 className="mt-5 max-w-2xl font-display text-5xl leading-[1.05] drop-shadow-lg sm:text-7xl">
+              Your Oasis of Relaxation Awaits
+            </h1>
+            <Link
+              href="/hotels"
+              className="mt-7 inline-block rounded bg-gold px-7 py-3 text-sm uppercase tracking-wider text-forest-dark transition hover:bg-gold-light"
+            >
+              Explore Our Hotels
+            </Link>
           </div>
-        </div>
-
-        <div className="relative z-10 mx-auto -mt-8 w-full max-w-5xl px-4 sm:-mt-10">
-          <BookingWidget hotels={hotels} />
         </div>
       </section>
 
-      <section className="border-b border-forest/10 bg-white py-10">
+      <div className="relative z-10 mx-auto -mt-10 w-full max-w-5xl px-4">
+        <BookingWidget hotels={hotels} />
+      </div>
+
+      <section className="border-b border-forest/10 py-10">
         <div className="mx-auto grid max-w-4xl grid-cols-2 gap-8 px-6 text-center sm:grid-cols-4">
           {stats.map((stat) => (
             <div key={stat.label}>
@@ -103,7 +80,7 @@ export default function HomePage() {
       </section>
 
       <section className="bg-forest py-20 text-cream">
-        <div className="mx-auto max-w-3xl px-6 text-center">
+        <Reveal className="mx-auto max-w-3xl px-6 text-center">
           <div className="flex items-center justify-center gap-3">
             <span className="h-px w-10 bg-gold" />
             <p className="text-xs uppercase tracking-[0.3em] text-gold-light">
@@ -119,27 +96,29 @@ export default function HomePage() {
             cleanliness. From breath-taking mountain getaways to destinations steeped in history,
             our hotels offer a variety of experiences, each with its own unique character and charm.
           </p>
-        </div>
+        </Reveal>
       </section>
 
       <section className="mx-auto max-w-7xl px-6 py-20">
-        <div className="mb-12 text-center">
+        <Reveal className="mb-12 text-center">
           <p className="text-xs uppercase tracking-[0.3em] text-gold">Featured Properties</p>
           <h2 className="mt-4 font-display text-3xl text-forest sm:text-4xl">Hotels and Resorts</h2>
           <p className="mx-auto mt-4 max-w-xl text-sm text-ink/70">
             Whether staying for business or leisure, discover our properties across India.
           </p>
-        </div>
+        </Reveal>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {hotels.map((hotel) => (
-            <HotelCard key={hotel.slug} hotel={hotel} />
+          {hotels.map((hotel, i) => (
+            <Reveal key={hotel.slug} delay={(i % 3) * 80}>
+              <HotelCard hotel={hotel} />
+            </Reveal>
           ))}
         </div>
       </section>
 
       <section className="border-y border-forest/10 bg-white py-20">
         <div className="mx-auto max-w-7xl px-6">
-          <div className="mb-10 text-center">
+          <Reveal className="mb-10 text-center">
             <p className="text-xs uppercase tracking-[0.3em] text-gold">Signature Experiences</p>
             <h2 className="mt-4 font-display text-3xl text-forest sm:text-4xl">
               Memories that last a lifetime
@@ -147,7 +126,7 @@ export default function HomePage() {
             <p className="mx-auto mt-4 max-w-xl text-sm text-ink/70">
               From misty mountain railways to island sunsets — unforgettable experiences await.
             </p>
-          </div>
+          </Reveal>
           <ExperiencesCarousel experiences={experiences} />
         </div>
       </section>
@@ -223,12 +202,19 @@ export default function HomePage() {
 
       <section className="bg-forest/5 py-20">
         <div className="mx-auto max-w-6xl px-6">
-          <h2 className="text-center font-display text-3xl text-forest sm:text-4xl">
-            Awards and Recognitions
-          </h2>
-          <div className="mt-10">
+          <Reveal className="text-center">
+            <p className="text-xs uppercase tracking-[0.3em] text-gold">Recognised Excellence</p>
+            <h2 className="mt-4 font-display text-3xl text-forest sm:text-4xl">
+              Awards and Recognitions
+            </h2>
+            <p className="mx-auto mt-4 max-w-xl text-sm text-ink/70">
+              Six of our properties have been honoured with Tripadvisor&rsquo;s Travellers&rsquo;
+              Choice Award 2026, ranking among the top hotels reviewed by travellers worldwide.
+            </p>
+          </Reveal>
+          <Reveal className="mt-12" delay={150}>
             <AwardsSection awards={awards} />
-          </div>
+          </Reveal>
         </div>
       </section>
 
