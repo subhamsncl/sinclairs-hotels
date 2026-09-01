@@ -1,0 +1,89 @@
+import type { Hotel } from '../types';
+
+export const burdwanHotel: Hotel = {
+  slug: 'burdwan',
+  name: 'Sinclairs Burdwan',
+  location: 'Burdwan',
+  state: 'West Bengal',
+  tagline: 'The rice bowl of India',
+  description:
+    'Situated at High Street 1 in Renaissance Township, Sinclairs Burdwan is an upscale tourist resort offering the finest accommodation, club and banquet facilities. Spread over four acres, the resort is a perfect getaway for families looking for a break from stressful city life. Conveniently located a two-hour drive from Kolkata airport and five minutes from Ullas Bus Stand, the resort has 19 well-appointed Premier rooms, 4 Junior suites and 1 Maharaja suite. Sinclairs Burdwan provides a pulsating environment for relaxation and a fun-filled destination for business executives.',
+  heroImage: '/images/hotels/burdwan/Sinclairs-Burdwan-with-Pool-view.jpg',
+  thumbnailImage: '/images/hotels/burdwan/Sinclairs-Burdwan-with-Pool-view.jpg',
+  amenities: [
+    'Multicuisine Restaurant',
+    'Doctor by Appointment',
+    'Laundry Service',
+    'Airport/Railway Transfers',
+    'Free Wi-Fi',
+    'Lounge Bar',
+    'Sightseeing Tours',
+    'Elevator',
+    'Gym and Yoga',
+    'Car Parking',
+    'Open Air Terrace',
+    'In-house Generator',
+    'Room Service',
+    'Lawn and Open Air Garden Cafe',
+    'Business Centre',
+    'Car Hire',
+    'Smoking Area',
+    "Outdoor Swimming Pool with Children's Wading Area",
+    'Playzone with Table Tennis, Carrom, Chess and Ludo',
+    'Badminton Court',
+    'Library',
+  ],
+  rooms: [
+    {
+      name: 'Premier Room',
+      description:
+        'A twin bedroom with an ensuite bathroom and shower. The twin beds are of a larger than normal size for greater comfort, and the room comes with direct dial telephones, mini bar, tea and coffee maker, satellite television, electronic safe and in-room dining.',
+      image: '/images/hotels/burdwan/rooms/premier-room.jpg',
+    },
+    {
+      name: 'Junior Suite',
+      description:
+        'A spacious air-conditioned bedroom with a large bed and an attached toilet, along with a spacious seating lounge with TV. Rooms feature direct dial telephones, tea and coffee maker, satellite television, electronic safe and in-room dining.',
+      image: '/images/hotels/burdwan/rooms/junior-suite.jpg',
+    },
+    {
+      name: 'Maharaja Suite',
+      description:
+        'The suite has a bedroom and a living room, each with an ensuite bathroom and shower. The decor recreates the ornate lifestyle of the erstwhile maharajas, complemented by direct dial telephones, mini bar, tea and coffee maker, satellite television, electronic safe and in-room dining.',
+      image: '/images/hotels/burdwan/rooms/maharaja-suite.jpg',
+    },
+  ],
+  dining: [
+    "The Palm Terrace - the resort's all-day multicuisine restaurant serving breakfast, lunch and dinner with views of the poolside and gardens, plus a bar stocked with premium drinks.",
+    'O3 Lounge Bar - a stylish lounge bar with colourful interiors and chic design, offering alcoholic and non-alcoholic beverages and cocktails, ideal for unwinding over drinks and snacks.',
+  ],
+  gallery: [
+    {
+      src: '/images/hotels/burdwan/Sinclairs-Burdwan-with-Pool-view.jpg',
+      alt: 'Sinclairs Burdwan resort building with outdoor swimming pool view',
+    },
+    {
+      src: '/images/hotels/burdwan/Meetings-and-Events-at-Burdwan.webp',
+      alt: 'Meetings and events venue set up at Sinclairs Burdwan',
+    },
+  ],
+  sightseeing: [
+    'Curzon Gate (Vijay Toran)',
+    '108 Shiva Mandir',
+    'Sarvamangala Mandir',
+    'Pir Baharam',
+    'Meghnad Saha Planetarium',
+    'Burdwan Science Centre',
+    'Town Hall',
+    'Krishnasayar Ecological Park',
+    'Golapbag',
+    'Deer Park',
+    'Kankaleshwari Kali Mandir',
+    'Kalna Raj Bari',
+    'Santiniketan',
+    'Bishnupur',
+    'Bhalkimachan',
+  ],
+};
+
+export default burdwanHotel;

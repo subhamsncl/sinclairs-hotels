@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+:root {
+  --color-brand-forest: #16352a;
+  --color-brand-forest-dark: #0d2119;
+  --color-brand-gold: #bd9455;
+  --color-brand-gold-light: #dcc08a;
+  --color-brand-cream: #faf7f1;
+  --color-brand-ink: #1c1c1a;
+
+  --background: var(--color-brand-cream);
+  --foreground: var(--color-brand-ink);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-forest: var(--color-brand-forest);
+  --color-forest-dark: var(--color-brand-forest-dark);
+  --color-gold: var(--color-brand-gold);
+  --color-gold-light: var(--color-brand-gold-light);
+  --color-cream: var(--color-brand-cream);
+  --color-ink: var(--color-brand-ink);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-playfair);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.input {
+  @apply w-full rounded border border-forest/20 bg-white px-3 py-2 text-sm text-ink;
+  @apply focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold;
+}

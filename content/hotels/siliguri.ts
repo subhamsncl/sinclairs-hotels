@@ -1,0 +1,70 @@
+import type { Hotel } from '../types';
+
+export const siliguriHotel: Hotel = {
+  slug: 'siliguri',
+  name: 'Sinclairs Siliguri',
+  location: 'Siliguri',
+  state: 'West Bengal',
+  tagline: 'Endless greenery with tea gardens amidst a bustling city.',
+  description:
+    'Situated in Pradhan Nagar, at the heart of the city, Sinclairs Siliguri is a luxury hotel equipped with modern amenities. One of the most renowned hotels in the region, it is ideal for businessmen and for tourists who want to make the best of what the city has to offer. The hotel offers rooms and suites over two levels, with guests able to dine at the multicuisine restaurant while taking in soothing views of the poolside and gardens, or unwind at the lounge bar which offers a range of premium drinks. For conferencing, multiple banquet halls and outdoor meeting facilities can accommodate up to 500 people, making Sinclairs one of the leading conference venues in Siliguri.',
+  heroImage: '/images/hotels/siliguri/Sinclairs-Siliguri-with-pool.jpg',
+  thumbnailImage: '/images/hotels/siliguri/Sinclairs-Siliguri-with-pool.jpg',
+  amenities: [
+    'Multicuisine Restaurant',
+    'Doctor by Appointment',
+    'Same Day Laundry Service',
+    'Airport/Railway Transfers',
+    'Outdoor Swimming Pool',
+    'Free Wi-Fi',
+    'Lounge Bar',
+    'Sightseeing Tours',
+    'Elevator',
+    'Gym',
+    'Car Parking & Valet Service',
+    'Open Air Terrace',
+    'In-house Generator',
+    'Room Service',
+    'Lawn and Open Air Garden Café',
+    'Car Hire',
+    'Smoking Area',
+    'Spa',
+  ],
+  rooms: [
+    {
+      name: 'Premier Room',
+      description:
+        'Recently refurbished with modern comforts, the room is equipped with ensuite bathrooms and rain showers. Room size: 192 sq. ft., with herbal bathroom amenities, a rain shower, twin lighting options, an LCD TV with satellite channels, split AC system and free Wi-Fi.',
+      image: '/images/hotels/siliguri/rooms/premier-room.jpg',
+    },
+    {
+      name: 'Garden Suite',
+      description:
+        'A bedroom with ensuite bathroom and shower, attached with a small seating area and a private terrace. Room size: 290 sq. ft., with a king size bed, writing desk, attached terrace garden with sit out, LCD TV with satellite channels, tea/coffee set, safe and free Wi-Fi.',
+      image: '/images/hotels/siliguri/rooms/garden-suite.jpg',
+    },
+    {
+      name: 'Premier Suite',
+      description:
+        'The rooms are luxurious and contemporary with a spacious bedroom, living room and two ensuite bathrooms and showers. Room size: 450 sq. ft., with a king size bed, separate living room, writing desk, two 32-inch LCD televisions, tea/coffee set, safe and free Wi-Fi.',
+      image: '/images/hotels/siliguri/rooms/premier-suite.jpg',
+    },
+  ],
+  dining: [
+    'The Palms — Serves classic favourites in international and local cuisine, with soothing views of the poolside and gardens and a bar offering a variety of premium drinks. Multicuisine, casual dress code, open 7.30 AM to 10.30 PM.',
+  ],
+  gallery: [
+    {
+      src: '/images/hotels/siliguri/Sinclairs-Siliguri-with-pool.jpg',
+      alt: 'Sinclairs Siliguri exterior with outdoor swimming pool',
+    },
+  ],
+  sightseeing: [
+    'The Kanchenjunga Stadium',
+    'Kalchakra Monastery',
+    'Salugara Monastery',
+    'ISKCON Temple',
+  ],
+};
+
+export default siliguriHotel;

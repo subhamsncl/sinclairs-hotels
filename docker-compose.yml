@@ -1,0 +1,15 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: sinclairs
+      POSTGRES_PASSWORD: sinclairs_dev
+      POSTGRES_DB: sinclairs_hotels
+    ports:
+      - '5432:5432'
+    volumes:
+      - sinclairs_pgdata:/var/lib/postgresql/data
+
+volumes:
+  sinclairs_pgdata:
