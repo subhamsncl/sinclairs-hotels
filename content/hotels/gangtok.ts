@@ -101,6 +101,15 @@ export const gangtokHotel: Hotel = {
     'Pelling',
     'Pemayangtse Monastery',
   ],
+  eventSpaces: {
+    totalSqFt: 4728,
+    maxCapacity: 110,
+    venues: [
+      { name: 'The Cherry Hall (Lower)', areaSqFt: 2240, capacity: 110 },
+      { name: 'The Cherry Hall (Upper)', areaSqFt: 1468, capacity: 80 },
+      { name: 'Jasmine Hall', areaSqFt: 510, capacity: 30 },
+    ],
+  },
 };
 
 export default gangtokHotel;

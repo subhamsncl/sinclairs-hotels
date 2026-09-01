@@ -105,6 +105,11 @@ export const portBlairHotel: Hotel = {
     'North Bay Island',
     'Viper Island',
   ],
+  eventSpaces: {
+    totalSqFt: 1785,
+    maxCapacity: 150,
+    venues: [{ name: 'The Forum', areaSqFt: 1785, capacity: 150 }],
+  },
 };
 
 export default portBlairHotel;

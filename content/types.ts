@@ -20,6 +20,18 @@ export interface DiningVenue {
   image?: string;
 }
 
+export interface EventVenue {
+  name: string;
+  areaSqFt: number;
+  capacity: number;
+}
+
+export interface EventSpaces {
+  totalSqFt: number;
+  maxCapacity: number;
+  venues: EventVenue[];
+}
+
 export interface Hotel {
   slug: string;
   name: string;
@@ -34,5 +46,6 @@ export interface Hotel {
   dining: DiningVenue[];
   gallery: GalleryImage[];
   sightseeing: string[];
+  eventSpaces?: EventSpaces;
   mapEmbedUrl?: string;
 }

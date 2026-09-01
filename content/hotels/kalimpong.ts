@@ -117,6 +117,15 @@ export const kalimpongHotel: Hotel = {
     'Hanuman Mandir',
     'Chardham Trip (Namchi)',
   ],
+  eventSpaces: {
+    totalSqFt: 3828,
+    maxCapacity: 300,
+    venues: [
+      { name: 'The Orchid', areaSqFt: 2700, capacity: 300 },
+      { name: 'The Fern', areaSqFt: 875, capacity: 70 },
+      { name: 'The Juniper', areaSqFt: 253, capacity: 10 },
+    ],
+  },
 };
 
 export default kalimpongHotel;

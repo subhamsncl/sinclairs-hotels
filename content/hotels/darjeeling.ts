@@ -103,6 +103,11 @@ export const darjeelingHotel: Hotel = {
     'Ghoom Monastery',
     'Mirik',
   ],
+  eventSpaces: {
+    totalSqFt: 960,
+    maxCapacity: 100,
+    venues: [{ name: 'The Pinnacle', areaSqFt: 960, capacity: 100 }],
+  },
 };
 
 export default darjeelingHotel;

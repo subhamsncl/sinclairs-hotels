@@ -69,6 +69,18 @@ export const siliguriHotel: Hotel = {
     'Salugara Monastery',
     'ISKCON Temple',
   ],
+  eventSpaces: {
+    totalSqFt: 13120,
+    maxCapacity: 500,
+    venues: [
+      { name: 'The Darbar', areaSqFt: 2400, capacity: 220 },
+      { name: 'Imperial', areaSqFt: 1750, capacity: 80 },
+      { name: 'The Regacy', areaSqFt: 750, capacity: 40 },
+      { name: 'The Summit', areaSqFt: 450, capacity: 18 },
+      { name: 'The Emperor', areaSqFt: 270, capacity: 10 },
+      { name: 'The Terrace', areaSqFt: 7500, capacity: 500 },
+    ],
+  },
 };
 
 export default siliguriHotel;

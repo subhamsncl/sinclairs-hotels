@@ -103,6 +103,15 @@ export const ootyHotel: Hotel = {
     'Government Museum',
     'Lalit Kala Academy',
   ],
+  eventSpaces: {
+    totalSqFt: 3870,
+    maxCapacity: 120,
+    venues: [
+      { name: 'The Regal Room', areaSqFt: 2200, capacity: 120 },
+      { name: 'The Windsor Room', areaSqFt: 1140, capacity: 70 },
+      { name: 'The Summit Room', areaSqFt: 530, capacity: 30 },
+    ],
+  },
 };
 
 export default ootyHotel;

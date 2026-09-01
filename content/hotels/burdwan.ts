@@ -92,6 +92,15 @@ export const burdwanHotel: Hotel = {
     'Bishnupur',
     'Bhalkimachan',
   ],
+  eventSpaces: {
+    totalSqFt: 4790,
+    maxCapacity: 350,
+    venues: [
+      { name: 'Crystal Room', areaSqFt: 520, capacity: 45 },
+      { name: 'Regal Room', areaSqFt: 3280, capacity: 350 },
+      { name: 'Saffron Hall', areaSqFt: 990, capacity: 50 },
+    ],
+  },
 };
 
 export default burdwanHotel;
