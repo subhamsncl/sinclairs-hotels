@@ -1,5 +1,7 @@
 'use client';
 
+import { DatePicker } from '@/components/ui/date-picker';
+import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/ui/select';
 import type { Hotel } from '@/content/types';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -28,42 +30,35 @@ export function BookingWidget({ hotels }: { hotels: Hotel[] }) {
       onSubmit={handleSearch}
       className="flex flex-col gap-3 overflow-hidden rounded-lg bg-white p-4 shadow-2xl sm:flex-row sm:items-stretch sm:gap-0 sm:divide-x sm:divide-forest/10 sm:p-0"
     >
-      <label className="flex-1 px-4 py-2 sm:py-3">
+      <div className="flex-1 px-4 py-2 sm:py-3">
         <span className="block text-xs uppercase tracking-wider text-ink/50">Select Property</span>
-        <select
-          value={property}
-          onChange={(e) => setProperty(e.target.value)}
-          className="mt-1 w-full text-sm text-ink outline-none"
-        >
-          {hotels.map((hotel) => (
-            <option key={hotel.slug} value={hotel.slug}>
-              {hotel.name}
-            </option>
-          ))}
-        </select>
-      </label>
+        <div className="mt-1">
+          <Select value={property} onValueChange={setProperty}>
+            <SelectTrigger />
+            <SelectContent>
+              {hotels.map((hotel) => (
+                <SelectItem key={hotel.slug} value={hotel.slug}>
+                  {hotel.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
 
-      <label className="px-4 py-2 sm:py-3">
+      <div className="px-4 py-2 sm:py-3">
         <span className="block text-xs uppercase tracking-wider text-ink/50">Check In</span>
-        <input
-          type="date"
-          value={checkIn}
-          min={todayISO(0)}
-          onChange={(e) => setCheckIn(e.target.value)}
-          className="mt-1 text-sm text-ink outline-none"
-        />
-      </label>
+        <div className="mt-1 w-32">
+          <DatePicker value={checkIn} onChange={setCheckIn} min={todayISO(0)} />
+        </div>
+      </div>
 
-      <label className="px-4 py-2 sm:py-3">
+      <div className="px-4 py-2 sm:py-3">
         <span className="block text-xs uppercase tracking-wider text-ink/50">Check Out</span>
-        <input
-          type="date"
-          value={checkOut}
-          min={checkIn}
-          onChange={(e) => setCheckOut(e.target.value)}
-          className="mt-1 text-sm text-ink outline-none"
-        />
-      </label>
+        <div className="mt-1 w-32">
+          <DatePicker value={checkOut} onChange={setCheckOut} min={checkIn} />
+        </div>
+      </div>
 
       <label className="px-4 py-2 sm:py-3">
         <span className="block text-xs uppercase tracking-wider text-ink/50">Guests</span>

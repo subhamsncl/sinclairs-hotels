@@ -1,8 +1,10 @@
 'use client';
 
 import { submitEnquiry } from '@/app/enquiry/actions';
+import { DatePicker } from '@/components/ui/date-picker';
+import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/ui/select';
 import type { Hotel } from '@/content/types';
-import { useActionState } from 'react';
+import { useActionState, useState } from 'react';
 
 const initialState = { status: 'idle' as const };
 
@@ -20,6 +22,9 @@ export function EnquiryForm({
   defaultGuests?: string;
 }) {
   const [state, formAction, pending] = useActionState(submitEnquiry, initialState);
+  const [property, setProperty] = useState(defaultProperty ?? '');
+  const [checkIn, setCheckIn] = useState(defaultCheckIn ?? '');
+  const [checkOut, setCheckOut] = useState(defaultCheckOut ?? '');
 
   if (state.status === 'success') {
     return (
@@ -74,41 +79,36 @@ export function EnquiryForm({
           />
         </Field>
         <Field label="Property" name="property" error={fieldError('property')}>
-          <select
-            id="property"
-            name="property"
-            required
-            defaultValue={defaultProperty ?? ''}
-            className="input"
-            aria-invalid={Boolean(fieldError('property'))}
-          >
-            <option value="" disabled>
-              Select a property
-            </option>
-            {hotels.map((hotel) => (
-              <option key={hotel.slug} value={hotel.slug}>
-                {hotel.name}
-              </option>
-            ))}
-          </select>
+          <input type="hidden" name="property" value={property} />
+          <div className="input">
+            <Select value={property} onValueChange={setProperty}>
+              <SelectTrigger id="property" placeholder="Select a property" />
+              <SelectContent>
+                {hotels.map((hotel) => (
+                  <SelectItem key={hotel.slug} value={hotel.slug}>
+                    {hotel.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
         </Field>
         <Field label="Check-in" name="checkIn">
-          <input
-            id="checkIn"
-            type="date"
-            name="checkIn"
-            defaultValue={defaultCheckIn}
-            className="input"
-          />
+          <input type="hidden" name="checkIn" value={checkIn} />
+          <div className="input">
+            <DatePicker value={checkIn} onChange={setCheckIn} placeholder="Select date" />
+          </div>
         </Field>
         <Field label="Check-out" name="checkOut">
-          <input
-            id="checkOut"
-            type="date"
-            name="checkOut"
-            defaultValue={defaultCheckOut}
-            className="input"
-          />
+          <input type="hidden" name="checkOut" value={checkOut} />
+          <div className="input">
+            <DatePicker
+              value={checkOut}
+              onChange={setCheckOut}
+              min={checkIn}
+              placeholder="Select date"
+            />
+          </div>
         </Field>
         <Field label="Guests" name="guests">
           <input
