@@ -108,6 +108,8 @@ export const darjeelingHotel: Hotel = {
     maxCapacity: 100,
     venues: [{ name: 'The Pinnacle', areaSqFt: 960, capacity: 100 }],
   },
+  mapEmbedUrl:
+    'https://maps.google.com/maps?q=Sinclairs%20Darjeeling&t=m&z=17&output=embed&iwloc=near',
 };
 
 export default darjeelingHotel;

@@ -91,6 +91,8 @@ export const dooarsHotel: Hotel = {
       { name: 'The Lilac', areaSqFt: 720, capacity: 45 },
     ],
   },
+  mapEmbedUrl:
+    'https://maps.google.com/maps?q=Sinclairs%20Retreat%20Dooars&t=m&z=17&output=embed&iwloc=near',
 };
 
 export default dooarsHotel;

@@ -126,6 +126,8 @@ export const kalimpongHotel: Hotel = {
       { name: 'The Juniper', areaSqFt: 253, capacity: 10 },
     ],
   },
+  mapEmbedUrl:
+    'https://maps.google.com/maps?q=Sinclairs%20Retreat%20Kalimpong&t=m&z=17&output=embed&iwloc=near',
 };
 
 export default kalimpongHotel;

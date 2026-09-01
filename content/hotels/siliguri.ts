@@ -81,6 +81,8 @@ export const siliguriHotel: Hotel = {
       { name: 'The Terrace', areaSqFt: 7500, capacity: 500 },
     ],
   },
+  mapEmbedUrl:
+    'https://maps.google.com/maps?q=Sinclairs%20Siliguri&t=m&z=17&output=embed&iwloc=near',
 };
 
 export default siliguriHotel;

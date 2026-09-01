@@ -110,6 +110,8 @@ export const gangtokHotel: Hotel = {
       { name: 'Jasmine Hall', areaSqFt: 510, capacity: 30 },
     ],
   },
+  mapEmbedUrl:
+    'https://maps.google.com/maps?q=Sinclairs%20Gangtok&t=m&z=17&output=embed&iwloc=near',
 };
 
 export default gangtokHotel;

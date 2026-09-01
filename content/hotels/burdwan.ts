@@ -101,6 +101,8 @@ export const burdwanHotel: Hotel = {
       { name: 'Saffron Hall', areaSqFt: 990, capacity: 50 },
     ],
   },
+  mapEmbedUrl:
+    'https://maps.google.com/maps?q=Sinclairs%20Burdwan&t=m&z=17&output=embed&iwloc=near',
 };
 
 export default burdwanHotel;

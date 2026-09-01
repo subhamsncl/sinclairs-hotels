@@ -70,6 +70,8 @@ export const udaipurHotel: Hotel = {
       { name: 'Mayur Bagh', areaSqFt: 2320, capacity: 100 },
     ],
   },
+  mapEmbedUrl:
+    'https://maps.google.com/maps?q=Sinclairs%20Palace%20Retreat%20Udaipur&t=m&z=17&output=embed&iwloc=near',
 };
 
 export default udaipurHotel;

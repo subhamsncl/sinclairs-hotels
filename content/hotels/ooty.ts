@@ -112,6 +112,8 @@ export const ootyHotel: Hotel = {
       { name: 'The Summit Room', areaSqFt: 530, capacity: 30 },
     ],
   },
+  mapEmbedUrl:
+    'https://maps.google.com/maps?q=Sinclairs%20Retreat%20Ooty&t=m&z=17&output=embed&iwloc=near',
 };
 
 export default ootyHotel;

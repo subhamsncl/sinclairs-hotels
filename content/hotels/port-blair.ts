@@ -110,6 +110,8 @@ export const portBlairHotel: Hotel = {
     maxCapacity: 150,
     venues: [{ name: 'The Forum', areaSqFt: 1785, capacity: 150 }],
   },
+  mapEmbedUrl:
+    'https://maps.google.com/maps?q=Sinclairs%20Bayview%20Portblair&t=m&z=17&output=embed&iwloc=near',
 };
 
 export default portBlairHotel;
