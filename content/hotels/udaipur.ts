@@ -58,7 +58,18 @@ export const udaipurHotel: Hotel = {
       alt: 'Night view of Sinclairs Palace Retreat Udaipur',
     },
   ],
-  sightseeing: [],
+  sightseeing: [
+    'Haldighati Museum',
+    'Chetak Samadhi',
+    'Rakt Talai',
+    'Nathdwara Shrinathji Temple',
+    'Eklingji Temple',
+    'Kumbhalgarh Fort',
+    'City Palace Udaipur',
+    'Lake Pichola',
+    'Fateh Sagar Lake',
+    'Saheliyon Ki Bari',
+  ],
   eventSpaces: {
     totalSqFt: 31620,
     maxCapacity: 2000,
@@ -72,6 +83,11 @@ export const udaipurHotel: Hotel = {
   },
   mapEmbedUrl:
     'https://maps.google.com/maps?q=Sinclairs%20Palace%20Retreat%20Udaipur&t=m&z=17&output=embed&iwloc=near',
+  contact: {
+    address: 'Karanji Ka Guda, District Udaipur 313322, Rajasthan, India',
+    phone: '+91 90075 40727',
+    email: 'palace.udaipur@sinclairshotels.com',
+  },
 };
 
 export default udaipurHotel;

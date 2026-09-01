@@ -134,7 +134,10 @@ export default async function HotelPage({ params }: { params: Promise<Params> })
             <h2 className="font-display text-2xl text-forest">Rooms &amp; Suites</h2>
             <div className="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
               {hotel.rooms.map((room) => (
-                <div key={room.name} className="group overflow-hidden rounded-lg bg-cream">
+                <div
+                  key={room.name}
+                  className="group flex flex-col overflow-hidden rounded-lg bg-cream shadow-sm transition hover:shadow-lg"
+                >
                   <div className="relative aspect-[4/3] overflow-hidden">
                     <Image
                       src={room.image}
@@ -144,9 +147,17 @@ export default async function HotelPage({ params }: { params: Promise<Params> })
                       className="object-cover transition duration-500 group-hover:scale-105"
                     />
                   </div>
-                  <div className="p-5">
+                  <div className="flex flex-1 flex-col p-5">
                     <h3 className="font-display text-lg text-forest">{room.name}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-ink/70">{room.description}</p>
+                    <p className="mt-2 flex-1 text-sm leading-relaxed text-ink/70">
+                      {room.description}
+                    </p>
+                    <Link
+                      href={`/enquiry?property=${hotel.slug}`}
+                      className="mt-5 block rounded bg-forest-dark py-2.5 text-center text-xs uppercase tracking-wider text-cream transition hover:bg-forest"
+                    >
+                      Book Now
+                    </Link>
                   </div>
                 </div>
               ))}
@@ -156,29 +167,34 @@ export default async function HotelPage({ params }: { params: Promise<Params> })
       )}
 
       {hotel.dining.length > 0 && (
-        <section id="dining" className="scroll-mt-32 py-16">
+        <section id="dining" className="scroll-mt-32 bg-forest-dark py-16">
           <div className="mx-auto max-w-6xl px-6">
-            <h2 className="font-display text-2xl text-forest">Dining</h2>
+            <h2 className="font-display text-2xl text-cream">Dining</h2>
+            <p className="mt-2 text-sm text-cream/60">
+              Signature restaurants and bars at {hotel.name}
+            </p>
             <div className="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2">
               {hotel.dining.map((venue) => (
                 <div
                   key={venue.name}
-                  className="overflow-hidden rounded-lg border border-forest/10"
+                  className="group overflow-hidden rounded-lg bg-forest shadow-lg"
                 >
-                  {venue.image && (
-                    <div className="relative aspect-[16/10]">
-                      <Image
-                        src={venue.image}
-                        alt={venue.name}
-                        fill
-                        sizes="(min-width: 640px) 50vw, 100vw"
-                        className="object-cover"
-                      />
-                    </div>
-                  )}
+                  <div className="relative aspect-[16/10] overflow-hidden">
+                    <Image
+                      src={venue.image ?? hotel.heroImage}
+                      alt={venue.name}
+                      fill
+                      sizes="(min-width: 640px) 50vw, 100vw"
+                      className="object-cover transition duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-forest-dark/80 via-transparent to-transparent" />
+                  </div>
                   <div className="p-6">
-                    <h3 className="font-display text-lg text-forest">{venue.name}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-ink/70">{venue.description}</p>
+                    <h3 className="font-display text-xl text-gold-light">{venue.name}</h3>
+                    <div className="mt-2 h-px w-10 bg-gold/50" />
+                    <p className="mt-3 text-sm leading-relaxed text-cream/75">
+                      {venue.description}
+                    </p>
                   </div>
                 </div>
               ))}
@@ -213,19 +229,25 @@ export default async function HotelPage({ params }: { params: Promise<Params> })
       )}
 
       {hotel.gallery.length > 0 && (
-        <section id="gallery" className="scroll-mt-32 bg-forest-dark py-16">
+        <section id="gallery" className="scroll-mt-32 py-16">
           <div className="mx-auto max-w-7xl px-6">
-            <h2 className="font-display text-2xl text-cream">Gallery</h2>
-            <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
-              {hotel.gallery.map((image) => (
-                <div key={image.src} className="relative aspect-square overflow-hidden rounded">
+            <h2 className="font-display text-2xl text-forest">Gallery</h2>
+            <div className="mt-8 grid auto-rows-[180px] grid-cols-2 gap-3 sm:grid-cols-4">
+              {hotel.gallery.map((image, i) => (
+                <div
+                  key={image.src}
+                  className={`group relative overflow-hidden rounded-lg ${
+                    i === 0 ? 'col-span-2 row-span-2' : ''
+                  }`}
+                >
                   <Image
                     src={image.src}
                     alt={image.alt}
                     fill
                     sizes="(min-width: 768px) 25vw, 50vw"
-                    className="object-cover"
+                    className="object-cover transition duration-500 group-hover:scale-110"
                   />
+                  <div className="absolute inset-0 bg-forest-dark/0 transition group-hover:bg-forest-dark/10" />
                 </div>
               ))}
             </div>
@@ -233,34 +255,68 @@ export default async function HotelPage({ params }: { params: Promise<Params> })
         </section>
       )}
 
-      {(hotel.mapEmbedUrl || hotel.sightseeing.length > 0) && (
+      {(hotel.mapEmbedUrl || hotel.sightseeing.length > 0 || hotel.contact) && (
         <section id="location" className="scroll-mt-32 py-16">
-          <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-6 lg:grid-cols-2">
-            {hotel.mapEmbedUrl && (
-              <div className="aspect-[4/3] overflow-hidden rounded-lg border border-forest/10 lg:aspect-auto">
-                <iframe
-                  src={hotel.mapEmbedUrl}
-                  title={`Map showing ${hotel.name}`}
-                  className="h-full min-h-[320px] w-full"
-                  loading="lazy"
-                />
-              </div>
-            )}
-            {hotel.sightseeing.length > 0 && (
+          <div className="mx-auto max-w-7xl px-6">
+            <h2 className="font-display text-2xl text-forest">Location &amp; Contact</h2>
+            <div className="mt-8 grid grid-cols-1 gap-10 lg:grid-cols-2">
               <div>
-                <h2 className="font-display text-2xl text-forest">Sightseeing Nearby</h2>
-                <div className="mt-6 flex flex-wrap gap-2">
-                  {hotel.sightseeing.map((spot) => (
-                    <span
-                      key={spot}
-                      className="rounded-full border border-forest/15 px-3 py-1.5 text-sm text-ink/80"
-                    >
-                      {spot}
-                    </span>
-                  ))}
-                </div>
+                {hotel.contact && (
+                  <dl className="grid grid-cols-1 gap-6 sm:grid-cols-3">
+                    <div>
+                      <dt className="text-xs uppercase tracking-wider text-ink/50">Location</dt>
+                      <dd className="mt-2 text-sm leading-relaxed text-ink/80">
+                        {hotel.contact.address}
+                      </dd>
+                    </div>
+                    <div>
+                      <dt className="text-xs uppercase tracking-wider text-ink/50">Contact No.</dt>
+                      <dd className="mt-2 text-sm text-ink/80">
+                        <a
+                          href={`tel:${hotel.contact.phone.replace(/\s/g, '')}`}
+                          className="hover:text-forest"
+                        >
+                          {hotel.contact.phone}
+                        </a>
+                      </dd>
+                    </div>
+                    <div>
+                      <dt className="text-xs uppercase tracking-wider text-ink/50">Email</dt>
+                      <dd className="mt-2 text-sm text-ink/80">
+                        <a href={`mailto:${hotel.contact.email}`} className="hover:text-forest">
+                          {hotel.contact.email}
+                        </a>
+                      </dd>
+                    </div>
+                  </dl>
+                )}
+                {hotel.sightseeing.length > 0 && (
+                  <div className="mt-10">
+                    <h3 className="font-display text-lg text-forest">Sightseeing Nearby</h3>
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {hotel.sightseeing.map((spot) => (
+                        <span
+                          key={spot}
+                          className="rounded-full border border-forest/15 px-3 py-1.5 text-sm text-ink/80"
+                        >
+                          {spot}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
-            )}
+              {hotel.mapEmbedUrl && (
+                <div className="aspect-[4/3] overflow-hidden rounded-lg border border-forest/10 shadow-md lg:aspect-auto">
+                  <iframe
+                    src={hotel.mapEmbedUrl}
+                    title={`Map showing ${hotel.name}`}
+                    className="h-full min-h-[320px] w-full"
+                    loading="lazy"
+                  />
+                </div>
+              )}
+            </div>
           </div>
         </section>
       )}

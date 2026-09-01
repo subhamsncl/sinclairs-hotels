@@ -93,6 +93,11 @@ export const dooarsHotel: Hotel = {
   },
   mapEmbedUrl:
     'https://maps.google.com/maps?q=Sinclairs%20Retreat%20Dooars&t=m&z=17&output=embed&iwloc=near',
+  contact: {
+    address: 'Chalsa Hill Top, Jalpaiguri 735206, West Bengal, India',
+    phone: '+91 98008 60282',
+    email: 'dooars@sinclairshotels.com',
+  },
 };
 
 export default dooarsHotel;

@@ -112,6 +112,11 @@ export const gangtokHotel: Hotel = {
   },
   mapEmbedUrl:
     'https://maps.google.com/maps?q=Sinclairs%20Gangtok&t=m&z=17&output=embed&iwloc=near',
+  contact: {
+    address: 'Cherry Residency Complex, Zero Point, PO Rajbhawan, Gangtok 737101, Sikkim, India',
+    phone: '+91 70032 07937',
+    email: 'gangtok@sinclairshotels.com',
+  },
 };
 
 export default gangtokHotel;

@@ -128,6 +128,11 @@ export const kalimpongHotel: Hotel = {
   },
   mapEmbedUrl:
     'https://maps.google.com/maps?q=Sinclairs%20Retreat%20Kalimpong&t=m&z=17&output=embed&iwloc=near',
+  contact: {
+    address: '6th Mile, Purbong Basti, PO Kalimpong, Dist Kalimpong 734301, West Bengal, India',
+    phone: '+91 97322 77760',
+    email: 'kalimpong@sinclairshotels.com',
+  },
 };
 
 export default kalimpongHotel;

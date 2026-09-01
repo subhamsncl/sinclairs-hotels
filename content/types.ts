@@ -32,6 +32,12 @@ export interface EventSpaces {
   venues: EventVenue[];
 }
 
+export interface ContactInfo {
+  address: string;
+  phone: string;
+  email: string;
+}
+
 export interface Hotel {
   slug: string;
   name: string;
@@ -48,4 +54,5 @@ export interface Hotel {
   sightseeing: string[];
   eventSpaces?: EventSpaces;
   mapEmbedUrl?: string;
+  contact?: ContactInfo;
 }

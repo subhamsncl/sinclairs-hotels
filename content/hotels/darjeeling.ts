@@ -110,6 +110,11 @@ export const darjeelingHotel: Hotel = {
   },
   mapEmbedUrl:
     'https://maps.google.com/maps?q=Sinclairs%20Darjeeling&t=m&z=17&output=embed&iwloc=near',
+  contact: {
+    address: '18/1 Gandhi Road, Darjeeling 734101, West Bengal, India',
+    phone: '+91 97359 41719',
+    email: 'darjeeling@sinclairshotels.com',
+  },
 };
 
 export default darjeelingHotel;

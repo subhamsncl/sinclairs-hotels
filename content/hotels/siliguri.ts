@@ -83,6 +83,11 @@ export const siliguriHotel: Hotel = {
   },
   mapEmbedUrl:
     'https://maps.google.com/maps?q=Sinclairs%20Siliguri&t=m&z=17&output=embed&iwloc=near',
+  contact: {
+    address: 'P.O. Pradhan Nagar, Siliguri 734003, West Bengal, India',
+    phone: '+91 97334 62777',
+    email: 'siliguri@sinclairshotels.com',
+  },
 };
 
 export default siliguriHotel;

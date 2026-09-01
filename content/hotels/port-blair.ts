@@ -112,6 +112,12 @@ export const portBlairHotel: Hotel = {
   },
   mapEmbedUrl:
     'https://maps.google.com/maps?q=Sinclairs%20Bayview%20Portblair&t=m&z=17&output=embed&iwloc=near',
+  contact: {
+    address:
+      'Corbyns Cove Road, South Point, Shadipur, Port Blair 744106, Andaman and Nicobar Islands, India',
+    phone: '+91 99332 56469',
+    email: 'portblair@sinclairshotels.com',
+  },
 };
 
 export default portBlairHotel;
