@@ -321,13 +321,26 @@ export default async function HotelPage({ params }: { params: Promise<Params> })
         </section>
       )}
 
-      <section className="border-t border-forest/10 py-16 text-center">
-        <Link
-          href={`/enquiry?property=${hotel.slug}`}
-          className="inline-block rounded bg-gold px-8 py-3 text-sm uppercase tracking-wider text-forest-dark transition hover:bg-gold-light"
-        >
-          Enquire About {hotel.name}
-        </Link>
+      <section className="relative flex h-[36vh] min-h-[280px] items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 animate-hero-zoom">
+          <Image src={hotel.heroImage} alt="" fill sizes="100vw" className="object-cover" />
+        </div>
+        <div className="absolute inset-0 bg-forest-dark/75" />
+        <div className="relative px-6 text-center text-cream">
+          <h2 className="font-display text-3xl drop-shadow-lg sm:text-4xl">
+            Ready to Stay at {hotel.name}?
+          </h2>
+          <p className="mx-auto mt-3 max-w-md text-sm text-cream/80">
+            Share your travel dates and our reservations team will get back to you with availability
+            and rates.
+          </p>
+          <Link
+            href={`/enquiry?property=${hotel.slug}`}
+            className="mt-6 inline-block rounded bg-gold px-8 py-3 text-sm uppercase tracking-wider text-forest-dark transition duration-300 hover:bg-gold-light hover:shadow-lg"
+          >
+            Enquire Now
+          </Link>
+        </div>
       </section>
     </div>
   );

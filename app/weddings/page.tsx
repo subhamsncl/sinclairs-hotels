@@ -1,5 +1,4 @@
 import { EditorialRow } from '@/components/editorial-row';
-import { EnquiryForm } from '@/components/enquiry-form';
 import {
   CakeIcon,
   CameraIcon,
@@ -12,6 +11,7 @@ import { VenueTable } from '@/components/venue-table';
 import { hotels } from '@/content/hotels';
 import type { Metadata } from 'next';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Weddings',
@@ -109,7 +109,7 @@ export default function WeddingsPage() {
         </div>
       </div>
 
-      <section className="bg-forest/5">
+      <section className="bg-forest/5 pt-16">
         <EditorialRow
           title="Memorable Weddings"
           body="Your fairy tale wedding will come alive at Sinclairs Hotels. Whether it means holding your ceremony on a green lawn, taking portraits by the pool, or hosting a cocktail party on the terrace, we offer intimate indoor and outdoor options, with private and exclusive use of the entire property."
@@ -211,18 +211,31 @@ export default function WeddingsPage() {
         </div>
       </section>
 
-      <section className="py-12">
-        <div className="mx-auto max-w-2xl px-6">
-          <h2 className="text-center font-display text-2xl text-forest">
+      <section className="relative flex h-[36vh] min-h-[280px] items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 animate-hero-zoom">
+          <Image
+            src="/images/weddings/celebration-toast.jpg"
+            alt=""
+            fill
+            sizes="100vw"
+            className="object-cover"
+          />
+        </div>
+        <div className="absolute inset-0 bg-forest-dark/75" />
+        <div className="relative px-6 text-center text-cream">
+          <h2 className="font-display text-3xl drop-shadow-lg sm:text-4xl">
             Contact Us, We Are Happy to Help
           </h2>
-          <p className="mt-3 text-center text-sm text-ink/70">
-            We understand that this day needs to be very special. Share your wedding dates, guest
-            count, and preferred property, and our events team will reach out with options.
+          <p className="mx-auto mt-3 max-w-md text-sm text-cream/80">
+            Share your wedding dates, guest count, and preferred property, and our events team will
+            reach out with options.
           </p>
-          <div className="mt-8 rounded-xl bg-white p-6 shadow-xl sm:p-10">
-            <EnquiryForm hotels={hotels} />
-          </div>
+          <Link
+            href="/enquiry"
+            className="mt-6 inline-block rounded bg-gold px-8 py-3 text-sm uppercase tracking-wider text-forest-dark transition duration-300 hover:bg-gold-light hover:shadow-lg"
+          >
+            Enquire Now
+          </Link>
         </div>
       </section>
     </div>

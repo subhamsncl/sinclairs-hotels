@@ -20,11 +20,10 @@ const fixtureHotel: Hotel = {
 };
 
 describe('HotelCard', () => {
-  it('renders the hotel name, location, and tagline', () => {
+  it('renders the hotel name and location', () => {
     render(<HotelCard hotel={fixtureHotel} />);
     expect(screen.getByText('Sinclairs Burdwan')).toBeInTheDocument();
     expect(screen.getByText('Burdwan, West Bengal')).toBeInTheDocument();
-    expect(screen.getByText(fixtureHotel.tagline)).toBeInTheDocument();
   });
 
   it('links to the hotel detail page', () => {

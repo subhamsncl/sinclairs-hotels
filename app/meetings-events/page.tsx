@@ -1,10 +1,10 @@
 import { BusinessIcon, SightseeingIcon } from '@/components/amenity-icon';
-import { EnquiryForm } from '@/components/enquiry-form';
 import { CateringIcon } from '@/components/service-icons';
 import { VenueTable } from '@/components/venue-table';
 import { hotels } from '@/content/hotels';
 import type { Metadata } from 'next';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Meetings & Events',
@@ -108,16 +108,29 @@ export default function MeetingsEventsPage() {
         </div>
       </section>
 
-      <section className="border-t border-forest/10 bg-forest/5 py-12">
-        <div className="mx-auto max-w-2xl px-6">
-          <h2 className="text-center font-display text-2xl text-forest">Plan Your Event</h2>
-          <p className="mt-3 text-center text-sm text-ink/70">
+      <section className="relative flex h-[36vh] min-h-[280px] items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 animate-hero-zoom">
+          <Image
+            src="/images/meetings-events/conference-setup.jpg"
+            alt=""
+            fill
+            sizes="100vw"
+            className="object-cover"
+          />
+        </div>
+        <div className="absolute inset-0 bg-forest-dark/75" />
+        <div className="relative px-6 text-center text-cream">
+          <h2 className="font-display text-3xl drop-shadow-lg sm:text-4xl">Plan Your Event</h2>
+          <p className="mx-auto mt-3 max-w-md text-sm text-cream/80">
             Tell us about your requirements and our sales team will get back to you with venue
             options and a quote.
           </p>
-          <div className="mt-8 rounded-xl bg-white p-6 shadow-xl sm:p-10">
-            <EnquiryForm hotels={hotels} />
-          </div>
+          <Link
+            href="/enquiry"
+            className="mt-6 inline-block rounded bg-gold px-8 py-3 text-sm uppercase tracking-wider text-forest-dark transition duration-300 hover:bg-gold-light hover:shadow-lg"
+          >
+            Enquire Now
+          </Link>
         </div>
       </section>
     </div>

@@ -107,7 +107,7 @@ export default function HomePage() {
             Whether staying for business or leisure, discover our properties across India.
           </p>
         </Reveal>
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 xl:grid-cols-4">
           {hotels.map((hotel, i) => (
             <Reveal key={hotel.slug} delay={(i % 3) * 80}>
               <HotelCard hotel={hotel} />
