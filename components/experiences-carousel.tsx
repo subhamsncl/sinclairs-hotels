@@ -25,15 +25,15 @@ export function ExperiencesCarousel({ experiences }: { experiences: Experience[]
           <div
             key={experience.title}
             data-card
-            className="w-[280px] flex-none snap-start overflow-hidden rounded-lg border border-forest/10 bg-white sm:w-[340px]"
+            className="group w-[280px] flex-none snap-start overflow-hidden rounded-lg border border-forest/10 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl sm:w-[340px]"
           >
-            <div className="relative aspect-[4/3]">
+            <div className="relative aspect-[4/3] overflow-hidden">
               <Image
                 src={experience.image}
                 alt={experience.title}
                 fill
                 sizes="340px"
-                className="object-cover"
+                className="object-cover transition duration-500 group-hover:scale-105"
               />
             </div>
             <div className="p-5">
