@@ -140,19 +140,19 @@ export default function HomePage() {
           </h2>
         </div>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-          <div className="overflow-hidden rounded-lg border border-forest/10">
-            <div className="relative aspect-[4/3]">
+          <div className="group overflow-hidden rounded-lg border border-forest/10 bg-white shadow-sm transition hover:shadow-xl">
+            <div className="relative aspect-[4/3] overflow-hidden">
               {secondaryTop && (
                 <Image
                   src={secondaryTop.heroImage}
                   alt="Events and conferences at Sinclairs"
                   fill
                   sizes="(min-width: 640px) 50vw, 100vw"
-                  className="object-cover"
+                  className="object-cover transition duration-500 group-hover:scale-105"
                 />
               )}
             </div>
-            <div className="bg-forest/5 p-6">
+            <div className="p-6">
               <h3 className="font-display text-xl text-forest">Events &amp; Conferences</h3>
               <p className="mt-2 text-sm text-ink/70">
                 From planning to execution, our teams support you every step of the way.
@@ -165,17 +165,17 @@ export default function HomePage() {
               </Link>
             </div>
           </div>
-          <div className="overflow-hidden rounded-lg border border-forest/10">
-            <div className="relative aspect-[4/3]">
+          <div className="group overflow-hidden rounded-lg border border-forest/10 bg-white shadow-sm transition hover:shadow-xl">
+            <div className="relative aspect-[4/3] overflow-hidden">
               <Image
-                src="/images/hotels/kalimpong/Kalimpong-wedding-in-natural-settings.jpg"
+                src="/images/weddings/mandap-entrance.jpg"
                 alt="Weddings at Sinclairs"
                 fill
                 sizes="(min-width: 640px) 50vw, 100vw"
-                className="object-cover"
+                className="object-cover transition duration-500 group-hover:scale-105"
               />
             </div>
-            <div className="bg-forest/5 p-6">
+            <div className="p-6">
               <h3 className="font-display text-xl text-forest">Weddings</h3>
               <p className="mt-2 text-sm text-ink/70">
                 Host your dream wedding at our hotel — we&apos;ll handle the details so you can

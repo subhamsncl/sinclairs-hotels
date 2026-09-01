@@ -139,7 +139,7 @@ function ElevatorIcon({ className = base }: IconProps) {
   );
 }
 
-function BusinessIcon({ className = base }: IconProps) {
+export function BusinessIcon({ className = base }: IconProps) {
   return (
     <svg
       className={className}
@@ -214,7 +214,7 @@ function GamesIcon({ className = base }: IconProps) {
   );
 }
 
-function SightseeingIcon({ className = base }: IconProps) {
+export function SightseeingIcon({ className = base }: IconProps) {
   return (
     <svg
       className={className}

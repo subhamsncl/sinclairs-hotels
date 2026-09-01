@@ -34,3 +34,31 @@ body {
   @apply w-full rounded border border-forest/20 bg-white px-3 py-2 text-sm text-ink;
   @apply focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold;
 }
+
+@keyframes hero-zoom {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.08);
+  }
+}
+
+.animate-hero-zoom {
+  animation: hero-zoom 16s ease-out forwards;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.8s ease-out forwards;
+}

@@ -28,7 +28,7 @@ export default function ContactPage() {
       </div>
 
       <div className="grid grid-cols-1 gap-10 sm:grid-cols-2">
-        <div className="rounded-lg border border-forest/10 bg-white p-8">
+        <div className="rounded-lg border border-forest/10 bg-white p-8 shadow-sm transition hover:shadow-md">
           <h2 className="font-display text-xl text-forest">Reservations &amp; Sales</h2>
           <dl className="mt-4 space-y-3 text-sm">
             <div>
@@ -60,7 +60,7 @@ export default function ContactPage() {
           </Link>
         </div>
 
-        <div className="rounded-lg border border-forest/10 bg-white p-8">
+        <div className="rounded-lg border border-forest/10 bg-white p-8 shadow-sm transition hover:shadow-md">
           <h2 className="font-display text-xl text-forest">Property Contacts</h2>
           <ul className="mt-4 space-y-3 text-sm">
             {hotels.map((hotel) => {
