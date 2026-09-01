@@ -51,7 +51,7 @@ export const portBlairHotel: Hotel = {
       name: 'Premier Family Room',
       description:
         'A spacious room where a family of four can spend their vacation together in great comfort, equipped with one king and one queen size bed. The attached three-fixture toilet is ideal for the family.',
-      image: '/images/hotels/port-blair/Sinclairs-bayview-Port-Blair-Sea-view.jpg',
+      image: '/images/hotels/port-blair/Premier-Family-Room.jpg',
     },
     {
       name: 'Premier Family Suite',
