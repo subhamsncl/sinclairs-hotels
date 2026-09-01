@@ -23,7 +23,7 @@ describe('HotelCard', () => {
   it('renders the hotel name, location, and tagline', () => {
     render(<HotelCard hotel={fixtureHotel} />);
     expect(screen.getByText('Sinclairs Burdwan')).toBeInTheDocument();
-    expect(screen.getByText('Burdwan')).toBeInTheDocument();
+    expect(screen.getByText('Burdwan, West Bengal')).toBeInTheDocument();
     expect(screen.getByText(fixtureHotel.tagline)).toBeInTheDocument();
   });
 
