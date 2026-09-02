@@ -14,7 +14,7 @@ export function Nav() {
     <header className="sticky top-0 z-50 border-b border-gold/20 bg-forest text-cream shadow-lg">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         <Link href="/" className="group flex flex-col leading-none">
-          <span className="font-display text-xl tracking-wide">Sinclairs</span>
+          <img src="/logo.svg" alt="Sinclairs" className="h-9 w-auto" />
           <span className="mt-1 h-px w-0 bg-gold transition-all duration-300 group-hover:w-full" />
         </Link>
 

@@ -8,8 +8,13 @@ export const dooarsHotel: Hotel = {
   tagline: 'Come and live with nature.',
   description:
     'Sinclairs Retreat Dooars sits on 20 acres of verdant green at Chalsa Hilltop, and is regarded as one of the finest resorts in North Bengal. Built in complete harmony with nature, it is ideal for those seeking rest, rejuvenation and adventure. The resort features 66 rooms, 3 suites and 2 wooden cottage accommodations with a rustic feel, each opening onto a private balcony overlooking the greens. Its versatile indoor and outdoor spaces, embraced by nature, make it equally suited to family holidays, banqueting, conferencing and destination weddings.',
-  heroImage: '/images/hotels/dooars/destination/Sinclairs-Retreat-Dooars-Garden-View.jpg',
-  thumbnailImage: '/images/hotels/dooars/destination/Sinclairs-Retreat-Dooars-Garden-View.jpg',
+  heroImage: '/images/hotels/dooars/amenities/DSC_1316-Enhanced-NR.webp',
+  heroGallery: [
+    '/images/hotels/dooars/amenities/DSC_1316-Enhanced-NR.webp',
+    '/images/hotels/dooars/destination/Main entrance to the resort.webp',
+    '/images/hotels/dooars/destination/DSC_0438.webp',
+  ],
+  thumbnailImage: '/images/hotels/dooars/amenities/DSC_1316-Enhanced-NR.webp',
   amenities: [
     'Free Wi-Fi',
     "Outdoor swimming pool with children's wading pool",
@@ -34,13 +39,34 @@ export const dooarsHotel: Hotel = {
       name: 'Deluxe Room',
       description:
         'Functional and contemporary, these rooms offer the ultimate in luxurious seclusion with a view of the main lawns. Room size 345 sq. ft., with an attached bath with hot and cold shower, herbal bathroom amenities, a queen or twin bed, writing desk, private balcony, electronic safe and tea/coffee set.',
-      images: ['/images/hotels/dooars/accommodations/Sinclairs-Retreat-Dooars-Deluxe-Room.jpg'],
+      images: [
+        '/images/hotels/dooars/accommodations/DSC_1114.webp',
+        '/images/hotels/dooars/accommodations/DSC_1005.webp',
+        '/images/hotels/dooars/accommodations/Toilet combined.webp',
+        '/images/hotels/dooars/accommodations/Private balcony with every room.webp',
+      ],
     },
     {
       name: 'Premier Suite',
       description:
-        'Spaciously created with a bedroom, living room, dining area and additional washroom, this suite has a distinct style recreating the atmosphere of the colonial lifestyle. Room size 690 sq. ft. plus balcony, with two baths with bathtub and rain shower, a king size bed, a separate living room with dining table, a private garden with sit-out, two 32" LCD televisions, electronic safe, tea/coffee set and refrigerator.',
-      images: ['/images/hotels/dooars/accommodations/Sinclairs-Retreat-Dooars-Premier-Suite.jpg'],
+        'Spaciously created with a bedroom, living room, dining area and additional washroom, this suite has a distinct style recreating the atmosphere of the colonial lifestyle — guests know it fondly as the "Burra Sahib Suite". Room size 690 sq. ft. plus balcony, with two baths with bathtub and rain shower, a king size bed, a separate living room with dining table and rich black lacquered furniture beneath a coffered, wood-beamed ceiling, a private garden with sit-out, two 32" LCD televisions, electronic safe, tea/coffee set and refrigerator.',
+      images: [
+        '/images/hotels/dooars/accommodations/Burra Sahib Suite.webp',
+        '/images/hotels/dooars/accommodations/Living room of Burra Sahib suite.webp',
+        '/images/hotels/dooars/accommodations/DSC_1173.webp',
+        '/images/hotels/dooars/accommodations/DSC_1182.webp',
+      ],
+    },
+    {
+      name: 'Wooden Cottage',
+      description:
+        'One of just two free-standing wooden cottages on the property, panelled entirely in warm pinewood beneath a vaulted, beamed ceiling, with a private sit-out looking straight into the forest. Comes with a sofa and coffee table, flat-screen TV and an attached bath with a walk-in shower — a rustic retreat for guests seeking seclusion amid the greenery.',
+      images: [
+        '/images/hotels/dooars/accommodations/Wooden Cottage Room.webp',
+        '/images/hotels/dooars/accommodations/DSC_1218.webp',
+        '/images/hotels/dooars/accommodations/DSC_1222-Enhanced-NR.webp',
+        '/images/hotels/dooars/accommodations/DSC_1209-Enhanced-NR.webp',
+      ],
     },
   ],
   dining: [
@@ -48,7 +74,10 @@ export const dooarsHotel: Hotel = {
       name: 'The Palm Terrace',
       description:
         "the resort's multicuisine restaurant, serving Indian, Chinese, Continental and regional dishes made from fresh, home-grown fare, with views over the Gorumara valley (7 AM to 11 PM).",
-      image: '/images/hotels/dooars/dining/Sinclairs-Retreat-Dooars-Palm-Terrace-Restaurant.jpg',
+      images: [
+        '/images/hotels/dooars/dining/DSC_1404.webp',
+        '/images/hotels/dooars/dining/DSC_1416.webp',
+      ],
     },
     {
       name: 'Thematic Bar',
@@ -57,25 +86,87 @@ export const dooarsHotel: Hotel = {
     {
       name: 'Café',
       description: 'an epicurean delight for casual bites through the day.',
-      image: '/images/hotels/dooars/dining/Sinclairs-Retreat-Dooars-Cafe.jpg',
+      images: ['/images/hotels/dooars/dining/Sinclairs-Retreat-Dooars-Cafe.jpg'],
+    },
+  ],
+  foodGallery: [
+    {
+      src: '/images/hotels/dooars/dining/Candle light dinner.webp',
+      alt: 'Candlelit Dinners Under the Stars',
+    },
+    {
+      src: '/images/hotels/dooars/dining/DSC_1453.webp',
+      alt: 'South Indian Breakfast, Freshly Steamed',
+    },
+    {
+      src: '/images/hotels/dooars/dining/DSC_1406.webp',
+      alt: 'A Trail of Sweet Endings',
+    },
+    {
+      src: '/images/hotels/dooars/dining/DSC_1432.webp',
+      alt: 'Starters with a Flourish',
+    },
+    {
+      src: '/images/hotels/dooars/dining/DSC_1435.webp',
+      alt: 'Steamed Momos, Mountain Style',
+    },
+    {
+      src: '/images/hotels/dooars/dining/DSC_1441.webp',
+      alt: 'A Splash of Colour on Every Plate',
+    },
+    {
+      src: '/images/hotels/dooars/dining/DSC_1449.webp',
+      alt: 'Kebabs Rolled Tableside',
+    },
+    {
+      src: '/images/hotels/dooars/dining/DSC_1421.webp',
+      alt: 'Live From the Kitchen',
     },
   ],
   gallery: [
     {
-      src: '/images/hotels/dooars/gallery/DooarsPackage6-6.webp',
-      alt: 'Forest canopy along a nature trail near the resort at Chalsa, Dooars',
+      src: '/images/hotels/dooars/destination/Main entrance to the resort.webp',
+      alt: 'The Sinclairs signage and stone gate marking the entrance to the resort at Chalsa',
     },
     {
-      src: '/images/hotels/dooars/gallery/Sinclairs-Retreat-Dooars-Lobby.jpg',
-      alt: 'Open-air garden pavilion lobby with white cane furniture at Sinclairs Retreat Dooars',
+      src: '/images/hotels/dooars/destination/DSC_0438.webp',
+      alt: 'Tree-lined driveway leading up to the porch at Sinclairs Retreat Dooars',
     },
     {
-      src: '/images/hotels/dooars/gallery/Sinclairs-Retreat-Dooars-Swimming-Pool.jpg',
-      alt: 'Outdoor swimming pool lit up at dusk, surrounded by palms at Sinclairs Retreat Dooars',
+      src: '/images/hotels/dooars/amenities/The green world!.webp',
+      alt: 'A circular garden bed shaded by mature trees on the resort grounds',
     },
     {
-      src: '/images/hotels/dooars/gallery/Sinclairs-Retreat-Dooars-The-Iris-Banquet-Hall.jpg',
-      alt: 'The Iris banquet hall set up for a wedding reception at Sinclairs Retreat Dooars',
+      src: '/images/hotels/dooars/amenities/DSC_1316-Enhanced-NR.webp',
+      alt: 'The swimming pool lit up at dusk and ringed by tall palms',
+    },
+    {
+      src: '/images/hotels/dooars/amenities/Wading pool for the kids.webp',
+      alt: "The pool and sundeck by day, with a dedicated children's wading pool",
+    },
+    {
+      src: '/images/hotels/dooars/amenities/Expansive lobby.webp',
+      alt: 'The tea lounge pavilion opening onto the lawns at dusk',
+    },
+    {
+      src: '/images/hotels/dooars/amenities/Front office.webp',
+      alt: 'Front desk reception at Sinclairs Retreat Dooars',
+    },
+    {
+      src: '/images/hotels/dooars/amenities/Welcoming guest with the traditional khada.webp',
+      alt: 'A guest welcomed at reception with the traditional khada scarf',
+    },
+    {
+      src: '/images/hotels/dooars/amenities/The Iris Hall 1 (2).webp',
+      alt: 'The Iris Hall dressed in banquet style, opening onto the gardens',
+    },
+    {
+      src: '/images/hotels/dooars/amenities/Hibiscus (1).webp',
+      alt: 'The Hibiscus banquet hall set for a corporate meeting',
+    },
+    {
+      src: '/images/hotels/dooars/amenities/Carnation (1).webp',
+      alt: 'The Carnation Hall arranged theatre-style for a seminar',
     },
   ],
   sightseeing: [

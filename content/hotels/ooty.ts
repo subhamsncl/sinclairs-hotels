@@ -8,8 +8,8 @@ export const ootyHotel: Hotel = {
   tagline: 'Stunning views from the highest point in South India.',
   description:
     "Enveloped by clouds at 8,000 feet, and situated exactly where the 'Queen of the Nilgiris' was discovered, Sinclairs Ooty is the highest located resort in South India. Far away from the crowd, the resort commands a majestic view of the Ooty valley and the Blue Mountains, with pristine forests interspersed with eucalyptus trees on the other side. It is an ideal getaway to beat the heat of the plains, for honeymooners and those in search of tranquil surroundings. The resort offers rooms and suites, a multicuisine restaurant overlooking the landscaped lawns, a Spanish bar, and an entertainment area with indoor games and a fitness centre.",
-  heroImage: '/images/hotels/ooty/destination/Sinclairs-Ooty-Ivy-Hill-Terrace.jpg',
-  thumbnailImage: '/images/hotels/ooty/destination/Sinclairs-Ooty-Facade-Night.jpg',
+  heroImage: '/images/hotels/ooty/destination/Sinclairs-Retreat-Ooty-view.jpg',
+  thumbnailImage: '/images/hotels/ooty/destination/Sinclairs-Retreat-Ooty-view.jpg',
   amenities: [
     'Free Wi-Fi',
     'Health Club & Gym',
@@ -71,31 +71,30 @@ export const ootyHotel: Hotel = {
       name: "Pine n' Petals",
       description:
         'Located on the lobby level of the hotel, this multicuisine restaurant offers a varied selection for breakfast, lunch and dinner in a cozy ambience with family-friendly, warm service. Open 7:30 AM to 10:30 PM.',
-      image: '/images/hotels/ooty/dining/Sinclairs-Ooty-Pine-N-Petals-Restaurant.jpg',
     },
     {
       name: 'Alto Espirito',
       description:
         'A stylish Spanish bar with catchy Spanish tunes, delectable Spanish snacks and dapper cocktails. Open 11 AM to 10:30 PM.',
-      image: '/images/hotels/ooty/dining/Sinclairs-Ooty-Alto-Espirito-Bar.jpg',
+      images: ['/images/hotels/ooty/dining/Sinclairs-Ooty-Alto-Espirito-Bar.jpg'],
     },
   ],
   gallery: [
     {
-      src: '/images/hotels/ooty/destination/Sinclairs-Ooty-Ivy-Hill-Terrace.jpg',
-      alt: 'Ivy-covered terraces and landscaped lawns stepping down the hillside at Sinclairs Ooty, with the valley beyond',
+      src: '/images/hotels/ooty/destination/Sinclairs-Retreat-Ooty-view.jpg',
+      alt: 'Sinclairs Ooty at dusk, its terraced lawns stepping down the hillside',
     },
     {
-      src: '/images/hotels/ooty/destination/Sinclairs-Ooty-Facade-Night.jpg',
-      alt: "Sinclairs Ooty's white colonial facade lit up at dusk against the wooded hillside",
+      src: '/images/hotels/ooty/dining/Sinclairs-Ooty-Alto-Espirito-Bar.jpg',
+      alt: 'Alto Espirito, the Spanish-themed bar at Sinclairs Ooty',
     },
     {
-      src: '/images/hotels/ooty/gallery/Sinclairs-Ooty-Dining-Terrace.jpg',
-      alt: 'Open-air dining terrace set for the evening with lanterns and a hillside view at Sinclairs Ooty',
+      src: '/images/hotels/ooty/accommodations/Sinclairs-Ooty-Nilgiri-Suite.jpg',
+      alt: 'The Nilgiri Suite, with its private forest-facing viewing veranda',
     },
     {
-      src: '/images/hotels/ooty/dining/Sinclairs-Ooty-Pine-N-Petals-Restaurant.jpg',
-      alt: "Window-side seating with valley views at Pine n' Petals restaurant, Sinclairs Ooty",
+      src: '/images/hotels/ooty/accommodations/Sinclairs-Ooty-Deluxe-Suite.jpg',
+      alt: 'The Deluxe Suite living area at Sinclairs Ooty',
     },
   ],
   sightseeing: [

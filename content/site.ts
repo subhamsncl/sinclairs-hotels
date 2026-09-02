@@ -11,6 +11,11 @@ export const siteConfig = {
 export const reservationUrl =
   'https://reservation.sinclairshotels.com/inst/#group?groupId=882Mjkbac8S7wLYqvHyxVFGKNMfaaeRV5yNO8NFk4hB5fg15ZQ3NDc=&JDRN=Y';
 
+export const socialLinks = [
+  { label: 'Facebook', href: 'https://www.facebook.com/sinclairshotelsandresorts/' },
+  { label: 'Instagram', href: 'https://www.instagram.com/sinclairshotelsandresorts/' },
+] as const;
+
 export const primaryNav = [
   { label: 'Home', href: '/' },
   { label: 'Hotels', href: '/hotels' },

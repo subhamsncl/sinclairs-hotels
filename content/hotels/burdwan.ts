@@ -8,8 +8,14 @@ export const burdwanHotel: Hotel = {
   tagline: 'The rice bowl of India',
   description:
     'Situated at High Street 1 in Renaissance Township, Sinclairs Burdwan is an upscale tourist resort offering the finest accommodation, club and banquet facilities. Spread over four acres, the resort is a perfect getaway for families looking for a break from stressful city life. Conveniently located a two-hour drive from Kolkata airport and five minutes from Ullas Bus Stand, the resort has 19 well-appointed Premier rooms, 4 Junior suites and 1 Maharaja suite. Sinclairs Burdwan provides a pulsating environment for relaxation and a fun-filled destination for business executives.',
-  heroImage: '/images/hotels/burdwan/destination/Sinclairs-Burdwan-with-Pool-view.jpg',
-  thumbnailImage: '/images/hotels/burdwan/destination/Sinclairs-Burdwan-with-Pool-view.jpg',
+  heroImage: '/images/hotels/burdwan/amenities/SwimmingPoolNightView.webp',
+  heroGallery: [
+    '/images/hotels/burdwan/amenities/SwimmingPoolNightView.webp',
+    '/images/hotels/burdwan/gallery/Building.webp',
+    '/images/hotels/burdwan/gallery/Porch1.webp',
+    '/images/hotels/burdwan/destination/Lobby.webp',
+  ],
+  thumbnailImage: '/images/hotels/burdwan/gallery/Building.webp',
   amenities: [
     'Multicuisine Restaurant',
     'Doctor by Appointment',
@@ -37,19 +43,34 @@ export const burdwanHotel: Hotel = {
       name: 'Premier Room',
       description:
         'A twin bedroom with an ensuite bathroom and shower. The twin beds are of a larger than normal size for greater comfort, and the room comes with direct dial telephones, mini bar, tea and coffee maker, satellite television, electronic safe and in-room dining.',
-      images: ['/images/hotels/burdwan/accommodations/Sinclairs-Burdwan-Premier-Room.jpg'],
+      images: [
+        '/images/hotels/burdwan/accommodations/Premier room (1).webp',
+        '/images/hotels/burdwan/accommodations/Premier room (2).webp',
+        '/images/hotels/burdwan/accommodations/Premier room (4).webp',
+        '/images/hotels/burdwan/accommodations/Premier_washroom (1).webp',
+      ],
     },
     {
       name: 'Junior Suite',
       description:
         'A spacious air-conditioned bedroom with a large bed and an attached toilet, along with a spacious seating lounge with TV. Rooms feature direct dial telephones, tea and coffee maker, satellite television, electronic safe and in-room dining.',
-      images: ['/images/hotels/burdwan/accommodations/Sinclairs-Burdwan-Junior-Suite.jpg'],
+      images: [
+        '/images/hotels/burdwan/accommodations/Junior suite (1).webp',
+        '/images/hotels/burdwan/accommodations/Junior suite (2).webp',
+        '/images/hotels/burdwan/accommodations/Junior suite seating 1.webp',
+        '/images/hotels/burdwan/accommodations/Junior suite_washroom (2).webp',
+      ],
     },
     {
       name: 'Maharaja Suite',
       description:
         'The suite has a bedroom and a living room, each with an ensuite bathroom and shower. The decor recreates the ornate lifestyle of the erstwhile maharajas, complemented by direct dial telephones, mini bar, tea and coffee maker, satellite television, electronic safe and in-room dining.',
-      images: ['/images/hotels/burdwan/accommodations/Sinclairs-Burdwan-Maharaja-Suite.jpg'],
+      images: [
+        '/images/hotels/burdwan/accommodations/Maharaja suite_bedroom (1).webp',
+        '/images/hotels/burdwan/accommodations/Maharaja suite_living room (1).webp',
+        '/images/hotels/burdwan/accommodations/Maharaja suite_bedroom (3).webp',
+        '/images/hotels/burdwan/accommodations/Maharaja suite_washroom (1).webp',
+      ],
     },
   ],
   dining: [
@@ -57,31 +78,103 @@ export const burdwanHotel: Hotel = {
       name: 'The Palm Terrace',
       description:
         "the resort's all-day multicuisine restaurant serving breakfast, lunch and dinner with views of the poolside and gardens, plus a bar stocked with premium drinks.",
-      image: '/images/hotels/burdwan/dining/Sinclairs-Burdwan-The-Palm-Terrace-Restaurant.jpg',
+      images: [
+        '/images/hotels/burdwan/dining/The Palm Terrace2.webp',
+        '/images/hotels/burdwan/dining/The Palm Terrace3.webp',
+        '/images/hotels/burdwan/dining/The Palm Terrace4.webp',
+        '/images/hotels/burdwan/dining/Terrace Adjacent to Restaurant1.webp',
+      ],
     },
     {
       name: 'O3 Lounge Bar',
       description:
         'a stylish lounge bar with colourful interiors and chic design, offering alcoholic and non-alcoholic beverages and cocktails, ideal for unwinding over drinks and snacks (opening shortly).',
-      image: '/images/hotels/burdwan/dining/Sinclairs-Burdwan-O3-Lounge-Bar.jpg',
+      images: [
+        '/images/hotels/burdwan/dining/O3LoungeBar1.webp',
+        '/images/hotels/burdwan/dining/O3LoungeBar2.webp',
+        '/images/hotels/burdwan/dining/O3LoungeBar3.webp',
+        '/images/hotels/burdwan/dining/O3LoungeBar4.webp',
+      ],
+    },
+  ],
+  foodGallery: [
+    {
+      src: '/images/hotels/burdwan/dining/BengaliThali1.webp',
+      alt: 'A Bengali Thali, Served the Traditional Way',
+    },
+    {
+      src: '/images/hotels/burdwan/dining/Buffetdisplay1.webp',
+      alt: 'Breakfast Buffet, Freshly Laid',
+    },
+    {
+      src: '/images/hotels/burdwan/dining/BreakfastToast.webp',
+      alt: 'Warm Breakfast Favourites',
+    },
+    {
+      src: '/images/hotels/burdwan/dining/ChickenLunch.webp',
+      alt: "Chef's Chicken Specials",
+    },
+    {
+      src: '/images/hotels/burdwan/dining/Lunch1.webp',
+      alt: 'A Leisurely Lunch Spread',
+    },
+    {
+      src: '/images/hotels/burdwan/dining/BurdwanMithai.webp',
+      alt: "Bengal's Sweet Traditions",
+    },
+    {
+      src: '/images/hotels/burdwan/dining/RiceLunch.webp',
+      alt: 'Steamed Rice & Regional Curries',
     },
   ],
   gallery: [
     {
-      src: '/images/hotels/burdwan/destination/Sinclairs-Burdwan-with-Pool-view.jpg',
-      alt: 'Sinclairs Burdwan resort building with outdoor swimming pool view',
+      src: '/images/hotels/burdwan/gallery/Porch1.webp',
+      alt: "The resort's colourfully muralled entrance porch, decorated for an event",
     },
     {
-      src: '/images/hotels/burdwan/gallery/Meetings-and-Events-at-Burdwan.webp',
-      alt: 'Meetings and events venue set up at Sinclairs Burdwan',
+      src: '/images/hotels/burdwan/gallery/Porch2.webp',
+      alt: 'The entrance porch at Sinclairs Burdwan',
     },
     {
-      src: '/images/hotels/burdwan/dining/Sinclairs-Burdwan-The-Palm-Terrace-Restaurant.jpg',
-      alt: 'The Palm Terrace multicuisine restaurant at Sinclairs Burdwan',
+      src: '/images/hotels/burdwan/destination/Lobby2.webp',
+      alt: 'Lobby lounge seating at Sinclairs Burdwan',
     },
     {
-      src: '/images/hotels/burdwan/dining/Sinclairs-Burdwan-O3-Lounge-Bar.jpg',
-      alt: 'O3 Lounge Bar seating and decor at Sinclairs Burdwan',
+      src: '/images/hotels/burdwan/destination/Lobby3.webp',
+      alt: 'Reception area at Sinclairs Burdwan',
+    },
+    {
+      src: '/images/hotels/burdwan/amenities/SwimmingPoolGuest.webp',
+      alt: 'A guest relaxing poolside with drinks at Sinclairs Burdwan',
+    },
+    {
+      src: '/images/hotels/burdwan/amenities/GamesRoom1.webp',
+      alt: "The resort's colourful indoor games room with table tennis, chess and carrom",
+    },
+    {
+      src: '/images/hotels/burdwan/amenities/Library1.webp',
+      alt: 'The library at Sinclairs Burdwan',
+    },
+    {
+      src: '/images/hotels/burdwan/amenities/Badminton court1.webp',
+      alt: 'Indoor badminton court at Sinclairs Burdwan',
+    },
+    {
+      src: '/images/hotels/burdwan/amenities/Squashcourt1.webp',
+      alt: 'Squash court at Sinclairs Burdwan',
+    },
+    {
+      src: '/images/hotels/burdwan/amenities/Gym1.webp',
+      alt: 'The fully equipped gymnasium at Sinclairs Burdwan',
+    },
+    {
+      src: '/images/hotels/burdwan/amenities/Yoga room.webp',
+      alt: 'The yoga room at Sinclairs Burdwan',
+    },
+    {
+      src: '/images/hotels/burdwan/gallery/Garden2.webp',
+      alt: 'Landscaped lawn and garden pathway at Sinclairs Burdwan',
     },
   ],
   sightseeing: [

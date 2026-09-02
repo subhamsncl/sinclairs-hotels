@@ -62,3 +62,29 @@ body {
 .animate-fade-up {
   animation: fade-up 0.8s ease-out forwards;
 }
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 42s linear infinite;
+}
+
+@keyframes hero-zoom-loop {
+  from {
+    transform: scale(1.02);
+  }
+  to {
+    transform: scale(1.1);
+  }
+}
+
+.animate-hero-zoom-loop {
+  animation: hero-zoom-loop 26s ease-in-out infinite alternate;
+}

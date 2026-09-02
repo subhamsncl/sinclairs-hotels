@@ -8,8 +8,14 @@ export const darjeelingHotel: Hotel = {
   tagline: "Kanchenjunga, the world's third highest peak, is the reason to be here.",
   description:
     'Strategically located a few minutes from the town centre, Chowrasta, Sinclairs Darjeeling offers splendid views of Mount Kanchenjunga, unmatched by any other hotel in the region. The hotel is an exciting blend of modernity and Victorian charm, perfect for those looking to explore the hill town or relax in comfort. Sinclairs Darjeeling offers 46 rooms and suites, including a special suite for honeymooners that opens out to a private balcony with unhindered views of the Himalayan mountain range.',
-  heroImage: '/images/hotels/darjeeling/destination/Sinclairs-Darjeeling-Lobby.jpg',
-  thumbnailImage: '/images/hotels/darjeeling/destination/Sinclairs-Darjeeling-Lobby.jpg',
+  heroImage: '/images/hotels/darjeeling/destination/Sinclairs-Darjeeling-Entrance-1.webp',
+  heroGallery: [
+    '/images/hotels/darjeeling/destination/Sinclairs-Darjeeling-Entrance-1.webp',
+    '/images/hotels/darjeeling/amenities/Sinclairs Darjeeling Kanchenjunga view.webp',
+    '/images/hotels/darjeeling/destination/Sinclairs-Darjeeling-Facade-View.webp',
+    '/images/hotels/darjeeling/destination/Sinclairs-Darjeeling-Entrance-2.webp',
+  ],
+  thumbnailImage: '/images/hotels/darjeeling/destination/Sinclairs-Darjeeling-Entrance-2.webp',
   amenities: [
     'Multicuisine Restaurant',
     'Doctor by Appointment',
@@ -40,20 +46,33 @@ export const darjeelingHotel: Hotel = {
       name: 'Deluxe Room',
       description:
         'Each of these cozy and well appointed rooms have ensuite washrooms, and are equipped with modern facilities. Room size: 223 sq. ft., with an attached bath with hot and cold shower.',
-      images: ['/images/hotels/darjeeling/accommodations/Sinclairs-Darjeeling-Deluxe-Room.jpg'],
+      images: [
+        '/images/hotels/darjeeling/accommodations/Deluxe Room Double.webp',
+        '/images/hotels/darjeeling/accommodations/Deluxe Room Double1.webp',
+        '/images/hotels/darjeeling/accommodations/Deluxe Room Twin Bed.webp',
+        '/images/hotels/darjeeling/accommodations/Deluxe Room Twin Bed2.webp',
+        '/images/hotels/darjeeling/accommodations/Deluxe Room Bathroom.webp',
+      ],
     },
     {
       name: 'Premier Room',
       description:
         'Enjoy beautiful mountain views with a spectacular sunrise from these rooms overlooking the Himalayas. Room size: 223 sq. ft., with a Kanchenjunga view and an attached bath with hot and cold shower.',
-      images: ['/images/hotels/darjeeling/accommodations/Sinclairs-Darjeeling-Premier-Room.jpg'],
+      images: [
+        '/images/hotels/darjeeling/accommodations/Sinclairs-Darjeeling-Premier-Room-1.webp',
+        '/images/hotels/darjeeling/accommodations/Sinclairs-Darjeeling-Premier-Room-2.webp',
+        '/images/hotels/darjeeling/accommodations/Sinclairs-Darjeeling-Premier-Room-3.webp',
+      ],
     },
     {
       name: 'Kanchenjunga Room',
       description:
         'This room has a stunning view of the mountains and is ideal for newly-weds. Room size: 271 sq. ft. with a Kanchenjunga view and an attached bath with hot and cold shower.',
       images: [
-        '/images/hotels/darjeeling/accommodations/Sinclairs-Darjeeling-Kanchenjunga-Room.jpg',
+        '/images/hotels/darjeeling/accommodations/Kanchenjunga Room 1.webp',
+        '/images/hotels/darjeeling/accommodations/Kanchenjunga Room 2.webp',
+        '/images/hotels/darjeeling/accommodations/Kanchenjunga Room 3.webp',
+        '/images/hotels/darjeeling/accommodations/Kanchenjunga Room Bathroom.webp',
       ],
     },
     {
@@ -61,7 +80,11 @@ export const darjeelingHotel: Hotel = {
       description:
         'This spacious suite has a bedroom and a living room with wooden floors and rich furnishings which reflect the typical hill style of the hotel. Room size: 446 sq. ft. with a Kanchenjunga view and an attached bath with hot and cold shower.',
       images: [
-        '/images/hotels/darjeeling/accommodations/Sinclairs-Darjeeling-Burra-Sahib-Suite.jpg',
+        '/images/hotels/darjeeling/accommodations/Sinclairs-Darjeeling-Burra-Sahib-Suite-Bathroom-View1.webp',
+        '/images/hotels/darjeeling/accommodations/Sinclairs-Darjeeling-Burra-Sahib-Suite1.webp',
+        '/images/hotels/darjeeling/accommodations/Sinclairs-Darjeeling-Burra-Sahib-Suite2.webp',
+        '/images/hotels/darjeeling/accommodations/Sinclairs-Darjeeling-Burra-Sahib-Suite4.webp',
+        '/images/hotels/darjeeling/accommodations/Sinclairs-Darjeeling-Burra-Sahib-Suite5.webp',
       ],
     },
     {
@@ -69,46 +92,79 @@ export const darjeelingHotel: Hotel = {
       description:
         'For guests with greater space requirements, this room is the ideal solution to ensure your privacy and have your family next to you in complete comfort and style. It consists of two adjoining double rooms, with the possibility of adding an extra bed in both rooms, sharing a common bathroom with separate areas for relaxing and a writing desk. Room size: 446 sq. ft.',
       images: [
-        '/images/hotels/darjeeling/accommodations/Sinclairs-Darjeeling-Deluxe-Family-Room.jpg',
+        '/images/hotels/darjeeling/accommodations/Deluxe Family Room1.webp',
+        '/images/hotels/darjeeling/accommodations/Deluxe Family Room2.webp',
+        '/images/hotels/darjeeling/accommodations/Deluxe Family Room3.webp',
+        '/images/hotels/darjeeling/accommodations/Deluxe Family Room Bathroom.webp',
       ],
     },
   ],
   dining: [
     {
-      name: 'The Kanchenjunga',
-      description:
-        'Overlooking a beautiful garden, this multicuisine restaurant serves delicious local, Indian or Continental cuisine customized to your preferences. Open 7 AM to 11 PM.',
-      image: '/images/hotels/darjeeling/dining/Sinclairs-Darjeeling-Kanchenjunga-Restaurant.jpg',
-    },
-    {
       name: 'The Dorjee Lounge',
       description:
         'A colonial style bar with an unhindered view of the Himalayan mountain range, ideal for a game of pool or relaxing with a book. Open 11 AM to 11 PM.',
-      image: '/images/hotels/darjeeling/dining/Sinclairs-Darjeeling-Dorjee-Lounge.jpg',
-    },
-    {
-      name: 'Mount View Café',
-      description:
-        'An outdoor café serving freshly prepared snacks and a cup of hot Darjeeling tea while you take in the gorgeous mountain views. Open 10 AM to 7:30 PM.',
-      image: '/images/hotels/darjeeling/dining/Sinclairs-Darjeeling-Mount-View-Cafe.jpg',
+      images: [
+        '/images/hotels/darjeeling/dining/Dorjee Lounge Set Up.webp',
+        '/images/hotels/darjeeling/dining/Dorjee Lounge Pool Table.webp',
+        '/images/hotels/darjeeling/dining/Sinclairs Darjeeling Bar Cabinet.webp',
+        '/images/hotels/darjeeling/dining/Sinclairs Darjeeling Lobby.webp',
+        '/images/hotels/darjeeling/dining/Sinclairs Darjeeling Reception.webp',
+      ],
     },
   ],
   gallery: [
     {
-      src: '/images/hotels/darjeeling/destination/Sinclairs-Darjeeling-Lobby.jpg',
-      alt: 'Lobby at Sinclairs Darjeeling with mountain views',
+      src: '/images/hotels/darjeeling/amenities/Sinclairs-Darjeeling-Lobby-Balcony.webp',
+      alt: 'Lobby-level balcony dining area with mountain views at Sinclairs Darjeeling',
     },
     {
-      src: '/images/hotels/darjeeling/gallery/Sinclairs-Darjeeling-Garden.jpg',
-      alt: 'Garden dining area at Sinclairs Darjeeling in the evening',
+      src: '/images/hotels/darjeeling/destination/Sinclairs-Darjeeling-Entrance-2.webp',
+      alt: 'Flower-lined entrance porch at Sinclairs Darjeeling by daylight',
     },
     {
-      src: '/images/hotels/darjeeling/gallery/Sinclairs-Darjeeling-Pinnacle-Banquet-Hall.jpg',
-      alt: 'The Pinnacle banquet hall set up for an event at Sinclairs Darjeeling',
+      src: '/images/hotels/darjeeling/destination/Sinclairs-Darjeeling-Facade-View.webp',
+      alt: 'Sinclairs Darjeeling building facade with signage, viewed from the street',
     },
     {
-      src: '/images/hotels/darjeeling/gallery/Sinclairs-Darjeeling-Viewpoint-Pagoda.jpg',
-      alt: 'Pagoda viewpoint overlooking Darjeeling town from the hotel grounds',
+      src: '/images/hotels/darjeeling/amenities/Sinclairs Darjeeling Kanchenjunga View 2.webp',
+      alt: 'Panoramic view of Mount Kanchenjunga from Sinclairs Darjeeling',
+    },
+    {
+      src: '/images/hotels/darjeeling/amenities/Serene surroundings of the Spa.webp',
+      alt: 'Cottage-style spa block set among trees at Sinclairs Darjeeling',
+    },
+    {
+      src: '/images/hotels/darjeeling/amenities/Sinclairs Darjeeling Games Room1.webp',
+      alt: 'Indoor games room with a table tennis table at Sinclairs Darjeeling',
+    },
+    {
+      src: '/images/hotels/darjeeling/amenities/Sinclairs Darjeeling Toddler Corner.webp',
+      alt: "Toddler's play corner at Sinclairs Darjeeling",
+    },
+    {
+      src: '/images/hotels/darjeeling/amenities/Toy Train.webp',
+      alt: "The Green View Express toy train ride in the hotel's children's park",
+    },
+    {
+      src: '/images/hotels/darjeeling/amenities/Library.webp',
+      alt: 'The library lounge at Sinclairs Darjeeling',
+    },
+    {
+      src: '/images/hotels/darjeeling/amenities/Elephants at the Children Park.webp',
+      alt: "Elephant statues in the hotel's children's park",
+    },
+    {
+      src: '/images/hotels/darjeeling/amenities/Sinclairs-Darjeeling-Pinnacle-Setup-1.webp',
+      alt: 'The Pinnacle banquet hall set in classroom style for a conference at Sinclairs Darjeeling',
+    },
+    {
+      src: '/images/hotels/darjeeling/amenities/Sinclairs-Darjeeling-Pinnacle-Setup-2.webp',
+      alt: 'The Pinnacle banquet hall with a podium set up for a presentation',
+    },
+    {
+      src: '/images/hotels/darjeeling/amenities/Sinclairs-Darjeeling-Pinnacle-Setup-3.webp',
+      alt: 'The Pinnacle banquet hall arranged in a U-shape layout for a meeting',
     },
   ],
   sightseeing: [

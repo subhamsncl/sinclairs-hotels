@@ -1,18 +1,54 @@
 import { AwardsSection } from '@/components/awards-section';
 import { BookingWidget } from '@/components/booking-widget';
-import { EditorialRow } from '@/components/editorial-row';
 import { ExperiencesCarousel } from '@/components/experiences-carousel';
+import { FoodStrip } from '@/components/food-strip';
 import { HotelCard } from '@/components/hotel-card';
+import { JourneyHero } from '@/components/journey-hero';
 import { Reveal } from '@/components/reveal';
 import { awards } from '@/content/awards';
 import { experiences } from '@/content/experiences';
-import { getHotelBySlug, hotels } from '@/content/hotels';
+import { hotels } from '@/content/hotels';
+import { reviews } from '@/content/reviews';
 import Image from 'next/image';
 import Link from 'next/link';
 
+const cuisineDishes = [
+  {
+    src: '/images/hotels/dooars/dining/Candle light dinner.webp',
+    alt: 'Candlelit Dinners Under the Stars, Sinclairs Retreat Dooars',
+  },
+  {
+    src: '/images/hotels/burdwan/dining/BengaliThali1.webp',
+    alt: 'A Traditional Bengali Thali, Sinclairs Burdwan',
+  },
+  {
+    src: '/images/hotels/kalimpong/dining/Momos1.webp',
+    alt: 'Steamed Momos with House Chutneys, Sinclairs Retreat Kalimpong',
+  },
+  {
+    src: '/images/hotels/gangtok/dining/GangtokSizzler.webp',
+    alt: 'Sizzlers Fresh off the Grill, Sinclairs Gangtok',
+  },
+  {
+    src: '/images/hotels/burdwan/dining/BurdwanMithai.webp',
+    alt: "Bengal's Sweet Traditions, Sinclairs Burdwan",
+  },
+  {
+    src: '/images/hotels/kalimpong/dining/Thukpa.webp',
+    alt: 'Warming Thukpa, a Himalayan Classic',
+  },
+  {
+    src: '/images/hotels/dooars/dining/DSC_1449.webp',
+    alt: 'Kebabs Rolled Tableside, Sinclairs Retreat Dooars',
+  },
+  {
+    src: '/images/hotels/gangtok/dining/GangtokCandlelightdinner.webp',
+    alt: 'An Evening Table with a Mountain View, Sinclairs Gangtok',
+  },
+];
+
 export default function HomePage() {
-  const [primary, secondaryTop, secondaryBottom] = hotels;
-  const heroProperty = getHotelBySlug('udaipur') ?? primary;
+  const [, secondaryTop, secondaryBottom] = hotels;
   const states = new Set(hotels.map((h) => h.state)).size;
   const totalDining = hotels.reduce((sum, h) => sum + h.dining.length, 0);
   const totalEventSpaces = hotels.reduce((sum, h) => sum + (h.eventSpaces?.venues.length ?? 0), 0);
@@ -26,40 +62,32 @@ export default function HomePage() {
 
   return (
     <>
-      <section className="relative h-[85vh] min-h-[620px] overflow-hidden">
-        {heroProperty && (
-          <>
-            <div className="absolute inset-0 animate-hero-zoom">
-              <Image
-                src={heroProperty.heroImage}
-                alt={heroProperty.name}
-                fill
-                priority
-                sizes="100vw"
-                className="object-cover"
-              />
-            </div>
-            <div className="absolute inset-0 bg-gradient-to-t from-forest-dark/95 via-forest-dark/50 to-forest-dark/15" />
-            <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-cream to-transparent sm:h-56" />
-          </>
-        )}
+      <section className="relative h-[75vh] min-h-[620px] overflow-hidden">
+        <JourneyHero
+          slides={hotels.map((hotel) => ({
+            image: hotel.heroImage,
+            name: hotel.name,
+            location: `${hotel.location}, ${hotel.state}`,
+            slug: hotel.slug,
+          }))}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-forest-dark/95 via-forest-dark/50 to-forest-dark/15" />
         <div className="absolute inset-x-0 bottom-0 pb-24 sm:pb-32">
           <div className="animate-fade-up mx-auto w-full max-w-7xl px-6 text-cream">
             <div className="flex items-center gap-3">
               <span className="h-px w-10 bg-gold" />
-              <p className="text-[0.65rem] uppercase tracking-[0.15em] text-cream drop-shadow-md sm:whitespace-nowrap sm:text-xs sm:tracking-[0.4em]">
+              <p className="text-[0.65rem] uppercase tracking-[0.25em] text-cream drop-shadow-md sm:whitespace-nowrap sm:text-xs sm:tracking-[0.5em]">
                 Business &amp; Leisure, Across India
               </p>
+              <span className="hidden h-px w-10 bg-gold sm:block" />
             </div>
-            <h1 className="mt-5 max-w-2xl font-display text-4xl leading-[1.1] drop-shadow-lg sm:text-6xl sm:leading-[1.05] lg:text-7xl">
-              Your Oasis of Relaxation Awaits
+            <h1 className="mt-6 max-w-2xl font-display text-4xl leading-[1.1] drop-shadow-lg sm:text-6xl sm:leading-[1.05] lg:text-7xl">
+              Your Oasis of{' '}
+              <em className="font-normal italic text-gold-light drop-shadow-[0_2px_16px_rgba(189,148,85,0.55)]">
+                Relaxation
+              </em>{' '}
+              Awaits
             </h1>
-            <Link
-              href="/hotels"
-              className="mt-7 inline-block rounded bg-gold px-7 py-3 text-sm uppercase tracking-wider text-forest-dark transition hover:bg-gold-light"
-            >
-              Explore Our Hotels
-            </Link>
           </div>
         </div>
       </section>
@@ -68,7 +96,7 @@ export default function HomePage() {
         <BookingWidget hotels={hotels} />
       </div>
 
-      <section className="border-b border-forest/10 py-10">
+      <section className="border-b border-forest/10 pb-10 pt-16 sm:pt-20">
         <div className="mx-auto grid max-w-4xl grid-cols-2 gap-8 px-6 text-center sm:grid-cols-4">
           {stats.map((stat) => (
             <div key={stat.label}>
@@ -131,15 +159,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="bg-forest/5">
-        <EditorialRow
-          title="A Journey of Delectable Flavours"
-          body="At Sinclairs Hotels, dining is not just a meal — it's an experience. Whether you're seeking a casual bite or dishes immersed in local flavour, our culinary offerings promise to delight every palate, from grab-and-go counters to traditional feasts."
-          image="/images/weddings/wedding-menu-spread.jpg"
-          alt="A spread of Indian dishes served in silver and gold vessels"
-          imageSide="right"
-        />
-      </section>
+      <FoodStrip
+        eyebrow="Culinary Journey"
+        title="A Journey of Delectable Flavours"
+        body="At Sinclairs Hotels, dining is not just a meal — it's an experience, from grab-and-go counters to candlelit, chef-plated feasts across every property."
+        images={cuisineDishes}
+      />
 
       <section className="mx-auto max-w-6xl px-6 py-14 sm:py-20">
         <div className="mb-10 text-center">
@@ -213,7 +238,7 @@ export default function HomePage() {
             </p>
           </Reveal>
           <Reveal className="mt-12" delay={150}>
-            <AwardsSection awards={awards} />
+            <AwardsSection awards={awards} reviews={reviews} />
           </Reveal>
         </div>
       </section>

@@ -1,4 +1,7 @@
 import { getAmenityIcon } from '@/components/amenity-icon';
+import { FoodStrip } from '@/components/food-strip';
+import { GalleryLightbox } from '@/components/gallery-lightbox';
+import { HeroCarousel } from '@/components/hero-carousel';
 import { RoomImageCarousel } from '@/components/room-image-carousel';
 import { VenueTable } from '@/components/venue-table';
 import { awards } from '@/content/awards';
@@ -55,14 +58,18 @@ export default async function HotelPage({ params }: { params: Promise<Params> })
   return (
     <div>
       <section className="relative flex h-[72vh] min-h-[480px] items-end">
-        <Image
-          src={hotel.heroImage}
-          alt={hotel.name}
-          fill
-          priority
-          className="object-cover"
-          sizes="100vw"
-        />
+        {hotel.heroGallery?.length ? (
+          <HeroCarousel images={hotel.heroGallery} alt={hotel.name} />
+        ) : (
+          <Image
+            src={hotel.heroImage}
+            alt={hotel.name}
+            fill
+            priority
+            className="object-cover"
+            sizes="100vw"
+          />
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-forest-dark/95 via-forest-dark/50 to-forest-dark/15" />
         {award && (
           <div className="absolute right-6 top-6 flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 shadow-lg">
@@ -154,7 +161,10 @@ export default async function HotelPage({ params }: { params: Promise<Params> })
                   key={room.name}
                   className="group flex flex-col overflow-hidden rounded-lg bg-cream shadow-sm transition hover:shadow-lg"
                 >
-                  <RoomImageCarousel images={room.images} alt={room.name} />
+                  <RoomImageCarousel
+                    images={room.images?.length ? room.images : [hotel.heroImage]}
+                    alt={room.name}
+                  />
                   <div className="flex flex-1 flex-col p-5">
                     <h3 className="font-display text-lg text-forest">{room.name}</h3>
                     <p className="mt-2 flex-1 text-sm leading-relaxed text-ink/70">
@@ -179,29 +189,35 @@ export default async function HotelPage({ params }: { params: Promise<Params> })
       {hotel.dining.length > 0 && (
         <section id="dining" className="scroll-mt-32 bg-forest-dark py-10 sm:py-16">
           <div className="mx-auto max-w-6xl px-6">
-            <h2 className="font-display text-2xl text-cream">Dining</h2>
-            <p className="mt-2 text-sm text-cream/60">
-              Signature restaurants and bars at {hotel.name}
+            <p className="text-xs uppercase tracking-[0.3em] text-gold">Restaurants &amp; Bars</p>
+            <h2 className="mt-3 font-display text-2xl text-cream sm:text-3xl">
+              Dining at {hotel.name}
+            </h2>
+            <p className="mt-2 max-w-xl text-sm text-cream/60">
+              Signature venues for every hour of the day, from a fresh multi-cuisine table to an
+              evening drink with a view.
             </p>
-            <div className="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2">
-              {hotel.dining.map((venue) => (
+            <div className="mt-10 grid max-w-4xl grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-6">
+              {hotel.dining.map((venue, i) => (
                 <div
                   key={venue.name}
-                  className="group overflow-hidden rounded-lg bg-forest shadow-lg"
+                  className="group overflow-hidden rounded-lg bg-forest shadow-lg transition duration-300 hover:-translate-y-1 hover:shadow-2xl"
                 >
-                  <div className="relative aspect-[16/10] overflow-hidden">
-                    <Image
-                      src={venue.image ?? hotel.heroImage}
+                  <div className="relative">
+                    <div className="absolute inset-x-0 top-0 z-10 h-0.5 bg-gradient-to-r from-transparent via-gold to-transparent" />
+                    <RoomImageCarousel
+                      images={venue.images?.length ? venue.images : [hotel.heroImage]}
                       alt={venue.name}
-                      fill
-                      sizes="(min-width: 640px) 50vw, 100vw"
-                      className="object-cover transition duration-500 group-hover:scale-105"
+                      aspectClassName="aspect-[16/11]"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-forest-dark/80 via-transparent to-transparent" />
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-forest-dark/80 via-transparent to-transparent" />
+                    <span className="pointer-events-none absolute left-3 top-3 font-display text-xs text-cream/70">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
                   </div>
-                  <div className="p-6">
-                    <h3 className="font-display text-xl text-gold-light">{venue.name}</h3>
-                    <div className="mt-2 h-px w-10 bg-gold/50" />
+                  <div className="p-5">
+                    <h3 className="font-display text-lg text-gold-light">{venue.name}</h3>
+                    <div className="mt-2 h-px w-8 bg-gold/50" />
                     <p className="mt-3 text-sm leading-relaxed text-cream/75">
                       {venue.description}
                     </p>
@@ -213,23 +229,42 @@ export default async function HotelPage({ params }: { params: Promise<Params> })
         </section>
       )}
 
+      {hotel.foodGallery && hotel.foodGallery.length > 0 && (
+        <FoodStrip
+          title={`Food & Dining at ${hotel.name}`}
+          body="A daily table of fresh, chef-plated Indian, Continental and Oriental fare — from sunrise breakfasts to candlelit evenings."
+          images={hotel.foodGallery}
+        />
+      )}
+
       {hotel.eventSpaces && (
-        <section
-          id="events"
-          className="scroll-mt-32 border-y border-forest/10 bg-white py-10 sm:py-16"
-        >
-          <div className="mx-auto max-w-3xl px-6">
-            <h2 className="font-display text-2xl text-forest">Meetings &amp; Celebrations</h2>
-            <p className="mt-3 text-sm leading-relaxed text-ink/70">
+        <section id="events" className="relative scroll-mt-32 overflow-hidden py-10 sm:py-16">
+          <div
+            className="pointer-events-none absolute inset-0 text-forest opacity-[0.07]"
+            style={{
+              backgroundImage: 'radial-gradient(currentColor 1.5px, transparent 1.5px)',
+              backgroundSize: '22px 22px',
+              maskImage:
+                'linear-gradient(to bottom, transparent, black 20%, black 80%, transparent)',
+              WebkitMaskImage:
+                'linear-gradient(to bottom, transparent, black 20%, black 80%, transparent)',
+            }}
+          />
+          <div className="relative mx-auto max-w-3xl px-6">
+            <p className="text-xs uppercase tracking-[0.3em] text-gold">Weddings &amp; Meetings</p>
+            <h2 className="mt-3 font-display text-2xl text-forest sm:text-3xl">
+              Meetings &amp; Celebrations
+            </h2>
+            <p className="mt-3 max-w-xl text-sm leading-relaxed text-ink/70">
               {hotel.eventSpaces.venues.length}{' '}
               {hotel.eventSpaces.venues.length === 1 ? 'venue' : 'venues'} across{' '}
               {hotel.eventSpaces.totalSqFt.toLocaleString('en-IN')} sq ft, hosting up to{' '}
               {hotel.eventSpaces.maxCapacity.toLocaleString('en-IN')} guests.
             </p>
-            <div className="mt-6">
+            <div className="mt-8">
               <VenueTable hotel={hotel} />
             </div>
-            <div className="mt-6 flex flex-wrap gap-4 text-sm">
+            <div className="mt-6 flex flex-wrap gap-6 text-sm">
               <Link href="/weddings" className="text-forest underline underline-offset-4">
                 Plan a wedding here
               </Link>
@@ -245,24 +280,11 @@ export default async function HotelPage({ params }: { params: Promise<Params> })
         <section id="gallery" className="scroll-mt-32 py-10 sm:py-16">
           <div className="mx-auto max-w-7xl px-6">
             <h2 className="font-display text-2xl text-forest">Gallery</h2>
-            <div className="mt-8 grid auto-rows-[180px] grid-cols-2 gap-3 sm:grid-cols-4">
-              {hotel.gallery.map((image, i) => (
-                <div
-                  key={image.src}
-                  className={`group relative overflow-hidden rounded-lg ${
-                    i === 0 ? 'col-span-2 row-span-2' : ''
-                  }`}
-                >
-                  <Image
-                    src={image.src}
-                    alt={image.alt}
-                    fill
-                    sizes="(min-width: 768px) 25vw, 50vw"
-                    className="object-cover transition duration-500 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-forest-dark/0 transition group-hover:bg-forest-dark/10" />
-                </div>
-              ))}
+            <p className="mt-2 text-sm text-ink/60">
+              The facade, the pool, the lounges &mdash; a closer look at {hotel.name}
+            </p>
+            <div className="mt-8">
+              <GalleryLightbox images={hotel.gallery} />
             </div>
           </div>
         </section>

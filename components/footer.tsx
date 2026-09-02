@@ -8,8 +8,7 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-6 pt-16">
         <div className="grid gap-10 pb-16 md:grid-cols-4">
           <div className="min-w-0">
-            <p className="font-display text-2xl text-cream">Sinclairs</p>
-            <div className="mt-3 h-px w-12 bg-gold" />
+            <img src="/logo.svg" alt="Sinclairs" className="h-10 w-auto" />
             <p className="mt-4 text-sm leading-relaxed">{siteConfig.description}</p>
           </div>
 

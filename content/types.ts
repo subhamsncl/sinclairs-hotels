@@ -6,7 +6,7 @@ export interface NavItem {
 export interface RoomType {
   name: string;
   description: string;
-  images: string[];
+  images?: string[];
 }
 
 export interface GalleryImage {
@@ -17,7 +17,7 @@ export interface GalleryImage {
 export interface DiningVenue {
   name: string;
   description: string;
-  image?: string;
+  images?: string[];
 }
 
 export interface EventVenue {
@@ -46,10 +46,12 @@ export interface Hotel {
   tagline: string;
   description: string;
   heroImage: string;
+  heroGallery?: string[];
   thumbnailImage: string;
   amenities: string[];
   rooms: RoomType[];
   dining: DiningVenue[];
+  foodGallery?: GalleryImage[];
   gallery: GalleryImage[];
   sightseeing: string[];
   eventSpaces?: EventSpaces;
