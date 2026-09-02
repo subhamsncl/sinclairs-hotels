@@ -71,15 +71,9 @@ export const udaipurHotel: Hotel = {
     'Saheliyon Ki Bari',
   ],
   eventSpaces: {
-    totalSqFt: 31620,
-    maxCapacity: 2000,
-    venues: [
-      { name: 'Rajmahal', areaSqFt: 7000, capacity: 700 },
-      { name: 'Maharani Bagh', areaSqFt: 19700, capacity: 2000 },
-      { name: 'Rajmahal Annexe', areaSqFt: 2000, capacity: 125 },
-      { name: 'Haveli', areaSqFt: 600, capacity: 40 },
-      { name: 'Mayur Bagh', areaSqFt: 2320, capacity: 100 },
-    ],
+    totalSqFt: 7000,
+    maxCapacity: 700,
+    venues: [{ name: 'Rajmahal', areaSqFt: 7000, capacity: 700 }],
   },
   mapEmbedUrl:
     'https://maps.google.com/maps?q=Sinclairs%20Palace%20Retreat%20Udaipur&t=m&z=17&output=embed&iwloc=near',

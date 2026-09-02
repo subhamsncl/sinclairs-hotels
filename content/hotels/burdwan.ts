@@ -30,7 +30,6 @@ export const burdwanHotel: Hotel = {
     'Smoking Area',
     "Outdoor Swimming Pool with Children's Wading Area",
     'Playzone with Table Tennis, Carrom, Chess and Ludo',
-    'Badminton Court',
     'Library',
   ],
   rooms: [
@@ -62,7 +61,7 @@ export const burdwanHotel: Hotel = {
     {
       name: 'O3 Lounge Bar',
       description:
-        'a stylish lounge bar with colourful interiors and chic design, offering alcoholic and non-alcoholic beverages and cocktails, ideal for unwinding over drinks and snacks.',
+        'a stylish lounge bar with colourful interiors and chic design, offering alcoholic and non-alcoholic beverages and cocktails, ideal for unwinding over drinks and snacks (opening shortly).',
     },
   ],
   gallery: [
@@ -104,9 +103,9 @@ export const burdwanHotel: Hotel = {
   mapEmbedUrl:
     'https://maps.google.com/maps?q=Sinclairs%20Burdwan&t=m&z=17&output=embed&iwloc=near',
   contact: {
-    address: 'Renaissance Township, NH-2, Burdwan 713102, West Bengal, India',
+    address: 'High Street 1, Renaissance Township, NH-2, Burdwan 713102, West Bengal, India',
     phone: '+91 83730 71037',
-    email: 'burdwan@sinclairshotels.com',
+    email: 'reservations@sinclairshotels.com',
   },
 };
 

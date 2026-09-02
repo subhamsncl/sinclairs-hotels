@@ -81,14 +81,12 @@ export const dooarsHotel: Hotel = {
     'Alipurduar (112 km)',
   ],
   eventSpaces: {
-    totalSqFt: 8995,
+    totalSqFt: 7750,
     maxCapacity: 500,
     venues: [
       { name: 'The Iris', areaSqFt: 5000, capacity: 500 },
       { name: 'The Hibiscus', areaSqFt: 1560, capacity: 110 },
       { name: 'The Carnation', areaSqFt: 1190, capacity: 90 },
-      { name: 'The Jasmine', areaSqFt: 525, capacity: 30 },
-      { name: 'The Lilac', areaSqFt: 720, capacity: 45 },
     ],
   },
   mapEmbedUrl:

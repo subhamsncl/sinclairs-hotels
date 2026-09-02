@@ -108,8 +108,8 @@ export const ootyHotel: Hotel = {
     maxCapacity: 120,
     venues: [
       { name: 'The Regal Room', areaSqFt: 2200, capacity: 120 },
-      { name: 'The Windsor Room', areaSqFt: 1140, capacity: 70 },
-      { name: 'The Summit Room', areaSqFt: 530, capacity: 30 },
+      { name: 'The Windsor Hall', areaSqFt: 1140, capacity: 70 },
+      { name: 'The Summit Hall', areaSqFt: 530, capacity: 30 },
     ],
   },
   mapEmbedUrl:
