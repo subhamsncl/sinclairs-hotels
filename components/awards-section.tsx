@@ -10,7 +10,7 @@ export function AwardsSection({ awards, reviews }: { awards: Award[]; reviews: R
         return (
           <div
             key={award.propertySlug}
-            className="group overflow-hidden rounded-xl border border-forest/10 bg-white shadow-sm transition duration-300 hover:-translate-y-1.5 hover:shadow-2xl"
+            className="group flex h-full flex-col overflow-hidden rounded-xl border border-forest/10 bg-white shadow-sm transition duration-300 hover:-translate-y-1.5 hover:shadow-2xl"
           >
             <div className="h-1 bg-gradient-to-r from-gold via-gold-light to-gold" />
             <div className="flex items-center gap-4 p-4">
@@ -30,7 +30,7 @@ export function AwardsSection({ awards, reviews }: { awards: Award[]; reviews: R
                 href={review.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block border-t border-forest/10 bg-cream/60 p-4 transition hover:bg-cream"
+                className="flex flex-1 flex-col justify-center border-t border-forest/10 bg-cream/60 p-4 transition hover:bg-cream"
               >
                 <div className="flex gap-0.5 text-gold" aria-hidden="true">
                   {Array.from({ length: review.rating }).map((_, i) => (

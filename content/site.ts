@@ -14,6 +14,7 @@ export const reservationUrl =
 export const socialLinks = [
   { label: 'Facebook', href: 'https://www.facebook.com/sinclairshotelsandresorts/' },
   { label: 'Instagram', href: 'https://www.instagram.com/sinclairshotelsandresorts/' },
+  { label: 'Twitter', href: 'https://www.twitter.com/sinclairshotels' },
 ] as const;
 
 export const primaryNav = [

@@ -1,6 +1,13 @@
 import { hotels } from '@/content/hotels';
-import { siteConfig } from '@/content/site';
+import { siteConfig, socialLinks } from '@/content/site';
 import Link from 'next/link';
+import { FacebookIcon, InstagramIcon, TwitterIcon } from './social-icons';
+
+const socialIcons = {
+  Facebook: FacebookIcon,
+  Instagram: InstagramIcon,
+  Twitter: TwitterIcon,
+} as const;
 
 export function Footer() {
   return (
@@ -10,6 +17,23 @@ export function Footer() {
           <div className="min-w-0">
             <img src="/logo.svg" alt="Sinclairs" className="h-10 w-auto" />
             <p className="mt-4 text-sm leading-relaxed">{siteConfig.description}</p>
+            <div className="mt-5 flex gap-3">
+              {socialLinks.map((social) => {
+                const Icon = socialIcons[social.label as keyof typeof socialIcons];
+                return (
+                  <a
+                    key={social.label}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={social.label}
+                    className="flex h-9 w-9 items-center justify-center rounded-full border border-cream/20 text-cream/70 transition hover:border-gold-light hover:text-gold-light"
+                  >
+                    <Icon />
+                  </a>
+                );
+              })}
+            </div>
           </div>
 
           <div className="min-w-0">
