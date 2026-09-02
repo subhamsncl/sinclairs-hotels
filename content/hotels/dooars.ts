@@ -57,6 +57,7 @@ export const dooarsHotel: Hotel = {
     {
       name: 'Café',
       description: 'an epicurean delight for casual bites through the day.',
+      image: '/images/hotels/dooars/Sinclairs-Retreat-Dooars-Cafe.jpg',
     },
   ],
   gallery: [
