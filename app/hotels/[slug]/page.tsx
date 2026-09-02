@@ -1,4 +1,5 @@
 import { getAmenityIcon } from '@/components/amenity-icon';
+import { RoomImageCarousel } from '@/components/room-image-carousel';
 import { VenueTable } from '@/components/venue-table';
 import { awards } from '@/content/awards';
 import { getHotelBySlug, hotels } from '@/content/hotels';
@@ -153,15 +154,7 @@ export default async function HotelPage({ params }: { params: Promise<Params> })
                   key={room.name}
                   className="group flex flex-col overflow-hidden rounded-lg bg-cream shadow-sm transition hover:shadow-lg"
                 >
-                  <div className="relative aspect-[4/3] overflow-hidden">
-                    <Image
-                      src={room.image}
-                      alt={room.name}
-                      fill
-                      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                      className="object-cover transition duration-500 group-hover:scale-105"
-                    />
-                  </div>
+                  <RoomImageCarousel images={room.images} alt={room.name} />
                   <div className="flex flex-1 flex-col p-5">
                     <h3 className="font-display text-lg text-forest">{room.name}</h3>
                     <p className="mt-2 flex-1 text-sm leading-relaxed text-ink/70">

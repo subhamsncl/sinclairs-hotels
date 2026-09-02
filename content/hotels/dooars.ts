@@ -34,13 +34,13 @@ export const dooarsHotel: Hotel = {
       name: 'Deluxe Room',
       description:
         'Functional and contemporary, these rooms offer the ultimate in luxurious seclusion with a view of the main lawns. Room size 345 sq. ft., with an attached bath with hot and cold shower, herbal bathroom amenities, a queen or twin bed, writing desk, private balcony, electronic safe and tea/coffee set.',
-      image: '/images/hotels/dooars/accommodations/Sinclairs-Retreat-Dooars-Deluxe-Room.jpg',
+      images: ['/images/hotels/dooars/accommodations/Sinclairs-Retreat-Dooars-Deluxe-Room.jpg'],
     },
     {
       name: 'Premier Suite',
       description:
         'Spaciously created with a bedroom, living room, dining area and additional washroom, this suite has a distinct style recreating the atmosphere of the colonial lifestyle. Room size 690 sq. ft. plus balcony, with two baths with bathtub and rain shower, a king size bed, a separate living room with dining table, a private garden with sit-out, two 32" LCD televisions, electronic safe, tea/coffee set and refrigerator.',
-      image: '/images/hotels/dooars/accommodations/Sinclairs-Retreat-Dooars-Premier-Suite.jpg',
+      images: ['/images/hotels/dooars/accommodations/Sinclairs-Retreat-Dooars-Premier-Suite.jpg'],
     },
   ],
   dining: [

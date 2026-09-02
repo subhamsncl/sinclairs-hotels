@@ -6,7 +6,7 @@ export interface NavItem {
 export interface RoomType {
   name: string;
   description: string;
-  image: string;
+  images: string[];
 }
 
 export interface GalleryImage {

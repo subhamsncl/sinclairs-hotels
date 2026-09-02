@@ -39,31 +39,31 @@ export const ootyHotel: Hotel = {
       name: 'Deluxe Room',
       description:
         'Overlooks pine forests interspersed with eucalyptus trees. These forest-facing rooms measure 210 sq. ft. and come with a queen-sized bed and a twin bed, a writing desk, and an attached bath with hot and cold shower.',
-      image: '/images/hotels/ooty/accommodations/Sinclairs-Ooty-Deluxe-Room.jpg',
+      images: ['/images/hotels/ooty/accommodations/Sinclairs-Ooty-Deluxe-Room.jpg'],
     },
     {
       name: 'Premier Room',
       description:
         'Offers a breathtaking view of the Blue Mountains and Ooty valley. These garden-facing rooms measure 210 sq. ft. and come with a queen-sized bed and a twin bed, a writing desk, and an attached bath with hot and cold shower.',
-      image: '/images/hotels/ooty/accommodations/Sinclairs-Ooty-Premier-Room.jpg',
+      images: ['/images/hotels/ooty/accommodations/Sinclairs-Ooty-Premier-Room.jpg'],
     },
     {
       name: 'Superior Room',
       description:
         'Cozy and quiet, the superior rooms overlook the pine forests. Measuring 273 sq. ft., they come with a queen-sized bed, a writing desk, and an attached bath with hot and cold shower.',
-      image: '/images/hotels/ooty/accommodations/Sinclairs-Ooty-Superior-Room.jpg',
+      images: ['/images/hotels/ooty/accommodations/Sinclairs-Ooty-Superior-Room.jpg'],
     },
     {
       name: 'Deluxe Suite',
       description:
         'Spacious and luxurious, the deluxe suites overlook the Blue Mountains and the Ooty valley. Measuring 397 sq. ft., they come with a queen-sized bed, sofa seating and a dining table, and an attached four-fixture bath with hot and cold shower.',
-      image: '/images/hotels/ooty/accommodations/Sinclairs-Ooty-Deluxe-Suite.jpg',
+      images: ['/images/hotels/ooty/accommodations/Sinclairs-Ooty-Deluxe-Suite.jpg'],
     },
     {
       name: 'Nilgiri Suite',
       description:
         'Popular with honeymooners, this suite provides elite comfort with spectacular views of pine forests from a private viewing veranda. Measuring 890 sq. ft., it comes with a queen-sized bed, sofa seating, a dining table, a private deck facing the forest, and an attached four-fixture bath with hot and cold running water.',
-      image: '/images/hotels/ooty/accommodations/Sinclairs-Ooty-Nilgiri-Suite.jpg',
+      images: ['/images/hotels/ooty/accommodations/Sinclairs-Ooty-Nilgiri-Suite.jpg'],
     },
   ],
   dining: [
