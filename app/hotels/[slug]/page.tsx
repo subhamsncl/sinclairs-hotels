@@ -53,12 +53,19 @@ export default async function HotelPage({ params }: { params: Promise<Params> })
   return (
     <div>
       <section className="relative flex h-[72vh] min-h-[480px] items-end">
-        <Image src={hotel.heroImage} alt={hotel.name} fill priority className="object-cover" />
+        <Image
+          src={hotel.heroImage}
+          alt={hotel.name}
+          fill
+          priority
+          className="object-cover"
+          sizes="100vw"
+        />
         <div className="absolute inset-0 bg-gradient-to-t from-forest-dark/95 via-forest-dark/50 to-forest-dark/15" />
         {award && (
           <div className="absolute right-6 top-6 flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 shadow-lg">
             <div className="relative h-8 w-8 shrink-0">
-              <Image src={award.badgeImage} alt="" fill className="object-contain" />
+              <Image src={award.badgeImage} alt="" fill sizes="32px" className="object-contain" />
             </div>
             <span className="text-xs font-medium uppercase tracking-wide text-forest-dark">
               Travellers&rsquo; Choice 2026
