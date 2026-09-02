@@ -1,7 +1,7 @@
 'use client';
 
 import { hotels } from '@/content/hotels';
-import { primaryNav } from '@/content/site';
+import { primaryNav, reservationUrl } from '@/content/site';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -78,12 +78,14 @@ export function Nav() {
           )}
         </nav>
 
-        <Link
-          href="/enquiry"
+        <a
+          href={reservationUrl}
+          target="_blank"
+          rel="noopener noreferrer"
           className="hidden rounded border border-gold px-5 py-2 text-sm uppercase tracking-wider text-gold-light transition duration-300 hover:bg-gold hover:text-forest hover:shadow-lg md:inline-block"
         >
           Book Now
-        </Link>
+        </a>
 
         <button
           type="button"

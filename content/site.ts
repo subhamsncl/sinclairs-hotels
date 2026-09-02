@@ -6,6 +6,11 @@ export const siteConfig = {
   url: 'https://www.sinclairshotels.com',
 };
 
+// Staah runs reservations end-to-end; every "Book Now" / availability CTA sends
+// guests there instead of handling booking on this site.
+export const reservationUrl =
+  'https://reservation.sinclairshotels.com/inst/#group?groupId=882Mjkbac8S7wLYqvHyxVFGKNMfaaeRV5yNO8NFk4hB5fg15ZQ3NDc=&JDRN=Y';
+
 export const primaryNav = [
   { label: 'Home', href: '/' },
   { label: 'Hotels', href: '/hotels' },

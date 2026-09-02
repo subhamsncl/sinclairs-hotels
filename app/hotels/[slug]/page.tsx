@@ -2,6 +2,7 @@ import { getAmenityIcon } from '@/components/amenity-icon';
 import { VenueTable } from '@/components/venue-table';
 import { awards } from '@/content/awards';
 import { getHotelBySlug, hotels } from '@/content/hotels';
+import { reservationUrl } from '@/content/site';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -93,12 +94,14 @@ export default async function HotelPage({ params }: { params: Promise<Params> })
             )}
             <Stat value={String(hotel.amenities.length)} label="Amenities" />
           </div>
-          <Link
-            href={`/enquiry?property=${hotel.slug}`}
+          <a
+            href={reservationUrl}
+            target="_blank"
+            rel="noopener noreferrer"
             className="rounded bg-gold px-6 py-3 text-sm uppercase tracking-wider text-forest-dark transition hover:bg-gold-light"
           >
             Check Availability
-          </Link>
+          </a>
         </div>
       </div>
 
@@ -164,12 +167,14 @@ export default async function HotelPage({ params }: { params: Promise<Params> })
                     <p className="mt-2 flex-1 text-sm leading-relaxed text-ink/70">
                       {room.description}
                     </p>
-                    <Link
-                      href={`/enquiry?property=${hotel.slug}`}
+                    <a
+                      href={reservationUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="mt-5 block rounded bg-forest-dark py-2.5 text-center text-xs uppercase tracking-wider text-cream transition hover:bg-forest"
                     >
                       Book Now
-                    </Link>
+                    </a>
                   </div>
                 </div>
               ))}

@@ -2,8 +2,8 @@
 
 import { DatePicker } from '@/components/ui/date-picker';
 import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/ui/select';
+import { reservationUrl } from '@/content/site';
 import type { Hotel } from '@/content/types';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 function todayISO(offsetDays = 0): string {
@@ -13,7 +13,6 @@ function todayISO(offsetDays = 0): string {
 }
 
 export function BookingWidget({ hotels }: { hotels: Hotel[] }) {
-  const router = useRouter();
   const [property, setProperty] = useState(hotels[0]?.slug ?? '');
   const [checkIn, setCheckIn] = useState(todayISO(0));
   const [checkOut, setCheckOut] = useState(todayISO(1));
@@ -21,8 +20,9 @@ export function BookingWidget({ hotels }: { hotels: Hotel[] }) {
 
   function handleSearch(event: React.FormEvent) {
     event.preventDefault();
-    const params = new URLSearchParams({ property, checkIn, checkOut, guests: String(guests) });
-    router.push(`/enquiry?${params.toString()}`);
+    // Staah runs the actual reservation search end-to-end; property/dates/guests
+    // picked here are just for a familiar UI, guests re-select them on Staah.
+    window.open(reservationUrl, '_blank', 'noopener,noreferrer');
   }
 
   return (
