@@ -50,11 +50,11 @@ export default function MeetingsEventsPage() {
           <div className="animate-fade-up">
             <div className="flex items-center gap-3">
               <span className="h-px w-10 bg-gold" />
-              <p className="text-xs uppercase tracking-[0.4em] text-cream drop-shadow-md">
+              <p className="text-[0.65rem] uppercase tracking-[0.15em] text-cream drop-shadow-md sm:whitespace-nowrap sm:text-xs sm:tracking-[0.4em]">
                 Business &amp; Events
               </p>
             </div>
-            <h1 className="mt-5 font-display text-5xl leading-[1.05] sm:text-7xl">
+            <h1 className="mt-5 font-display text-4xl leading-[1.1] sm:text-6xl sm:leading-[1.05] lg:text-7xl">
               Where Business Meets
               <br />
               Impeccable Hospitality

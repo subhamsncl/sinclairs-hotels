@@ -11,7 +11,7 @@ export function VenueTable({ hotel }: { hotel: Hotel }) {
       href={`/hotels/${hotel.slug}`}
       className="group flex overflow-hidden rounded-lg border border-forest/10 bg-white shadow-sm transition duration-300 hover:-translate-y-0.5 hover:shadow-lg"
     >
-      <div className="relative w-28 shrink-0 overflow-hidden sm:w-32">
+      <div className="relative w-20 shrink-0 overflow-hidden sm:w-32">
         <Image
           src={hotel.thumbnailImage}
           alt=""
@@ -20,7 +20,7 @@ export function VenueTable({ hotel }: { hotel: Hotel }) {
           className="object-cover transition duration-500 group-hover:scale-105"
         />
       </div>
-      <div className="flex-1 p-4">
+      <div className="min-w-0 flex-1 p-3 sm:p-4">
         <h3 className="font-display text-base text-forest">{hotel.name}</h3>
         <p className="mt-0.5 text-xs uppercase tracking-wider text-gold">
           {spaces.venues.length} {spaces.venues.length === 1 ? 'Room' : 'Rooms'} ·{' '}
@@ -28,8 +28,8 @@ export function VenueTable({ hotel }: { hotel: Hotel }) {
         </p>
         <ul className="mt-2 space-y-0.5 text-xs text-ink/70">
           {spaces.venues.slice(0, 3).map((venue) => (
-            <li key={venue.name} className="flex justify-between gap-2">
-              <span className="truncate">{venue.name}</span>
+            <li key={venue.name} className="flex flex-wrap justify-between gap-x-2">
+              <span className="min-w-0 truncate">{venue.name}</span>
               <span className="shrink-0 text-ink/50">{venue.capacity} guests</span>
             </li>
           ))}

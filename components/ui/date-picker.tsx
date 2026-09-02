@@ -87,7 +87,7 @@ export function DatePicker({
         <PopoverPrimitive.Content
           align="start"
           sideOffset={8}
-          className="animate-fade-up z-50 w-[300px] rounded-lg border border-forest/10 bg-white p-3 shadow-2xl"
+          className="animate-fade-up z-50 w-[min(300px,calc(100vw-2rem))] rounded-lg border border-forest/10 bg-white p-3 shadow-2xl"
         >
           <div className="mb-2 flex items-center gap-2">
             <div className="flex-1">

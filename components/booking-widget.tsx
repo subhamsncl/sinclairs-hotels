@@ -48,14 +48,14 @@ export function BookingWidget({ hotels }: { hotels: Hotel[] }) {
 
       <div className="px-4 py-2 sm:py-3">
         <span className="block text-xs uppercase tracking-wider text-ink/50">Check In</span>
-        <div className="mt-1 w-32">
+        <div className="mt-1 w-full sm:w-32">
           <DatePicker value={checkIn} onChange={setCheckIn} min={todayISO(0)} />
         </div>
       </div>
 
       <div className="px-4 py-2 sm:py-3">
         <span className="block text-xs uppercase tracking-wider text-ink/50">Check Out</span>
-        <div className="mt-1 w-32">
+        <div className="mt-1 w-full sm:w-32">
           <DatePicker value={checkOut} onChange={setCheckOut} min={checkIn} />
         </div>
       </div>
@@ -68,13 +68,13 @@ export function BookingWidget({ hotels }: { hotels: Hotel[] }) {
           max={20}
           value={guests}
           onChange={(e) => setGuests(Number(e.target.value))}
-          className="mt-1 w-16 text-sm text-ink outline-none"
+          className="mt-1 w-full text-sm text-ink outline-none sm:w-16"
         />
       </label>
 
       <button
         type="submit"
-        className="rounded bg-forest px-8 py-3 text-sm uppercase tracking-wider text-cream transition hover:bg-forest-dark sm:rounded-none sm:px-10"
+        className="w-full rounded bg-forest px-8 py-3 text-sm uppercase tracking-wider text-cream transition hover:bg-forest-dark sm:w-auto sm:rounded-none sm:px-10"
       >
         Search
       </button>

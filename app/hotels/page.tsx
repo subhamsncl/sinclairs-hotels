@@ -26,7 +26,7 @@ export default function HotelsPage() {
           <div className="animate-fade-up">
             <div className="flex items-center gap-3">
               <span className="h-px w-10 bg-gold" />
-              <p className="text-xs uppercase tracking-[0.4em] text-cream drop-shadow-md">
+              <p className="text-[0.65rem] uppercase tracking-[0.15em] text-cream drop-shadow-md sm:whitespace-nowrap sm:text-xs sm:tracking-[0.4em]">
                 Our Properties
               </p>
             </div>
@@ -41,7 +41,7 @@ export default function HotelsPage() {
         </div>
       </section>
 
-      <div className="mx-auto max-w-7xl px-6 py-16">
+      <div className="mx-auto max-w-7xl px-6 py-10 sm:py-16">
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 xl:grid-cols-4">
           {hotels.map((hotel) => (
             <HotelCard key={hotel.slug} hotel={hotel} />

@@ -20,7 +20,7 @@ export default async function EnquiryPage({
   const { property, checkIn, checkOut, guests } = await searchParams;
 
   return (
-    <div className="bg-forest/5 py-16">
+    <div className="bg-forest/5 py-10 sm:py-16">
       <div className="mx-auto max-w-2xl px-6">
         <div className="mb-10 text-center">
           <p className="text-xs uppercase tracking-[0.3em] text-gold">Get In Touch</p>

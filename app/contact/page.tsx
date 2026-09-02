@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <div className="mx-auto max-w-5xl px-6 py-16">
+    <div className="mx-auto max-w-5xl px-6 py-10 sm:py-16">
       <div className="mb-12 text-center">
         <p className="text-xs uppercase tracking-[0.3em] text-gold">Get In Touch</p>
         <h1 className="mt-4 font-display text-4xl text-forest">Contact Us</h1>
@@ -38,7 +38,10 @@ export default function ContactPage() {
             <div>
               <dt className="text-xs uppercase tracking-wider text-ink/50">Reservations</dt>
               <dd className="mt-1">
-                <a href="mailto:reservations@sinclairshotels.com" className="hover:text-gold">
+                <a
+                  href="mailto:reservations@sinclairshotels.com"
+                  className="break-words hover:text-gold"
+                >
                   reservations@sinclairshotels.com
                 </a>
               </dd>
@@ -46,7 +49,7 @@ export default function ContactPage() {
             <div>
               <dt className="text-xs uppercase tracking-wider text-ink/50">Sales</dt>
               <dd className="mt-1">
-                <a href="mailto:sales@sinclairshotels.com" className="hover:text-gold">
+                <a href="mailto:sales@sinclairshotels.com" className="break-words hover:text-gold">
                   sales@sinclairshotels.com
                 </a>
               </dd>
@@ -66,13 +69,13 @@ export default function ContactPage() {
             {hotels.map((hotel) => {
               const email = propertyEmails[hotel.slug];
               return (
-                <li key={hotel.slug} className="flex items-baseline justify-between gap-3">
+                <li
+                  key={hotel.slug}
+                  className="flex flex-col gap-0.5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-3"
+                >
                   <span>{hotel.name}</span>
                   {email && (
-                    <a
-                      href={`mailto:${email}`}
-                      className="whitespace-nowrap text-gold hover:text-forest"
-                    >
+                    <a href={`mailto:${email}`} className="break-words text-gold hover:text-forest">
                       {email}
                     </a>
                   )}

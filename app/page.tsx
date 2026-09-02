@@ -47,11 +47,11 @@ export default function HomePage() {
           <div className="animate-fade-up mx-auto w-full max-w-7xl px-6 text-cream">
             <div className="flex items-center gap-3">
               <span className="h-px w-10 bg-gold" />
-              <p className="text-xs uppercase tracking-[0.4em] text-cream drop-shadow-md">
+              <p className="text-[0.65rem] uppercase tracking-[0.15em] text-cream drop-shadow-md sm:whitespace-nowrap sm:text-xs sm:tracking-[0.4em]">
                 Business &amp; Leisure, Across India
               </p>
             </div>
-            <h1 className="mt-5 max-w-2xl font-display text-5xl leading-[1.05] drop-shadow-lg sm:text-7xl">
+            <h1 className="mt-5 max-w-2xl font-display text-4xl leading-[1.1] drop-shadow-lg sm:text-6xl sm:leading-[1.05] lg:text-7xl">
               Your Oasis of Relaxation Awaits
             </h1>
             <Link
@@ -79,7 +79,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="bg-forest py-20 text-cream">
+      <section className="bg-forest py-14 sm:py-20 text-cream">
         <Reveal className="mx-auto max-w-3xl px-6 text-center">
           <div className="flex items-center justify-center gap-3">
             <span className="h-px w-10 bg-gold" />
@@ -99,7 +99,7 @@ export default function HomePage() {
         </Reveal>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-20">
+      <section className="mx-auto max-w-7xl px-6 py-14 sm:py-20">
         <Reveal className="mb-12 text-center">
           <p className="text-xs uppercase tracking-[0.3em] text-gold">Featured Properties</p>
           <h2 className="mt-4 font-display text-3xl text-forest sm:text-4xl">Hotels and Resorts</h2>
@@ -116,7 +116,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="border-y border-forest/10 bg-white py-20">
+      <section className="border-y border-forest/10 bg-white py-14 sm:py-20">
         <div className="mx-auto max-w-7xl px-6">
           <Reveal className="mb-10 text-center">
             <p className="text-xs uppercase tracking-[0.3em] text-gold">Signature Experiences</p>
@@ -141,7 +141,7 @@ export default function HomePage() {
         />
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 py-20">
+      <section className="mx-auto max-w-6xl px-6 py-14 sm:py-20">
         <div className="mb-10 text-center">
           <h2 className="font-display text-3xl text-forest sm:text-4xl">
             Unforgettable Events and Weddings Await You
@@ -200,7 +200,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="bg-forest/5 py-20">
+      <section className="bg-forest/5 py-14 sm:py-20">
         <div className="mx-auto max-w-6xl px-6">
           <Reveal className="text-center">
             <p className="text-xs uppercase tracking-[0.3em] text-gold">Recognised Excellence</p>

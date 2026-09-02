@@ -7,13 +7,13 @@ export function Footer() {
     <footer className="bg-forest-dark text-cream/80">
       <div className="mx-auto max-w-7xl px-6 pt-16">
         <div className="grid gap-10 pb-16 md:grid-cols-4">
-          <div>
+          <div className="min-w-0">
             <p className="font-display text-2xl text-cream">Sinclairs</p>
             <div className="mt-3 h-px w-12 bg-gold" />
             <p className="mt-4 text-sm leading-relaxed">{siteConfig.description}</p>
           </div>
 
-          <div>
+          <div className="min-w-0">
             <p className="text-xs uppercase tracking-widest text-gold-light">Our Hotels</p>
             <ul className="mt-4 space-y-2 text-sm">
               {hotels.map((hotel) => (
@@ -29,7 +29,7 @@ export function Footer() {
             </ul>
           </div>
 
-          <div>
+          <div className="min-w-0">
             <p className="text-xs uppercase tracking-widest text-gold-light">Explore</p>
             <ul className="mt-4 space-y-2 text-sm">
               <li>
@@ -67,7 +67,7 @@ export function Footer() {
             </ul>
           </div>
 
-          <div>
+          <div className="min-w-0">
             <p className="text-xs uppercase tracking-widest text-gold-light">Reservations</p>
             <dl className="mt-4 space-y-3 text-sm">
               <div>
@@ -83,7 +83,7 @@ export function Footer() {
                 <dd className="mt-0.5">
                   <a
                     href="mailto:reservations@sinclairshotels.com"
-                    className="transition hover:text-gold-light"
+                    className="break-words transition hover:text-gold-light"
                   >
                     reservations@sinclairshotels.com
                   </a>

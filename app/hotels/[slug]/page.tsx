@@ -66,10 +66,12 @@ export default async function HotelPage({ params }: { params: Promise<Params> })
           </div>
         )}
         <div className="relative mx-auto w-full max-w-7xl px-6 pb-10 text-cream">
-          <p className="text-sm uppercase tracking-[0.3em] text-cream drop-shadow-md">
+          <p className="text-xs uppercase tracking-[0.15em] text-cream drop-shadow-md sm:text-sm sm:tracking-[0.3em]">
             {hotel.location}, {hotel.state}
           </p>
-          <h1 className="mt-3 font-display text-4xl sm:text-6xl">{hotel.name}</h1>
+          <h1 className="mt-3 font-display text-3xl leading-tight sm:text-5xl lg:text-6xl">
+            {hotel.name}
+          </h1>
           <p className="mt-3 max-w-2xl text-lg text-cream/85">{hotel.tagline}</p>
         </div>
       </section>
@@ -107,7 +109,7 @@ export default async function HotelPage({ params }: { params: Promise<Params> })
         </div>
       </nav>
 
-      <section id="overview" className="mx-auto max-w-4xl scroll-mt-32 px-6 py-16">
+      <section id="overview" className="mx-auto max-w-4xl scroll-mt-32 px-6 py-10 sm:py-16">
         <p className="text-base leading-relaxed text-ink/80">{hotel.description}</p>
 
         {hotel.amenities.length > 0 && (
@@ -119,7 +121,7 @@ export default async function HotelPage({ params }: { params: Promise<Params> })
                 return (
                   <li key={amenity} className="flex items-start gap-2.5">
                     <Icon className="mt-0.5 h-5 w-5 shrink-0 stroke-current stroke-[1.6] text-gold" />
-                    <span className="text-sm text-ink/80">{amenity}</span>
+                    <span className="min-w-0 text-sm text-ink/80">{amenity}</span>
                   </li>
                 );
               })}
@@ -129,7 +131,10 @@ export default async function HotelPage({ params }: { params: Promise<Params> })
       </section>
 
       {hotel.rooms.length > 0 && (
-        <section id="rooms" className="scroll-mt-32 border-y border-forest/10 bg-white py-16">
+        <section
+          id="rooms"
+          className="scroll-mt-32 border-y border-forest/10 bg-white py-10 sm:py-16"
+        >
           <div className="mx-auto max-w-7xl px-6">
             <h2 className="font-display text-2xl text-forest">Rooms &amp; Suites</h2>
             <div className="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
@@ -167,7 +172,7 @@ export default async function HotelPage({ params }: { params: Promise<Params> })
       )}
 
       {hotel.dining.length > 0 && (
-        <section id="dining" className="scroll-mt-32 bg-forest-dark py-16">
+        <section id="dining" className="scroll-mt-32 bg-forest-dark py-10 sm:py-16">
           <div className="mx-auto max-w-6xl px-6">
             <h2 className="font-display text-2xl text-cream">Dining</h2>
             <p className="mt-2 text-sm text-cream/60">
@@ -204,7 +209,10 @@ export default async function HotelPage({ params }: { params: Promise<Params> })
       )}
 
       {hotel.eventSpaces && (
-        <section id="events" className="scroll-mt-32 border-y border-forest/10 bg-white py-16">
+        <section
+          id="events"
+          className="scroll-mt-32 border-y border-forest/10 bg-white py-10 sm:py-16"
+        >
           <div className="mx-auto max-w-3xl px-6">
             <h2 className="font-display text-2xl text-forest">Meetings &amp; Celebrations</h2>
             <p className="mt-3 text-sm leading-relaxed text-ink/70">
@@ -229,7 +237,7 @@ export default async function HotelPage({ params }: { params: Promise<Params> })
       )}
 
       {hotel.gallery.length > 0 && (
-        <section id="gallery" className="scroll-mt-32 py-16">
+        <section id="gallery" className="scroll-mt-32 py-10 sm:py-16">
           <div className="mx-auto max-w-7xl px-6">
             <h2 className="font-display text-2xl text-forest">Gallery</h2>
             <div className="mt-8 grid auto-rows-[180px] grid-cols-2 gap-3 sm:grid-cols-4">
@@ -256,7 +264,7 @@ export default async function HotelPage({ params }: { params: Promise<Params> })
       )}
 
       {(hotel.mapEmbedUrl || hotel.sightseeing.length > 0 || hotel.contact) && (
-        <section id="location" className="scroll-mt-32 py-16">
+        <section id="location" className="scroll-mt-32 py-10 sm:py-16">
           <div className="mx-auto max-w-7xl px-6">
             <h2 className="font-display text-2xl text-forest">Location &amp; Contact</h2>
             <div className="mt-8 grid grid-cols-1 gap-10 lg:grid-cols-2">
@@ -280,10 +288,13 @@ export default async function HotelPage({ params }: { params: Promise<Params> })
                         </a>
                       </dd>
                     </div>
-                    <div>
+                    <div className="min-w-0">
                       <dt className="text-xs uppercase tracking-wider text-ink/50">Email</dt>
                       <dd className="mt-2 text-sm text-ink/80">
-                        <a href={`mailto:${hotel.contact.email}`} className="hover:text-forest">
+                        <a
+                          href={`mailto:${hotel.contact.email}`}
+                          className="break-words hover:text-forest"
+                        >
                           {hotel.contact.email}
                         </a>
                       </dd>
