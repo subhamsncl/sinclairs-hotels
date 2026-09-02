@@ -40,31 +40,31 @@ export const darjeelingHotel: Hotel = {
       name: 'Deluxe Room',
       description:
         'Each of these cozy and well appointed rooms have ensuite washrooms, and are equipped with modern facilities. Room size: 223 sq. ft., with an attached bath with hot and cold shower.',
-      image: '/images/hotels/darjeeling/Sinclairs-Darjeeling-Lobby.jpg',
+      image: '/images/hotels/darjeeling/Sinclairs-Darjeeling-Deluxe-Room.jpg',
     },
     {
       name: 'Premier Room',
       description:
         'Enjoy beautiful mountain views with a spectacular sunrise from these rooms overlooking the Himalayas. Room size: 223 sq. ft., with a Kanchenjunga view and an attached bath with hot and cold shower.',
-      image: '/images/hotels/darjeeling/Sinclairs-Darjeeling-Lobby.jpg',
+      image: '/images/hotels/darjeeling/Sinclairs-Darjeeling-Premier-Room.jpg',
     },
     {
       name: 'Kanchenjunga Room',
       description:
         'This room has a stunning view of the mountains and is ideal for newly-weds. Room size: 271 sq. ft. with a Kanchenjunga view and an attached bath with hot and cold shower.',
-      image: '/images/hotels/darjeeling/Sinclairs-Darjeeling-Lobby.jpg',
+      image: '/images/hotels/darjeeling/Sinclairs-Darjeeling-Kanchenjunga-Room.jpg',
     },
     {
       name: 'Burra Sahib Suite',
       description:
         'This spacious suite has a bedroom and a living room with wooden floors and rich furnishings which reflect the typical hill style of the hotel. Room size: 446 sq. ft. with a Kanchenjunga view and an attached bath with hot and cold shower.',
-      image: '/images/hotels/darjeeling/Sinclairs-Darjeeling-Lobby.jpg',
+      image: '/images/hotels/darjeeling/Sinclairs-Darjeeling-Burra-Sahib-Suite.jpg',
     },
     {
       name: 'Deluxe Family Room',
       description:
         'For guests with greater space requirements, this room is the ideal solution to ensure your privacy and have your family next to you in complete comfort and style. It consists of two adjoining double rooms, with the possibility of adding an extra bed in both rooms, sharing a common bathroom with separate areas for relaxing and a writing desk. Room size: 446 sq. ft.',
-      image: '/images/hotels/darjeeling/Sinclairs-Darjeeling-Lobby.jpg',
+      image: '/images/hotels/darjeeling/Sinclairs-Darjeeling-Deluxe-Family-Room.jpg',
     },
   ],
   dining: [
@@ -72,22 +72,37 @@ export const darjeelingHotel: Hotel = {
       name: 'The Kanchenjunga',
       description:
         'Overlooking a beautiful garden, this multicuisine restaurant serves delicious local, Indian or Continental cuisine customized to your preferences. Open 7 AM to 11 PM.',
+      image: '/images/hotels/darjeeling/Sinclairs-Darjeeling-Kanchenjunga-Restaurant.jpg',
     },
     {
       name: 'The Dorjee Lounge',
       description:
         'A colonial style bar with an unhindered view of the Himalayan mountain range, ideal for a game of pool or relaxing with a book. Open 11 AM to 11 PM.',
+      image: '/images/hotels/darjeeling/Sinclairs-Darjeeling-Dorjee-Lounge.jpg',
     },
     {
       name: 'Mount View Café',
       description:
         'An outdoor café serving freshly prepared snacks and a cup of hot Darjeeling tea while you take in the gorgeous mountain views. Open 10 AM to 7:30 PM.',
+      image: '/images/hotels/darjeeling/Sinclairs-Darjeeling-Mount-View-Cafe.jpg',
     },
   ],
   gallery: [
     {
       src: '/images/hotels/darjeeling/Sinclairs-Darjeeling-Lobby.jpg',
       alt: 'Lobby at Sinclairs Darjeeling with mountain views',
+    },
+    {
+      src: '/images/hotels/darjeeling/Sinclairs-Darjeeling-Garden.jpg',
+      alt: 'Garden dining area at Sinclairs Darjeeling in the evening',
+    },
+    {
+      src: '/images/hotels/darjeeling/Sinclairs-Darjeeling-Pinnacle-Banquet-Hall.jpg',
+      alt: 'The Pinnacle banquet hall set up for an event at Sinclairs Darjeeling',
+    },
+    {
+      src: '/images/hotels/darjeeling/Sinclairs-Darjeeling-Viewpoint-Pagoda.jpg',
+      alt: 'Pagoda viewpoint overlooking Darjeeling town from the hotel grounds',
     },
   ],
   sightseeing: [

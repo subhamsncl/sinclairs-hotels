@@ -40,31 +40,31 @@ export const kalimpongHotel: Hotel = {
       name: 'Premier Room',
       description:
         'The richly appointed premier rooms in dark wood finish are spacious and comfortable, blending well with the intimate and tranquil atmosphere of the resort. Each room features one king size bed or two twin beds plus a day bed, and a private balcony overlooking the mountains. Room size: 420 sq. ft.',
-      image: '/images/hotels/kalimpong/Sinclairs-Retreat-Kalimpong-Night-View.jpg',
+      image: '/images/hotels/kalimpong/Sinclairs-Kalimpong-Premier-Room.jpg',
     },
     {
       name: 'Premier Plus Room',
       description:
         'These charming guest rooms provide a relaxed stay for individuals or a couple, with modern amenities such as flat screen LED televisions and wireless internet, a private balcony, a fireplace and a daybed to lounge on. Room size: 460 sq. ft.',
-      image: '/images/hotels/kalimpong/Sinclairs-Retreat-Kalimpong-Night-View.jpg',
+      image: '/images/hotels/kalimpong/Sinclairs-Kalimpong-Premier-Plus-Room.jpg',
     },
     {
       name: 'Premier Attic Room',
       description:
         'Similar to the premier rooms but with a spacious attic reached via a wooden staircase, ideal for families — the attic has its own king size bed and a separate wardrobe for children. Room size: 524 sq. ft.',
-      image: '/images/hotels/kalimpong/Sinclairs-Retreat-Kalimpong-Night-View.jpg',
+      image: '/images/hotels/kalimpong/Sinclairs-Kalimpong-Premier-Attic-Room.jpg',
     },
     {
       name: 'Premier Suite',
       description:
         'With a view of the swimming pool and the mountains, this extravagant suite has two separate rooms — a bedroom with a king bed and a mountain-facing balcony, and a living room with a full sofa set and a four-seater dining table. Room size: 900 sq. ft.',
-      image: '/images/hotels/kalimpong/Sinclairs-Retreat-Kalimpong-Night-View.jpg',
+      image: '/images/hotels/kalimpong/Sinclairs-Kalimpong-Premier-Suite.jpg',
     },
     {
       name: 'Wooden Cottage Room',
       description:
         'Made entirely out of steam-treated recyclable wood, this secluded cottage has two rooms with attached baths — even the toilets, barring the shower area, are built from wood. The king size bed has a large upholstered headboard, and the room opens onto a private sit-out area overlooking the mountains, ideal for honeymooners. Room size: 284 sq. ft.',
-      image: '/images/hotels/kalimpong/Sinclairs-Retreat-Kalimpong-Night-View.jpg',
+      image: '/images/hotels/kalimpong/Sinclairs-Kalimpong-Wooden-Cottage-Room.jpg',
     },
   ],
   dining: [
@@ -72,16 +72,19 @@ export const kalimpongHotel: Hotel = {
       name: 'The Golden Oak',
       description:
         'All-day dining restaurant a floor below the lobby, serving daily fresh Indian, Continental and Oriental dishes for breakfast, lunch and dinner, with open-terrace seating looking out over the mountains. Timings: 12:30 PM to 3 PM | 7:30 PM to 10 PM.',
+      image: '/images/hotels/kalimpong/Sinclairs-Kalimpong-The-Golden-Oak-Restaurant.jpg',
     },
     {
       name: 'Alto Espirito',
       description:
         'A debonair bar created on a Spanish theme, serving whisky, lager and artfully made cocktails alongside chef-inspired snacks and nibbles. Timings: 12 Noon to 11 PM.',
+      image: '/images/hotels/kalimpong/Sinclairs-Kalimpong-Alto-Espirito-Bar.jpg',
     },
     {
       name: 'The Birch',
       description:
         'A cosy coffee shop with a smart selection of coffee and breads, with the option of indoor or outdoor seating. Timings: 10 AM to 10:30 PM.',
+      image: '/images/hotels/kalimpong/Sinclairs-Kalimpong-The-Birch-Coffee-Shop.jpg',
     },
   ],
   gallery: [
@@ -94,8 +97,12 @@ export const kalimpongHotel: Hotel = {
       alt: "A wedding celebration set up amid the resort's natural garden surroundings",
     },
     {
-      src: '/images/hotels/kalimpong/Dining-at-Kalimpong-1140x740.webp',
-      alt: 'Dining setup at Sinclairs Retreat Kalimpong',
+      src: '/images/hotels/kalimpong/Sinclairs-Kalimpong-Grand-Reception-Lobby.jpg',
+      alt: "The resort's grand reception lobby with wood beam ceiling and seating area",
+    },
+    {
+      src: '/images/hotels/kalimpong/Sinclairs-Kalimpong-Twilight-View.jpg',
+      alt: 'Sinclairs Retreat Kalimpong at twilight, with the landscaped entrance garden lit up',
     },
   ],
   sightseeing: [
