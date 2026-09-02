@@ -8,8 +8,8 @@ export const dooarsHotel: Hotel = {
   tagline: 'Come and live with nature.',
   description:
     'Sinclairs Retreat Dooars sits on 20 acres of verdant green at Chalsa Hilltop, and is regarded as one of the finest resorts in North Bengal. Built in complete harmony with nature, it is ideal for those seeking rest, rejuvenation and adventure. The resort features 66 rooms, 3 suites and 2 wooden cottage accommodations with a rustic feel, each opening onto a private balcony overlooking the greens. Its versatile indoor and outdoor spaces, embraced by nature, make it equally suited to family holidays, banqueting, conferencing and destination weddings.',
-  heroImage: '/images/hotels/dooars/Sinclairs-Retreat-Dooars-Garden-View.jpg',
-  thumbnailImage: '/images/hotels/dooars/Sinclairs-Retreat-Dooars-Garden-View.jpg',
+  heroImage: '/images/hotels/dooars/destination/Sinclairs-Retreat-Dooars-Garden-View.jpg',
+  thumbnailImage: '/images/hotels/dooars/destination/Sinclairs-Retreat-Dooars-Garden-View.jpg',
   amenities: [
     'Free Wi-Fi',
     "Outdoor swimming pool with children's wading pool",
@@ -34,13 +34,13 @@ export const dooarsHotel: Hotel = {
       name: 'Deluxe Room',
       description:
         'Functional and contemporary, these rooms offer the ultimate in luxurious seclusion with a view of the main lawns. Room size 345 sq. ft., with an attached bath with hot and cold shower, herbal bathroom amenities, a queen or twin bed, writing desk, private balcony, electronic safe and tea/coffee set.',
-      image: '/images/hotels/dooars/Sinclairs-Retreat-Dooars-Deluxe-Room.jpg',
+      image: '/images/hotels/dooars/accommodations/Sinclairs-Retreat-Dooars-Deluxe-Room.jpg',
     },
     {
       name: 'Premier Suite',
       description:
         'Spaciously created with a bedroom, living room, dining area and additional washroom, this suite has a distinct style recreating the atmosphere of the colonial lifestyle. Room size 690 sq. ft. plus balcony, with two baths with bathtub and rain shower, a king size bed, a separate living room with dining table, a private garden with sit-out, two 32" LCD televisions, electronic safe, tea/coffee set and refrigerator.',
-      image: '/images/hotels/dooars/Sinclairs-Retreat-Dooars-Premier-Suite.jpg',
+      image: '/images/hotels/dooars/accommodations/Sinclairs-Retreat-Dooars-Premier-Suite.jpg',
     },
   ],
   dining: [
@@ -48,7 +48,7 @@ export const dooarsHotel: Hotel = {
       name: 'The Palm Terrace',
       description:
         "the resort's multicuisine restaurant, serving Indian, Chinese, Continental and regional dishes made from fresh, home-grown fare, with views over the Gorumara valley (7 AM to 11 PM).",
-      image: '/images/hotels/dooars/Sinclairs-Retreat-Dooars-Palm-Terrace-Restaurant.jpg',
+      image: '/images/hotels/dooars/dining/Sinclairs-Retreat-Dooars-Palm-Terrace-Restaurant.jpg',
     },
     {
       name: 'Thematic Bar',
@@ -57,24 +57,24 @@ export const dooarsHotel: Hotel = {
     {
       name: 'Café',
       description: 'an epicurean delight for casual bites through the day.',
-      image: '/images/hotels/dooars/Sinclairs-Retreat-Dooars-Cafe.jpg',
+      image: '/images/hotels/dooars/dining/Sinclairs-Retreat-Dooars-Cafe.jpg',
     },
   ],
   gallery: [
     {
-      src: '/images/hotels/dooars/DooarsPackage6-6.webp',
+      src: '/images/hotels/dooars/gallery/DooarsPackage6-6.webp',
       alt: 'Forest canopy along a nature trail near the resort at Chalsa, Dooars',
     },
     {
-      src: '/images/hotels/dooars/Sinclairs-Retreat-Dooars-Lobby.jpg',
+      src: '/images/hotels/dooars/gallery/Sinclairs-Retreat-Dooars-Lobby.jpg',
       alt: 'Open-air garden pavilion lobby with white cane furniture at Sinclairs Retreat Dooars',
     },
     {
-      src: '/images/hotels/dooars/Sinclairs-Retreat-Dooars-Swimming-Pool.jpg',
+      src: '/images/hotels/dooars/gallery/Sinclairs-Retreat-Dooars-Swimming-Pool.jpg',
       alt: 'Outdoor swimming pool lit up at dusk, surrounded by palms at Sinclairs Retreat Dooars',
     },
     {
-      src: '/images/hotels/dooars/Sinclairs-Retreat-Dooars-The-Iris-Banquet-Hall.jpg',
+      src: '/images/hotels/dooars/gallery/Sinclairs-Retreat-Dooars-The-Iris-Banquet-Hall.jpg',
       alt: 'The Iris banquet hall set up for a wedding reception at Sinclairs Retreat Dooars',
     },
   ],

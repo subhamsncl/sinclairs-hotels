@@ -14,7 +14,7 @@ export default function HotelsPage() {
       <section className="relative flex h-[62vh] min-h-[440px] items-end overflow-hidden">
         <div className="absolute inset-0 animate-hero-zoom">
           <Image
-            src="/images/hotels/ooty/Sinclairs-Retreat-Ooty-view.jpg"
+            src="/images/hotels/ooty/destination/Sinclairs-Retreat-Ooty-view.jpg"
             alt="Sinclairs Retreat Ooty overlooking the Nilgiri hills at dusk"
             fill
             priority
