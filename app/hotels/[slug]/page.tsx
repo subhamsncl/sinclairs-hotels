@@ -366,9 +366,9 @@ export default async function HotelPage({ params }: { params: Promise<Params> })
 
 function Stat({ value, label }: { value: string; label: string }) {
   return (
-    <div>
+    <div className="text-center">
       <p className="font-display text-2xl text-forest">{value}</p>
-      <p className="text-xs uppercase tracking-wider text-ink/50">{label}</p>
+      <p className="whitespace-nowrap text-xs uppercase tracking-wider text-ink/50">{label}</p>
     </div>
   );
 }
