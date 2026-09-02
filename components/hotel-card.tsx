@@ -6,7 +6,7 @@ export function HotelCard({ hotel }: { hotel: Hotel }) {
   return (
     <Link
       href={`/hotels/${hotel.slug}`}
-      className="group relative block aspect-[3/4] overflow-hidden rounded-xl shadow-sm transition duration-300 hover:-translate-y-1.5 hover:shadow-2xl sm:aspect-[2/3]"
+      className="group relative block aspect-[3/4] overflow-hidden rounded-xl shadow-sm transition duration-300 hover:-translate-y-1.5 hover:shadow-2xl lg:aspect-[5/4]"
     >
       <Image
         src={hotel.thumbnailImage}
