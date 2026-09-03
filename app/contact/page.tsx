@@ -1,4 +1,5 @@
 import { hotels } from '@/content/hotels';
+import { pageMetadata } from '@/lib/seo';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -15,10 +16,11 @@ const propertyEmails: Record<string, string> = {
   udaipur: 'palace.udaipur@sinclairshotels.com',
 };
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'Contact Us',
   description: 'Get in touch with Sinclairs Hotels & Resorts reservations and sales teams.',
-};
+  path: '/contact',
+});
 
 export default function ContactPage() {
   return (

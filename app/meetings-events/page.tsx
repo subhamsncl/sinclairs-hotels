@@ -3,13 +3,16 @@ import { ClosingCta } from '@/components/closing-cta';
 import { MeetingVenueCard } from '@/components/meeting-venue-card';
 import { CateringIcon } from '@/components/service-icons';
 import { hotels } from '@/content/hotels';
+import { pageMetadata } from '@/lib/seo';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'Meetings & Events',
   description: 'Host your next business gathering or conference at a Sinclairs property.',
-};
+  path: '/meetings-events',
+  image: '/images/hotels/kalimpong/amenities/The Orchid 1.webp',
+});
 
 const features = [
   {

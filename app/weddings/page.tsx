@@ -10,6 +10,7 @@ import {
 } from '@/components/service-icons';
 import { WeddingVenueCard } from '@/components/wedding-venue-card';
 import { hotels } from '@/content/hotels';
+import { pageMetadata } from '@/lib/seo';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 
@@ -46,10 +47,12 @@ const moments = [
   },
 ];
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'Weddings',
   description: 'Celebrate your wedding at a Sinclairs property, from the mountains to the coast.',
-};
+  path: '/weddings',
+  image: '/images/weddings/Wedding-Portrait.webp',
+});
 
 const occasions = [
   'Roka',

@@ -2,13 +2,16 @@ import { ClosingCta } from '@/components/closing-cta';
 import { EditorialRow } from '@/components/editorial-row';
 import { HotelCard } from '@/components/hotel-card';
 import { hotels } from '@/content/hotels';
+import { pageMetadata } from '@/lib/seo';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'Our Hotels',
   description: 'Explore Sinclairs Hotels & Resorts properties across India.',
-};
+  path: '/hotels',
+  image: '/images/hotels/port-blair/destination/SinclairsBayviewAerielView.webp',
+});
 
 const milestones = [
   { year: '1971', label: 'Founded in Kolkata' },

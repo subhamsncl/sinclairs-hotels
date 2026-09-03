@@ -1,12 +1,14 @@
 import { EnquiryForm } from '@/components/enquiry-form';
 import { hotels } from '@/content/hotels';
+import { pageMetadata } from '@/lib/seo';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'Enquire Now',
   description: 'Send us your travel dates and requirements and our team will get back to you.',
-};
+  path: '/enquiry',
+});
 
 export default async function EnquiryPage({
   searchParams,

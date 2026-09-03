@@ -4,12 +4,14 @@ import { ExploreSection } from '@/components/explore-section';
 import { FoodStrip } from '@/components/food-strip';
 import { GalleryLightbox } from '@/components/gallery-lightbox';
 import { HeroCarousel } from '@/components/hero-carousel';
+import { JsonLd } from '@/components/json-ld';
 import { MeetingsSection } from '@/components/meetings-section';
 import { RoomImageCarousel } from '@/components/room-image-carousel';
 import { WeddingSection } from '@/components/wedding-section';
 import { awards } from '@/content/awards';
 import { getHotelBySlug, hotels } from '@/content/hotels';
-import { reservationUrl } from '@/content/site';
+import { reservationUrl, siteConfig } from '@/content/site';
+import { pageMetadata } from '@/lib/seo';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
@@ -28,10 +30,12 @@ export async function generateMetadata({
   const { slug } = await params;
   const hotel = getHotelBySlug(slug);
   if (!hotel) return {};
-  return {
+  return pageMetadata({
     title: hotel.name,
-    description: hotel.description,
-  };
+    description: `${hotel.tagline} Located in ${hotel.location}, ${hotel.state}.`,
+    path: `/hotels/${hotel.slug}`,
+    image: hotel.heroImage,
+  });
 }
 
 const subNav = [
@@ -60,8 +64,42 @@ export default async function HotelPage({ params }: { params: Promise<Params> })
     return true;
   });
 
+  const hotelJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Hotel',
+    name: hotel.name,
+    description: hotel.description,
+    url: `${siteConfig.url}/hotels/${hotel.slug}`,
+    image: `${siteConfig.url}${hotel.heroImage}`,
+    ...(hotel.contact && {
+      address: hotel.contact.address,
+      telephone: hotel.contact.phone,
+    }),
+    amenityFeature: hotel.amenities.map((name) => ({
+      '@type': 'LocationFeatureSpecification',
+      name,
+    })),
+  };
+
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: siteConfig.url },
+      { '@type': 'ListItem', position: 2, name: 'Hotels', item: `${siteConfig.url}/hotels` },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: hotel.name,
+        item: `${siteConfig.url}/hotels/${hotel.slug}`,
+      },
+    ],
+  };
+
   return (
     <div>
+      <JsonLd data={hotelJsonLd} />
+      <JsonLd data={breadcrumbJsonLd} />
       <section className="relative flex h-[72vh] min-h-[480px] items-end">
         {hotel.heroGallery?.length ? (
           <HeroCarousel images={hotel.heroGallery} alt={hotel.name} />
