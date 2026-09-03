@@ -8,6 +8,8 @@ export const siliguriHotel: Hotel = {
   tagline: 'Endless greenery with tea gardens amidst a bustling city.',
   description:
     'Situated in Pradhan Nagar, at the heart of the city, Sinclairs Siliguri is a luxury hotel equipped with modern amenities. One of the most renowned hotels in the region, it is ideal for businessmen and for tourists who want to make the best of what the city has to offer. The hotel offers rooms and suites over two levels, with guests able to dine at the multicuisine restaurant while taking in soothing views of the poolside and gardens, or unwind at the lounge bar which offers a range of premium drinks. For conferencing, multiple banquet halls and outdoor meeting facilities can accommodate up to 500 people, making Sinclairs one of the leading conference venues in Siliguri.',
+  history:
+    "Sinclairs' very first hotel, opened here in 1976 — the gateway city that grew around a 19th-century railway junction linking the Bengal plains to Darjeeling and the eastern Himalayas.",
   heroImage: '/images/hotels/siliguri/destination/Sinclairs-Siliguri-with-pool.jpg',
   thumbnailImage: '/images/hotels/siliguri/destination/Sinclairs-Siliguri-with-pool.jpg',
   amenities: [
@@ -70,11 +72,57 @@ export const siliguriHotel: Hotel = {
     },
   ],
   sightseeing: [
-    'The Kanchenjunga Stadium',
-    'Kalchakra Monastery',
-    'Salugara Monastery',
-    'ISKCON Temple',
+    { name: 'The Kanchenjunga Stadium', image: '/images/hotels/siliguri/explore/stadium.webp' },
+    { name: 'Kalchakra Monastery' },
+    { name: 'Salugara Monastery', image: '/images/hotels/siliguri/explore/Monastery.webp' },
+    { name: 'ISKCON Temple' },
   ],
+  weddings: {
+    intro:
+      'With six banquet spaces and a total capacity of 500 guests, Sinclairs Siliguri is built for a wedding on any scale — from an intimate sangeet in The Regacy to a Darbar Hall reception under the chandeliers.',
+    highlights: [
+      'The Darbar seats up to 220 guests',
+      'The Terrace for outdoor receptions up to 500',
+      'Dedicated haldi, mehendi and sangeet arrangements',
+      'Multi-cuisine wedding menus',
+    ],
+    gallery: [
+      {
+        src: '/images/hotels/siliguri/weddings/Wedding.webp',
+        alt: 'A wedding celebration at Sinclairs Siliguri',
+      },
+      {
+        src: '/images/hotels/siliguri/weddings/haldi (3).webp',
+        alt: 'Haldi ceremony celebrations at Sinclairs Siliguri',
+      },
+      {
+        src: '/images/hotels/siliguri/weddings/mehendi (2).webp',
+        alt: 'Mehendi ceremony decor at Sinclairs Siliguri',
+      },
+      {
+        src: '/images/hotels/siliguri/weddings/vow.webp',
+        alt: 'A couple exchanging vows at Sinclairs Siliguri',
+      },
+      {
+        src: '/images/hotels/siliguri/weddings/couple shoot (4).webp',
+        alt: 'A couple portrait shoot at Sinclairs Siliguri',
+      },
+      {
+        src: '/images/hotels/siliguri/weddings/honeymoon (3).webp',
+        alt: 'A honeymoon getaway at Sinclairs Siliguri',
+      },
+    ],
+  },
+  meetings: {
+    intro:
+      "Six configurable banquet spaces — from the intimate Emperor Hall to the 500-capacity Terrace — make Sinclairs Siliguri one of the region's leading conference venues, right in the heart of the city.",
+    highlights: [
+      'Six halls seating from 10 to 500 guests',
+      'The Darbar and Imperial for mid-size conferences',
+      'In-house catering and Wi-Fi throughout',
+      'Central Siliguri location, close to NJP station',
+    ],
+  },
   eventSpaces: {
     totalSqFt: 13120,
     maxCapacity: 500,

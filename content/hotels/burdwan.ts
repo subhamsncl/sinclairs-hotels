@@ -8,6 +8,8 @@ export const burdwanHotel: Hotel = {
   tagline: 'The rice bowl of India',
   description:
     'Situated at High Street 1 in Renaissance Township, Sinclairs Burdwan is an upscale tourist resort offering the finest accommodation, club and banquet facilities. Spread over four acres, the resort is a perfect getaway for families looking for a break from stressful city life. Conveniently located a two-hour drive from Kolkata airport and five minutes from Ullas Bus Stand, the resort has 19 well-appointed Premier rooms, 4 Junior suites and 1 Maharaja suite. Sinclairs Burdwan provides a pulsating environment for relaxation and a fun-filled destination for business executives.',
+  history:
+    'Sinclairs Burdwan opened in 2015 in Renaissance Township, on the edge of a city once ruled by the Bardhaman Raj — a zamindari estate that governed the region from 1657 until India abolished hereditary landholding in 1955.',
   heroImage: '/images/hotels/burdwan/amenities/SwimmingPoolNightView.webp',
   heroGallery: [
     '/images/hotels/burdwan/amenities/SwimmingPoolNightView.webp',
@@ -178,21 +180,36 @@ export const burdwanHotel: Hotel = {
     },
   ],
   sightseeing: [
-    'Curzon Gate (Vijay Toran)',
-    '108 Shiva Mandir',
-    'Sarvamangala Mandir',
-    'Pir Baharam',
-    'Meghnad Saha Planetarium',
-    'Burdwan Science Centre',
-    'Town Hall',
-    'Krishnasayar Ecological Park',
-    'Golapbag',
-    'Deer Park',
-    'Kankaleshwari Kali Mandir',
-    'Kalna Raj Bari',
-    'Santiniketan',
-    'Bishnupur',
-    'Bhalkimachan',
+    {
+      name: 'Curzon Gate (Vijay Toran)',
+      image: '/images/hotels/burdwan/explore/curzon gate.webp',
+    },
+    { name: '108 Shiva Mandir', image: '/images/hotels/burdwan/explore/108 shiv mandir.webp' },
+    {
+      name: 'Sarvamangala Mandir',
+      image: '/images/hotels/burdwan/explore/sarbamangala kali mandir.webp',
+    },
+    { name: 'Pir Baharam' },
+    { name: 'Meghnad Saha Planetarium' },
+    {
+      name: 'Burdwan Science Centre',
+      image: '/images/hotels/burdwan/explore/science meuseum.webp',
+    },
+    { name: 'Town Hall', image: '/images/hotels/burdwan/explore/town hall.webp' },
+    {
+      name: 'Krishnasayar Ecological Park',
+      image: '/images/hotels/burdwan/explore/krishnasayar lake and park.webp',
+    },
+    { name: 'Golapbag', image: '/images/hotels/burdwan/explore/golapbag.webp' },
+    { name: 'Deer Park' },
+    {
+      name: 'Kankaleshwari Kali Mandir',
+      image: '/images/hotels/burdwan/explore/Kankaleswar mandir.webp',
+    },
+    { name: 'Kalna Raj Bari', image: '/images/hotels/burdwan/explore/Rajbari.webp' },
+    { name: 'Santiniketan', image: '/images/hotels/burdwan/explore/Santiniketan.webp' },
+    { name: 'Bishnupur', image: '/images/hotels/burdwan/explore/Bishnupur.webp' },
+    { name: 'Bhalkimachan', image: '/images/hotels/burdwan/explore/Bhalkimachan.webp' },
   ],
   eventSpaces: {
     totalSqFt: 4790,
@@ -201,6 +218,52 @@ export const burdwanHotel: Hotel = {
       { name: 'Crystal Room', areaSqFt: 520, capacity: 45 },
       { name: 'Regal Room', areaSqFt: 3280, capacity: 350 },
       { name: 'Saffron Hall', areaSqFt: 990, capacity: 50 },
+    ],
+  },
+  weddings: {
+    intro:
+      'Set across four acres of landscaped grounds in Renaissance Township, Sinclairs Burdwan brings together spacious banquet halls and open-air lawns for a wedding that can move effortlessly from an intimate mehendi to a 350-guest reception.',
+    highlights: [
+      'The Regal Room seats up to 350 guests',
+      'Poolside and garden ceremony spaces',
+      'Dedicated haldi, mehendi and sangeet arrangements',
+      'Multicuisine banquet catering',
+    ],
+    gallery: [
+      {
+        src: '/images/hotels/burdwan/weddings/burdwan wedding.webp',
+        alt: 'A wedding celebration at Sinclairs Burdwan',
+      },
+      {
+        src: '/images/hotels/burdwan/weddings/wedding feast.webp',
+        alt: 'A wedding feast laid out at Sinclairs Burdwan',
+      },
+      {
+        src: '/images/hotels/burdwan/weddings/bridal shower.webp',
+        alt: 'A bridal shower celebration at Sinclairs Burdwan',
+      },
+      {
+        src: '/images/hotels/burdwan/weddings/haldi.webp',
+        alt: 'Haldi ceremony celebrations at Sinclairs Burdwan',
+      },
+      {
+        src: '/images/hotels/burdwan/weddings/mehendi.webp',
+        alt: 'Mehendi ceremony decor at Sinclairs Burdwan',
+      },
+      {
+        src: '/images/hotels/burdwan/weddings/sangeet.webp',
+        alt: 'Sangeet night celebrations at Sinclairs Burdwan',
+      },
+    ],
+  },
+  meetings: {
+    intro:
+      "Three versatile banquet spaces — from the intimate Crystal Room to the 350-capacity Regal Room — make Sinclairs Burdwan a natural choice for conferences, product launches and corporate off-sites just two hours from Kolkata's airport.",
+    highlights: [
+      'Regal Room, Saffron Hall and Crystal Room for every group size',
+      'Business Centre with printing and Wi-Fi support',
+      'In-house catering for working lunches and gala dinners',
+      'Free parking for delegate vehicles',
     ],
   },
   mapEmbedUrl:

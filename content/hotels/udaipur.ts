@@ -8,6 +8,8 @@ export const udaipurHotel: Hotel = {
   tagline: 'Experience the grandeur and elegance of a bygone royal era.',
   description:
     "Experience the grandeur and elegance of a bygone royal era at Sinclairs Palace Retreat, a palace hotel set in the heart of Haldighati, an hour's drive from Udaipur city. The 95-room hotel blends rich history with modern opulence, offering guests a royal retreat with impeccable service and panoramic views of the surrounding landscapes. The palace exudes luxury and grandeur, making it an ideal venue for an extravagant wedding, social gathering, or royal conference.",
+  history:
+    "The group's newest property, opened in September 2025 on Haldighati Road — the site of the 1576 battle between Maharana Pratap and the Mughal forces of Akbar.",
   heroImage: '/images/hotels/udaipur/destination/Facade_night view.webp',
   heroGallery: [
     '/images/hotels/udaipur/destination/Facade_night view.webp',
@@ -113,21 +115,76 @@ export const udaipurHotel: Hotel = {
     },
   ],
   sightseeing: [
-    'Haldighati Museum',
-    'Chetak Samadhi',
-    'Rakt Talai',
-    'Nathdwara Shrinathji Temple',
-    'Eklingji Temple',
-    'Kumbhalgarh Fort',
-    'City Palace Udaipur',
-    'Lake Pichola',
-    'Fateh Sagar Lake',
-    'Saheliyon Ki Bari',
+    {
+      name: 'Haldighati Museum',
+      image: '/images/hotels/udaipur/explore/haldighati pass.webp',
+    },
+    { name: 'Chetak Samadhi', image: '/images/hotels/udaipur/explore/chetak samadhi.webp' },
+    {
+      name: 'Rakt Talai',
+      image: '/images/hotels/udaipur/explore/Rakht-Talai-Haldighati.webp',
+    },
+    {
+      name: 'Nathdwara Shrinathji Temple',
+      image: '/images/hotels/udaipur/explore/Shrinathji_Temple-Nathdwara_Rajsamand12.webp',
+    },
+    { name: 'Eklingji Temple' },
+    { name: 'Kumbhalgarh Fort', image: '/images/hotels/udaipur/explore/kumbhalgarh.webp' },
+    { name: 'City Palace Udaipur' },
+    { name: 'Lake Pichola' },
+    { name: 'Fateh Sagar Lake' },
+    { name: 'Saheliyon Ki Bari' },
   ],
   eventSpaces: {
     totalSqFt: 7000,
     maxCapacity: 700,
     venues: [{ name: 'Rajmahal', areaSqFt: 7000, capacity: 700 }],
+  },
+  weddings: {
+    intro:
+      'A genuine Rajasthani palace, complete with a fountain courtyard and domed pavilions, Sinclairs Palace Retreat Udaipur is built for a wedding on a royal scale — the Rajmahal alone seats 700.',
+    highlights: [
+      'Rajmahal seats up to 700 guests',
+      'Palace courtyard for a fairytale ceremony',
+      'Dedicated haldi, mehendi and sangeet arrangements',
+      'Vegetarian, multicuisine wedding menus at The Gharana',
+    ],
+    gallery: [
+      {
+        src: '/images/hotels/udaipur/weddings/Sinclairs Palace Retreat Udaipur Weddings.webp',
+        alt: 'A wedding celebration at Sinclairs Palace Retreat Udaipur',
+      },
+      {
+        src: '/images/hotels/udaipur/weddings/A Royal Fairytale.webp',
+        alt: 'A royal wedding celebration within the palace courtyard',
+      },
+      {
+        src: '/images/hotels/udaipur/weddings/Weddings- To Abhirup.webp',
+        alt: 'A wedding celebration at the palace',
+      },
+      {
+        src: '/images/hotels/udaipur/weddings/Romance blossoms in every courtyard.webp',
+        alt: 'A couple celebrating amid the palace courtyards',
+      },
+      {
+        src: '/images/hotels/udaipur/weddings/Mehendi.webp',
+        alt: 'Mehendi ceremony decor at Sinclairs Palace Retreat Udaipur',
+      },
+      {
+        src: '/images/hotels/udaipur/weddings/Sangeet.webp',
+        alt: 'Sangeet night celebrations at Sinclairs Palace Retreat Udaipur',
+      },
+    ],
+  },
+  meetings: {
+    intro:
+      "The Rajmahal's 7,000 sq ft can seat up to 700 delegates, making Sinclairs Palace Retreat Udaipur one of the region's largest royal conference venues, set within a genuine heritage palace an hour from Udaipur city.",
+    highlights: [
+      'Rajmahal seats up to 700 guests',
+      'Palace courtyard for outdoor breakout sessions',
+      'Vegetarian, multicuisine catering at The Gharana',
+      "An hour's drive from Udaipur airport",
+    ],
   },
   mapEmbedUrl:
     'https://maps.google.com/maps?q=Sinclairs%20Palace%20Retreat%20Udaipur&t=m&z=17&output=embed&iwloc=near',

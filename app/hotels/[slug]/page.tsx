@@ -1,15 +1,17 @@
 import { getAmenityIcon } from '@/components/amenity-icon';
+import { ClosingCta } from '@/components/closing-cta';
+import { ExploreSection } from '@/components/explore-section';
 import { FoodStrip } from '@/components/food-strip';
 import { GalleryLightbox } from '@/components/gallery-lightbox';
 import { HeroCarousel } from '@/components/hero-carousel';
+import { MeetingsSection } from '@/components/meetings-section';
 import { RoomImageCarousel } from '@/components/room-image-carousel';
-import { VenueTable } from '@/components/venue-table';
+import { WeddingSection } from '@/components/wedding-section';
 import { awards } from '@/content/awards';
 import { getHotelBySlug, hotels } from '@/content/hotels';
 import { reservationUrl } from '@/content/site';
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 type Params = { slug: string };
@@ -36,8 +38,10 @@ const subNav = [
   { href: '#overview', label: 'Overview' },
   { href: '#rooms', label: 'Rooms' },
   { href: '#dining', label: 'Dining' },
-  { href: '#events', label: 'Events' },
+  { href: '#weddings', label: 'Weddings' },
+  { href: '#meetings', label: 'Meetings' },
   { href: '#gallery', label: 'Gallery' },
+  { href: '#explore', label: 'Explore' },
   { href: '#location', label: 'Location' },
 ];
 
@@ -48,10 +52,11 @@ export default async function HotelPage({ params }: { params: Promise<Params> })
 
   const award = awards.find((a) => a.propertySlug === hotel.slug);
   const sections = subNav.filter((item) => {
-    if (item.href === '#events') return Boolean(hotel.eventSpaces);
+    if (item.href === '#weddings') return Boolean(hotel.weddings);
+    if (item.href === '#meetings') return Boolean(hotel.meetings && hotel.eventSpaces);
     if (item.href === '#gallery') return hotel.gallery.length > 0;
-    if (item.href === '#location')
-      return Boolean(hotel.mapEmbedUrl) || hotel.sightseeing.length > 0;
+    if (item.href === '#explore') return hotel.sightseeing.length > 0;
+    if (item.href === '#location') return Boolean(hotel.mapEmbedUrl || hotel.contact);
     return true;
   });
 
@@ -129,6 +134,15 @@ export default async function HotelPage({ params }: { params: Promise<Params> })
 
       <section id="overview" className="mx-auto max-w-4xl scroll-mt-32 px-6 py-10 sm:py-16">
         <p className="text-base leading-relaxed text-ink/80">{hotel.description}</p>
+
+        {hotel.history && (
+          <div className="mt-8 rounded-lg border-l-4 border-gold bg-forest/5 p-6">
+            <p className="text-xs uppercase tracking-[0.3em] text-gold">Heritage</p>
+            <p className="mt-3 font-display text-lg italic leading-relaxed text-forest">
+              {hotel.history}
+            </p>
+          </div>
+        )}
 
         {hotel.amenities.length > 0 && (
           <div className="mt-12">
@@ -237,44 +251,8 @@ export default async function HotelPage({ params }: { params: Promise<Params> })
         />
       )}
 
-      {hotel.eventSpaces && (
-        <section id="events" className="relative scroll-mt-32 overflow-hidden py-10 sm:py-16">
-          <div
-            className="pointer-events-none absolute inset-0 text-forest opacity-[0.07]"
-            style={{
-              backgroundImage: 'radial-gradient(currentColor 1.5px, transparent 1.5px)',
-              backgroundSize: '22px 22px',
-              maskImage:
-                'linear-gradient(to bottom, transparent, black 20%, black 80%, transparent)',
-              WebkitMaskImage:
-                'linear-gradient(to bottom, transparent, black 20%, black 80%, transparent)',
-            }}
-          />
-          <div className="relative mx-auto max-w-3xl px-6">
-            <p className="text-xs uppercase tracking-[0.3em] text-gold">Weddings &amp; Meetings</p>
-            <h2 className="mt-3 font-display text-2xl text-forest sm:text-3xl">
-              Meetings &amp; Celebrations
-            </h2>
-            <p className="mt-3 max-w-xl text-sm leading-relaxed text-ink/70">
-              {hotel.eventSpaces.venues.length}{' '}
-              {hotel.eventSpaces.venues.length === 1 ? 'venue' : 'venues'} across{' '}
-              {hotel.eventSpaces.totalSqFt.toLocaleString('en-IN')} sq ft, hosting up to{' '}
-              {hotel.eventSpaces.maxCapacity.toLocaleString('en-IN')} guests.
-            </p>
-            <div className="mt-8">
-              <VenueTable hotel={hotel} />
-            </div>
-            <div className="mt-6 flex flex-wrap gap-6 text-sm">
-              <Link href="/weddings" className="text-forest underline underline-offset-4">
-                Plan a wedding here
-              </Link>
-              <Link href="/meetings-events" className="text-forest underline underline-offset-4">
-                Plan a meeting here
-              </Link>
-            </div>
-          </div>
-        </section>
-      )}
+      <WeddingSection hotel={hotel} />
+      <MeetingsSection hotel={hotel} />
 
       {hotel.gallery.length > 0 && (
         <section id="gallery" className="scroll-mt-32 py-10 sm:py-16">
@@ -290,7 +268,9 @@ export default async function HotelPage({ params }: { params: Promise<Params> })
         </section>
       )}
 
-      {(hotel.mapEmbedUrl || hotel.sightseeing.length > 0 || hotel.contact) && (
+      <ExploreSection hotel={hotel} />
+
+      {(hotel.mapEmbedUrl || hotel.contact) && (
         <section id="location" className="scroll-mt-32 py-10 sm:py-16">
           <div className="mx-auto max-w-7xl px-6">
             <h2 className="font-display text-2xl text-forest">Location &amp; Contact</h2>
@@ -328,21 +308,6 @@ export default async function HotelPage({ params }: { params: Promise<Params> })
                     </div>
                   </dl>
                 )}
-                {hotel.sightseeing.length > 0 && (
-                  <div className="mt-10">
-                    <h3 className="font-display text-lg text-forest">Sightseeing Nearby</h3>
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {hotel.sightseeing.map((spot) => (
-                        <span
-                          key={spot}
-                          className="rounded-full border border-forest/15 px-3 py-1.5 text-sm text-ink/80"
-                        >
-                          {spot}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
               </div>
               {hotel.mapEmbedUrl && (
                 <div className="aspect-[4/3] overflow-hidden rounded-lg border border-forest/10 shadow-md lg:aspect-auto">
@@ -359,27 +324,12 @@ export default async function HotelPage({ params }: { params: Promise<Params> })
         </section>
       )}
 
-      <section className="relative flex h-[36vh] min-h-[280px] items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 animate-hero-zoom">
-          <Image src={hotel.heroImage} alt="" fill sizes="100vw" className="object-cover" />
-        </div>
-        <div className="absolute inset-0 bg-forest-dark/75" />
-        <div className="relative px-6 text-center text-cream">
-          <h2 className="font-display text-3xl drop-shadow-lg sm:text-4xl">
-            Ready to Stay at {hotel.name}?
-          </h2>
-          <p className="mx-auto mt-3 max-w-md text-sm text-cream/80">
-            Share your travel dates and our reservations team will get back to you with availability
-            and rates.
-          </p>
-          <Link
-            href={`/enquiry?property=${hotel.slug}`}
-            className="mt-6 inline-block rounded bg-gold px-8 py-3 text-sm uppercase tracking-wider text-forest-dark transition duration-300 hover:bg-gold-light hover:shadow-lg"
-          >
-            Enquire Now
-          </Link>
-        </div>
-      </section>
+      <ClosingCta
+        image={hotel.heroImage}
+        heading={`Ready to Stay at ${hotel.name}?`}
+        body="Share your travel dates and our reservations team will get back to you with availability and rates."
+        href={`/enquiry?property=${hotel.slug}`}
+      />
     </div>
   );
 }

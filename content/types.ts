@@ -38,6 +38,23 @@ export interface ContactInfo {
   email: string;
 }
 
+export interface SightseeingSpot {
+  name: string;
+  image?: string;
+}
+
+export interface WeddingContent {
+  intro: string;
+  highlights: string[];
+  gallery: GalleryImage[];
+}
+
+export interface MeetingsContent {
+  intro: string;
+  highlights: string[];
+  gallery?: GalleryImage[];
+}
+
 export interface Hotel {
   slug: string;
   name: string;
@@ -45,6 +62,7 @@ export interface Hotel {
   state: string;
   tagline: string;
   description: string;
+  history?: string;
   heroImage: string;
   heroGallery?: string[];
   thumbnailImage: string;
@@ -53,8 +71,10 @@ export interface Hotel {
   dining: DiningVenue[];
   foodGallery?: GalleryImage[];
   gallery: GalleryImage[];
-  sightseeing: string[];
+  sightseeing: SightseeingSpot[];
   eventSpaces?: EventSpaces;
+  weddings?: WeddingContent;
+  meetings?: MeetingsContent;
   mapEmbedUrl?: string;
   contact?: ContactInfo;
 }

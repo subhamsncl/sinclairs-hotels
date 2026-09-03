@@ -8,6 +8,8 @@ export const dooarsHotel: Hotel = {
   tagline: 'Come and live with nature.',
   description:
     'Sinclairs Retreat Dooars sits on 20 acres of verdant green at Chalsa Hilltop, and is regarded as one of the finest resorts in North Bengal. Built in complete harmony with nature, it is ideal for those seeking rest, rejuvenation and adventure. The resort features 66 rooms, 3 suites and 2 wooden cottage accommodations with a rustic feel, each opening onto a private balcony overlooking the greens. Its versatile indoor and outdoor spaces, embraced by nature, make it equally suited to family holidays, banqueting, conferencing and destination weddings.',
+  history:
+    'Commissioned in 1999 on Chalsa Hilltop, at the edge of the Dooars — the alluvial floodplain along the Bhutan border long known for its tea gardens, forest reserves and wildlife.',
   heroImage: '/images/hotels/dooars/amenities/DSC_1316-Enhanced-NR.webp',
   heroGallery: [
     '/images/hotels/dooars/amenities/DSC_1316-Enhanced-NR.webp',
@@ -170,16 +172,31 @@ export const dooarsHotel: Hotel = {
     },
   ],
   sightseeing: [
-    'Chapramari Wildlife Park (1 km)',
-    'Gorumara National Park (14 km)',
-    'Samsing (15 km)',
-    'Suntalekhola (20 km)',
-    'Neora Valley National Park (58 km)',
-    'Jaldapara Wildlife Sanctuary (82 km)',
-    'Phuntsholing (103 km)',
-    'Lava – Lolaygaon (100 km)',
-    'Buxa Tiger Reserve (104 km)',
-    'Alipurduar (112 km)',
+    {
+      name: 'Chapramari Wildlife Park (1 km)',
+      image: '/images/hotels/dooars/explore/chapramari.webp',
+    },
+    {
+      name: 'Gorumara National Park (14 km)',
+      image: '/images/hotels/dooars/explore/gorumara.webp',
+    },
+    { name: 'Samsing (15 km)', image: '/images/hotels/dooars/explore/samsing.webp' },
+    { name: 'Suntalekhola (20 km)', image: '/images/hotels/dooars/explore/suntalikhola.webp' },
+    {
+      name: 'Neora Valley National Park (58 km)',
+      image: '/images/hotels/dooars/explore/neora valley.webp',
+    },
+    {
+      name: 'Jaldapara Wildlife Sanctuary (82 km)',
+      image: '/images/hotels/dooars/explore/jaldapara.webp',
+    },
+    { name: 'Phuntsholing (103 km)', image: '/images/hotels/dooars/explore/puntsholing.webp' },
+    { name: 'Lava – Lolaygaon (100 km)' },
+    {
+      name: 'Buxa Tiger Reserve (104 km)',
+      image: '/images/hotels/dooars/explore/buxa.webp',
+    },
+    { name: 'Alipurduar (112 km)', image: '/images/hotels/dooars/explore/alipurduar.webp' },
   ],
   eventSpaces: {
     totalSqFt: 7750,
@@ -188,6 +205,66 @@ export const dooarsHotel: Hotel = {
       { name: 'The Iris', areaSqFt: 5000, capacity: 500 },
       { name: 'The Hibiscus', areaSqFt: 1560, capacity: 110 },
       { name: 'The Carnation', areaSqFt: 1190, capacity: 90 },
+    ],
+  },
+  weddings: {
+    intro:
+      "Twenty acres of hilltop forest make Sinclairs Retreat Dooars one of North Bengal's most sought-after destination wedding venues — a setting built for a mehendi under the trees and a reception for 500 beneath open skies.",
+    highlights: [
+      'The Iris: 5,000 sq ft, up to 500 guests',
+      'Sprawling lawns for outdoor ceremonies',
+      'Dedicated haldi, mehendi and sangeet arrangements',
+      'Home-grown, organic-farm catering',
+    ],
+    gallery: [
+      {
+        src: '/images/hotels/dooars/weddings/weddings.webp',
+        alt: 'A wedding celebration at Sinclairs Retreat Dooars',
+      },
+      {
+        src: '/images/hotels/dooars/weddings/vow (3).webp',
+        alt: 'A couple exchanging vows at Sinclairs Retreat Dooars',
+      },
+      {
+        src: '/images/hotels/dooars/weddings/couple shoot.webp',
+        alt: 'A couple portrait shoot amid the hilltop forest',
+      },
+      {
+        src: '/images/hotels/dooars/weddings/honeymoon.webp',
+        alt: 'A honeymoon getaway at Sinclairs Retreat Dooars',
+      },
+      {
+        src: '/images/hotels/dooars/weddings/haldi.webp',
+        alt: 'Haldi ceremony celebrations at Sinclairs Retreat Dooars',
+      },
+      {
+        src: '/images/hotels/dooars/weddings/mehendi.webp',
+        alt: 'Mehendi ceremony decor at Sinclairs Retreat Dooars',
+      },
+    ],
+  },
+  meetings: {
+    intro:
+      'With three banquet halls — The Iris, The Hibiscus and The Carnation — set within 20 acres of hilltop forest, Sinclairs Retreat Dooars pairs serious conferencing capacity with a genuine change of scenery for offsites and incentive groups.',
+    highlights: [
+      'The Iris seats up to 500 guests theatre-style',
+      'Business centre and in-house AV support',
+      'Cycling, badminton and bonfire evenings for team offsites',
+      'Full-service catering for working meals',
+    ],
+    gallery: [
+      {
+        src: '/images/hotels/dooars/amenities/The Iris Hall 1 (2).webp',
+        alt: 'The Iris Hall dressed in banquet style, opening onto the gardens',
+      },
+      {
+        src: '/images/hotels/dooars/amenities/Hibiscus (1).webp',
+        alt: 'The Hibiscus banquet hall set for a corporate meeting',
+      },
+      {
+        src: '/images/hotels/dooars/amenities/Carnation (1).webp',
+        alt: 'The Carnation Hall arranged theatre-style for a seminar',
+      },
     ],
   },
   mapEmbedUrl:

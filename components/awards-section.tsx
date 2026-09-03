@@ -20,7 +20,7 @@ export function AwardsSection({ awards, reviews }: { awards: Award[]; reviews: R
                   alt={`${award.propertyName} — Tripadvisor Travellers' Choice 2026`}
                   fill
                   sizes="64px"
-                  className="object-contain transition duration-300 group-hover:scale-105"
+                  className="transform-gpu object-contain transition duration-300 group-hover:scale-105"
                 />
               </div>
               <p className="font-display text-sm text-forest">{award.propertyName}</p>

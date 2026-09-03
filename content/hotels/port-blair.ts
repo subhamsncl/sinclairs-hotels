@@ -8,6 +8,8 @@ export const portBlairHotel: Hotel = {
   tagline: 'A quiet getaway for those who want to unwind and explore the Andamans.',
   description:
     "Located right on the waterfront, Sinclairs Bayview is Port Blair's only hotel to offer spectacular views of the Bay of Bengal from almost all its rooms. Refreshingly environment-friendly and functionally decorated, it is a quiet getaway for those who want to unwind and explore the Andamans, just 15 minutes from the airport and the town's shopping centre. The hotel's 46 rooms and suites are virtually on the sea, opening onto the crystal-blue waters of the Indian Ocean, with the Valentine rooms offering views of the ocean on one side and Ross Island on the other. A rare relic from World War II — a bunker built by the Japanese, its cannon still in place — remains within the hotel grounds.",
+  history:
+    'With Sinclairs since 1991, on a coastline that became a British penal settlement in the 1850s — the same period that gave Port Blair its most storied landmark, the Cellular Jail.',
   heroImage: '/images/hotels/port-blair/destination/SinclairsBayviewAerielView.webp',
   heroGallery: [
     '/images/hotels/port-blair/destination/SinclairsBayviewAerielView.webp',
@@ -193,20 +195,91 @@ export const portBlairHotel: Hotel = {
     },
   ],
   sightseeing: [
-    'Cellular Jail',
-    'Marine Samudrika Museum',
-    "Corbyn's Cove",
-    'Chidiya Tapu',
-    'Andaman Water Sport Complex',
-    'Havelock Island',
-    'Jolly Buoy Island',
-    'North Bay Island',
-    'Viper Island',
+    { name: 'Cellular Jail', image: '/images/hotels/port-blair/explore/Cellular Jail.webp' },
+    {
+      name: 'Marine Samudrika Museum',
+      image: '/images/hotels/port-blair/explore/Marine Samudrika Museum.webp',
+    },
+    {
+      name: "Corbyn's Cove",
+      image: '/images/hotels/port-blair/explore/Corbyn_s Cove Island.webp',
+    },
+    { name: 'Chidiya Tapu', image: '/images/hotels/port-blair/explore/Chidiya Tapu.webp' },
+    { name: 'Andaman Water Sport Complex' },
+    {
+      name: 'Havelock Island',
+      image: '/images/hotels/port-blair/explore/Havelock Island.webp',
+    },
+    {
+      name: 'Jolly Buoy Island',
+      image: '/images/hotels/port-blair/explore/Jolly Buoy Island.webp',
+    },
+    {
+      name: 'North Bay Island',
+      image: '/images/hotels/port-blair/explore/North Bay Island.webp',
+    },
+    { name: 'Viper Island', image: '/images/hotels/port-blair/explore/Viper Island.webp' },
   ],
   eventSpaces: {
     totalSqFt: 1785,
     maxCapacity: 150,
     venues: [{ name: 'The Forum', areaSqFt: 1785, capacity: 150 }],
+  },
+  weddings: {
+    intro:
+      'Nearly every room at Sinclairs Bayview opens onto the Bay of Bengal — an oceanfront setting for a wedding that trades banquet-hall formality for sea breeze and sunset vows.',
+    highlights: [
+      'The Forum seats up to 150 guests',
+      'Oceanfront ceremony spaces on the Sea Deck',
+      'Dedicated haldi, mehendi and sangeet arrangements',
+      'The Valentine Room for the newlyweds',
+    ],
+    gallery: [
+      {
+        src: '/images/hotels/port-blair/weddings/Your Oceanfront Wedding Paradise.webp',
+        alt: 'An oceanfront wedding setting at Sinclairs Bayview',
+      },
+      {
+        src: '/images/hotels/port-blair/weddings/Where love meets the ocean.webp',
+        alt: 'A couple celebrating their wedding by the Bay of Bengal',
+      },
+      {
+        src: '/images/hotels/port-blair/weddings/Eternal Love by the Bay.webp',
+        alt: 'A wedding celebration by the bay at Sinclairs Bayview',
+      },
+      {
+        src: '/images/hotels/port-blair/weddings/Beautiful Weddings.webp',
+        alt: 'A wedding celebration at Sinclairs Bayview',
+      },
+      {
+        src: '/images/hotels/port-blair/weddings/Bridal Shower.webp',
+        alt: 'A bridal shower celebration at Sinclairs Bayview',
+      },
+      {
+        src: '/images/hotels/port-blair/weddings/Haldi.webp',
+        alt: 'Haldi ceremony celebrations at Sinclairs Bayview',
+      },
+    ],
+  },
+  meetings: {
+    intro:
+      'The Forum brings 150 guests together just steps from the Bay of Bengal, making Sinclairs Bayview a rare conference venue that doubles as an island getaway for delegates.',
+    highlights: [
+      'The Forum seats up to 150 guests',
+      'Palm-shaded courtyard for breakout sessions',
+      'In-house catering with sea views',
+      '15 minutes from Port Blair airport',
+    ],
+    gallery: [
+      {
+        src: '/images/hotels/port-blair/dining/Forum2.webp',
+        alt: 'The Forum banquet hall set up for a conference at Sinclairs Bayview',
+      },
+      {
+        src: '/images/hotels/port-blair/dining/GardenAdjacenttoForum.webp',
+        alt: 'The palm-shaded courtyard adjoining The Forum, set up for an event',
+      },
+    ],
   },
   mapEmbedUrl:
     'https://maps.google.com/maps?q=Sinclairs%20Bayview%20Portblair&t=m&z=17&output=embed&iwloc=near',

@@ -8,6 +8,8 @@ export const kalimpongHotel: Hotel = {
   tagline: 'An ideal retreat for those in search of a restful nature experience.',
   description:
     'Nestled in virgin green surroundings, Sinclairs Retreat Kalimpong stands out over five acres of aesthetically landscaped grounds, with an unmatched view of the Himalayan mountain range and a luxuriant forested valley. This cozy boutique resort has 44 rooms, two large suites and two rooms in a wooden cottage, all with a view of the alluring Himalayan range. Guests can enjoy local fare and international favourites at the all-day dining venue The Golden Oak, sip a drink at the thematic bar, or relax by the swimming pool and rejuvenate at the spa.',
+  history:
+    'Opened in 2014 across five acres above the town, in a former British hill station that once thrived as a key stop on the trade route between Bengal and Tibet.',
   heroImage: '/images/hotels/kalimpong/destination/SinclairsKalimpongentrance3.webp',
   heroGallery: [
     '/images/hotels/kalimpong/destination/SinclairsKalimpongentrance3.webp',
@@ -204,23 +206,35 @@ export const kalimpongHotel: Hotel = {
     },
   ],
   sightseeing: [
-    'Durpin Dara',
-    'Durpin Monastery',
-    'Thongsa Gompa',
-    'Flower Nurseries',
-    "Dr Graham's Homes",
-    'Deolo Hill',
-    'Macfarlane Church',
-    'Tharpa Choling Gompa',
-    'Mangal Dham',
-    'Army Golf Club',
-    'Kalibari',
-    'Central Sericulture Station',
-    'Cinchona Plantation',
-    'Tea Estates',
-    'Dharmodaya Vihar',
-    'Hanuman Mandir',
-    'Chardham Trip (Namchi)',
+    { name: 'Durpin Dara', image: '/images/hotels/kalimpong/explore/durpin.webp' },
+    {
+      name: 'Durpin Monastery',
+      image: '/images/hotels/kalimpong/explore/Kalimpong Durpin Monastery.webp',
+    },
+    { name: 'Thongsa Gompa', image: '/images/hotels/kalimpong/explore/thongsa gompa.webp' },
+    { name: 'Flower Nurseries', image: '/images/hotels/kalimpong/explore/flower.webp' },
+    {
+      name: "Dr Graham's Homes",
+      image: '/images/hotels/kalimpong/explore/graham_s home.webp',
+    },
+    { name: 'Deolo Hill', image: '/images/hotels/kalimpong/explore/deolo.webp' },
+    { name: 'Macfarlane Church', image: '/images/hotels/kalimpong/explore/Church.webp' },
+    { name: 'Tharpa Choling Gompa' },
+    {
+      name: 'Mangal Dham',
+      image: '/images/hotels/kalimpong/explore/Kalimpong Mangal Dham.webp',
+    },
+    { name: 'Army Golf Club', image: '/images/hotels/kalimpong/explore/army golf club.webp' },
+    { name: 'Kalibari', image: '/images/hotels/kalimpong/explore/market.webp' },
+    {
+      name: 'Central Sericulture Station',
+      image: '/images/hotels/kalimpong/explore/sericulture.webp',
+    },
+    { name: 'Cinchona Plantation', image: '/images/hotels/kalimpong/explore/cinchona.webp' },
+    { name: 'Tea Estates', image: '/images/hotels/kalimpong/explore/tea estate.webp' },
+    { name: 'Dharmodaya Vihar' },
+    { name: 'Hanuman Mandir', image: '/images/hotels/kalimpong/explore/hanuman mandir.webp' },
+    { name: 'Chardham Trip (Namchi)' },
   ],
   eventSpaces: {
     totalSqFt: 3828,
@@ -229,6 +243,62 @@ export const kalimpongHotel: Hotel = {
       { name: 'The Orchid', areaSqFt: 2700, capacity: 300 },
       { name: 'The Fern', areaSqFt: 875, capacity: 70 },
       { name: 'The Juniper', areaSqFt: 253, capacity: 10 },
+    ],
+  },
+  weddings: {
+    intro:
+      'Amid five acres of landscaped gardens with the Himalayan range as a backdrop, Sinclairs Retreat Kalimpong has already played host to weddings set entirely amid nature — The Orchid hall seats 300, with the grounds themselves the real draw.',
+    highlights: [
+      'The Orchid seats up to 300 guests',
+      'Garden ceremony spaces amid Himalayan views',
+      'Dedicated haldi, mehendi and sangeet arrangements',
+      'Wooden Cottage Room for the newlyweds',
+    ],
+    gallery: [
+      {
+        src: '/images/hotels/kalimpong/weddings/Kalimpong wedding in natural settings.webp',
+        alt: "A wedding celebration set up amid the resort's natural garden surroundings",
+      },
+      {
+        src: '/images/hotels/kalimpong/weddings/Wedding.webp',
+        alt: 'A wedding celebration at Sinclairs Retreat Kalimpong',
+      },
+      {
+        src: '/images/hotels/kalimpong/weddings/Kalimpong -where love touches the clouds.webp',
+        alt: 'A couple celebrating their wedding with mountain views at Kalimpong',
+      },
+      {
+        src: '/images/hotels/kalimpong/weddings/Kalimpong Celebrate your love.webp',
+        alt: 'A wedding celebration amid the Kalimpong gardens',
+      },
+      {
+        src: '/images/hotels/kalimpong/weddings/Kalimpong A vow.webp',
+        alt: 'A couple exchanging vows at Sinclairs Retreat Kalimpong',
+      },
+      {
+        src: '/images/hotels/kalimpong/weddings/Kalimpong renewal of vow.webp',
+        alt: 'A couple renewing their vows at Sinclairs Retreat Kalimpong',
+      },
+    ],
+  },
+  meetings: {
+    intro:
+      'The Orchid and The Fern give Sinclairs Retreat Kalimpong two banquet halls set against the Himalayan range, both a short drive from Bagdogra — a genuine change of scenery for conferences and corporate retreats.',
+    highlights: [
+      'The Orchid seats up to 300 guests',
+      'The Fern for smaller boardroom-style sessions',
+      'In-house catering at The Golden Oak',
+      'Spa and gym for delegate downtime',
+    ],
+    gallery: [
+      {
+        src: '/images/hotels/kalimpong/amenities/The Orchid 1.webp',
+        alt: "The Orchid, the resort's largest banquet hall, set up for a conference",
+      },
+      {
+        src: '/images/hotels/kalimpong/amenities/The Fern Complete View.webp',
+        alt: 'The Fern banquet hall at Sinclairs Retreat Kalimpong',
+      },
     ],
   },
   mapEmbedUrl:

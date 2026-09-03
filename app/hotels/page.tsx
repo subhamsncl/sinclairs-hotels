@@ -1,3 +1,5 @@
+import { ClosingCta } from '@/components/closing-cta';
+import { EditorialRow } from '@/components/editorial-row';
 import { HotelCard } from '@/components/hotel-card';
 import { hotels } from '@/content/hotels';
 import type { Metadata } from 'next';
@@ -8,14 +10,21 @@ export const metadata: Metadata = {
   description: 'Explore Sinclairs Hotels & Resorts properties across India.',
 };
 
+const milestones = [
+  { year: '1971', label: 'Founded in Kolkata' },
+  { year: '1976', label: 'First Hotel Opens in Siliguri' },
+  { year: '1986', label: 'Listed on the Stock Exchange' },
+  { year: 'Today', label: `${hotels.length} Destinations Across India` },
+];
+
 export default function HotelsPage() {
   return (
     <div>
       <section className="relative flex h-[62vh] min-h-[440px] items-end overflow-hidden">
         <div className="absolute inset-0 animate-hero-zoom">
           <Image
-            src="/images/hotels/ooty/destination/Sinclairs-Retreat-Ooty-view.jpg"
-            alt="Sinclairs Retreat Ooty overlooking the Nilgiri hills at dusk"
+            src="/images/hotels/port-blair/destination/SinclairsBayviewAerielView.webp"
+            alt="Sinclairs Bayview perched on a coastal headland above the Bay of Bengal"
             fill
             priority
             className="object-cover"
@@ -42,6 +51,28 @@ export default function HotelsPage() {
         </div>
       </section>
 
+      <section className="bg-forest/5">
+        <EditorialRow
+          title="A Legacy Since 1971"
+          body="Sinclairs Hotels &amp; Resorts was founded in 1971 by Kolkata entrepreneur H.C. Suchanti, opening its first hotel in Siliguri in 1976 and a second in the hills of Darjeeling in 1981. The company went public in 1986, listing on the Bombay and Calcutta Stock Exchanges. Since 1990, under the stewardship of the Suchanti family, the group has grown from those early Himalayan beginnings into nine destinations spanning the Dooars, the Nilgiris, Rajasthan and the Andaman Islands — each still built around the same promise of comfortable, well-run hospitality in some of India's most memorable places."
+          image="/images/hotels/darjeeling/dining/Sinclairs Darjeeling Lobby.webp"
+          alt="A colonial-style lounge at Sinclairs Darjeeling, one of the group's earliest properties"
+          imageSide="right"
+        />
+        <div className="mx-auto max-w-5xl px-6 pb-16">
+          <div className="grid grid-cols-2 gap-8 border-t border-forest/10 pt-10 sm:grid-cols-4">
+            {milestones.map((milestone) => (
+              <div key={milestone.label} className="text-center">
+                <p className="font-display text-2xl text-forest">{milestone.year}</p>
+                <p className="mt-1 text-xs uppercase tracking-wider text-ink/60">
+                  {milestone.label}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <div className="mx-auto max-w-7xl px-6 py-10 sm:py-16">
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 xl:grid-cols-4">
           {hotels.map((hotel) => (
@@ -49,6 +80,13 @@ export default function HotelsPage() {
           ))}
         </div>
       </div>
+
+      <ClosingCta
+        image="/images/hotels/darjeeling/amenities/Sinclairs Darjeeling Kanchenjunga view.webp"
+        heading="Find Your Sinclairs"
+        body="Share your travel dates and preferred destination, and our reservations team will help you choose the right property."
+        href="/enquiry"
+      />
     </div>
   );
 }

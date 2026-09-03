@@ -1,10 +1,10 @@
 import { BusinessIcon, SightseeingIcon } from '@/components/amenity-icon';
+import { ClosingCta } from '@/components/closing-cta';
+import { MeetingVenueCard } from '@/components/meeting-venue-card';
 import { CateringIcon } from '@/components/service-icons';
-import { VenueTable } from '@/components/venue-table';
 import { hotels } from '@/content/hotels';
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Meetings & Events',
@@ -17,19 +17,37 @@ const features = [
     description:
       'Our hotels have a variety of event spaces to meet your needs. Thoughtfully designed, each space offers exclusivity and access to the latest technology.',
     icon: BusinessIcon,
+    image: '/images/hotels/dooars/amenities/The Iris Hall 1 (2).webp',
+    alt: 'The Iris Hall dressed in banquet style, opening onto the gardens',
   },
   {
     title: 'Bespoke Menus',
     description:
       'Our culinary team crafts special menus featuring Indian and local cuisines, together with thoughtful service, to ensure a seamless event.',
     icon: CateringIcon,
+    image: '/images/hotels/gangtok/dining/RestaurantBuffet2.webp',
+    alt: 'A lavish catering spread, freshly laid',
   },
   {
     title: 'Team Building Activities',
     description:
       'Between meetings, we organise tours around town — from monasteries to lakes and mountains — helping you experience each destination at its best.',
     icon: SightseeingIcon,
+    image: '/images/hotels/gangtok/explore/Gangtok Tsogmo Lake.webp',
+    alt: 'Tsomgo Lake, a popular excursion near Sinclairs Gangtok',
   },
+];
+
+const venueHotels = hotels.filter((hotel) => hotel.eventSpaces);
+const totalVenues = hotels.reduce((sum, h) => sum + (h.eventSpaces?.venues.length ?? 0), 0);
+const totalSqFt = hotels.reduce((sum, h) => sum + (h.eventSpaces?.totalSqFt ?? 0), 0);
+const largestCapacity = Math.max(...hotels.map((h) => h.eventSpaces?.maxCapacity ?? 0));
+
+const stats = [
+  { value: String(totalVenues), label: 'Conference Venues' },
+  { value: totalSqFt.toLocaleString('en-IN'), label: 'Sq Ft of Event Space' },
+  { value: largestCapacity.toLocaleString('en-IN'), label: 'Capacity, Largest Venue' },
+  { value: String(venueHotels.length), label: 'Properties Nationwide' },
 ];
 
 export default function MeetingsEventsPage() {
@@ -38,8 +56,8 @@ export default function MeetingsEventsPage() {
       <section className="relative flex h-[58vh] min-h-[400px] items-end overflow-hidden">
         <div className="absolute inset-0 animate-hero-zoom">
           <Image
-            src="/images/meetings-events/conference-setup.jpg"
-            alt="A boardroom-style conference setup at a Sinclairs property"
+            src="/images/hotels/kalimpong/amenities/The Orchid 1.webp"
+            alt="The Orchid, a banquet hall at Sinclairs Retreat Kalimpong, set up for a conference"
             fill
             priority
             className="object-cover"
@@ -70,7 +88,18 @@ export default function MeetingsEventsPage() {
         </div>
       </section>
 
-      <section className="border-y border-forest/10 bg-white py-12">
+      <div className="relative z-10 mx-auto -mt-10 w-full max-w-5xl px-4">
+        <div className="grid grid-cols-2 gap-6 rounded-xl bg-white px-6 py-6 shadow-2xl sm:grid-cols-4 sm:gap-8 sm:px-10">
+          {stats.map((stat) => (
+            <div key={stat.label} className="text-center">
+              <p className="font-display text-3xl text-forest">{stat.value}</p>
+              <p className="mt-1 text-xs uppercase tracking-wider text-ink/60">{stat.label}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <section className="pt-16">
         <div className="mx-auto max-w-3xl px-6 text-center">
           <p className="text-xs uppercase tracking-[0.3em] text-gold">Our Commitment</p>
           <p className="mt-4 text-base leading-relaxed text-ink/70">
@@ -79,61 +108,55 @@ export default function MeetingsEventsPage() {
             mountains, forests, and heritage towns where our hotels are located.
           </p>
         </div>
-        <div className="mx-auto mt-10 grid max-w-5xl grid-cols-1 gap-5 px-6 sm:grid-cols-3">
+        <div className="mx-auto mt-10 grid max-w-6xl grid-cols-1 gap-6 px-6 pb-16 sm:grid-cols-3">
           {features.map((feature) => (
             <div
               key={feature.title}
-              className="rounded-lg border border-forest/10 p-5 text-left shadow-sm transition hover:shadow-md"
+              className="group overflow-hidden rounded-lg border border-forest/10 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl"
             >
-              <feature.icon className="h-6 w-6 stroke-current stroke-[1.6] text-gold" />
-              <h3 className="mt-3 font-display text-lg text-forest">{feature.title}</h3>
-              <p className="mt-1.5 text-sm leading-relaxed text-ink/70">{feature.description}</p>
+              <div className="relative aspect-[3/2] overflow-hidden">
+                <Image
+                  src={feature.image}
+                  alt={feature.alt}
+                  fill
+                  sizes="(min-width: 640px) 33vw, 100vw"
+                  className="transform-gpu object-cover transition duration-700 group-hover:scale-110"
+                />
+              </div>
+              <div className="p-5">
+                <feature.icon className="h-6 w-6 stroke-current stroke-[1.6] text-gold" />
+                <h3 className="mt-3 font-display text-lg text-forest">{feature.title}</h3>
+                <p className="mt-1.5 text-sm leading-relaxed text-ink/70">{feature.description}</p>
+              </div>
             </div>
           ))}
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-12">
-        <h2 className="text-center font-display text-2xl text-forest">
-          Meaningful Meetings and Celebrations
-        </h2>
-        <p className="mx-auto mt-3 max-w-2xl text-center text-sm text-ink/70">
-          There are endless reasons to celebrate, and Sinclairs offers flexible meeting venues to
-          make your event memorable — be it a corporate triumph, a milestone, or an offsite that
-          feels like a getaway.
-        </p>
-        <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
-          {hotels.map((hotel) => (
-            <VenueTable key={hotel.slug} hotel={hotel} />
-          ))}
+      <section className="border-y border-forest/10 bg-white py-12">
+        <div className="mx-auto max-w-7xl px-6">
+          <h2 className="text-center font-display text-2xl text-forest">
+            Conference &amp; Banquet Venues
+          </h2>
+          <p className="mx-auto mt-3 max-w-2xl text-center text-sm text-ink/70">
+            There are endless reasons to celebrate, and Sinclairs offers flexible meeting venues to
+            make your event memorable — be it a corporate triumph, a milestone, or an offsite that
+            feels like a getaway.
+          </p>
+          <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {venueHotels.map((hotel) => (
+              <MeetingVenueCard key={hotel.slug} hotel={hotel} />
+            ))}
+          </div>
         </div>
       </section>
 
-      <section className="relative flex h-[36vh] min-h-[280px] items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 animate-hero-zoom">
-          <Image
-            src="/images/meetings-events/conference-setup.jpg"
-            alt=""
-            fill
-            sizes="100vw"
-            className="object-cover"
-          />
-        </div>
-        <div className="absolute inset-0 bg-forest-dark/75" />
-        <div className="relative px-6 text-center text-cream">
-          <h2 className="font-display text-3xl drop-shadow-lg sm:text-4xl">Plan Your Event</h2>
-          <p className="mx-auto mt-3 max-w-md text-sm text-cream/80">
-            Tell us about your requirements and our sales team will get back to you with venue
-            options and a quote.
-          </p>
-          <Link
-            href="/enquiry"
-            className="mt-6 inline-block rounded bg-gold px-8 py-3 text-sm uppercase tracking-wider text-forest-dark transition duration-300 hover:bg-gold-light hover:shadow-lg"
-          >
-            Enquire Now
-          </Link>
-        </div>
-      </section>
+      <ClosingCta
+        image="/images/hotels/ooty/gallery/The Regal room.webp"
+        heading="Plan Your Event"
+        body="Tell us about your requirements and our sales team will get back to you with venue options and a quote."
+        href="/enquiry"
+      />
     </div>
   );
 }

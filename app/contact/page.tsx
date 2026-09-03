@@ -1,5 +1,6 @@
 import { hotels } from '@/content/hotels';
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 
 const propertyEmails: Record<string, string> = {
@@ -21,68 +22,105 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <div className="mx-auto max-w-5xl px-6 py-10 sm:py-16">
-      <div className="mb-12 text-center">
-        <p className="text-xs uppercase tracking-[0.3em] text-gold">Get In Touch</p>
-        <h1 className="mt-4 font-display text-4xl text-forest">Contact Us</h1>
-      </div>
-
-      <div className="grid grid-cols-1 gap-10 sm:grid-cols-2">
-        <div className="rounded-lg border border-forest/10 bg-white p-8 shadow-sm transition hover:shadow-md">
-          <h2 className="font-display text-xl text-forest">Reservations &amp; Sales</h2>
-          <dl className="mt-4 space-y-3 text-sm">
-            <div>
-              <dt className="text-xs uppercase tracking-wider text-ink/50">Toll Free</dt>
-              <dd className="mt-1">1800 120 267 000</dd>
-            </div>
-            <div>
-              <dt className="text-xs uppercase tracking-wider text-ink/50">Reservations</dt>
-              <dd className="mt-1">
-                <a
-                  href="mailto:reservations@sinclairshotels.com"
-                  className="break-words hover:text-gold"
-                >
-                  reservations@sinclairshotels.com
-                </a>
-              </dd>
-            </div>
-            <div>
-              <dt className="text-xs uppercase tracking-wider text-ink/50">Sales</dt>
-              <dd className="mt-1">
-                <a href="mailto:sales@sinclairshotels.com" className="break-words hover:text-gold">
-                  sales@sinclairshotels.com
-                </a>
-              </dd>
-            </div>
-          </dl>
-          <Link
-            href="/enquiry"
-            className="mt-6 inline-block rounded bg-forest px-6 py-3 text-sm uppercase tracking-wider text-cream transition hover:bg-forest-dark"
-          >
-            Send an Enquiry
-          </Link>
+    <div>
+      <section className="relative flex h-[42vh] min-h-[320px] items-end overflow-hidden">
+        <div className="absolute inset-0 animate-hero-zoom">
+          <Image
+            src="/images/hotels/dooars/amenities/Welcoming guest with the traditional khada.webp"
+            alt="A guest welcomed at reception with the traditional khada scarf"
+            fill
+            priority
+            className="object-cover"
+            sizes="100vw"
+          />
         </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-forest-dark/95 via-forest-dark/50 to-forest-dark/15" />
+        <div className="relative mx-auto w-full max-w-7xl px-6 pb-14 text-cream">
+          <div className="animate-fade-up">
+            <div className="flex items-center gap-3">
+              <span className="h-px w-10 bg-gold" />
+              <p className="text-xs uppercase tracking-[0.3em] text-cream drop-shadow-md">
+                Get In Touch
+              </p>
+            </div>
+            <h1 className="mt-4 font-display text-4xl leading-tight sm:text-5xl">Contact Us</h1>
+            <p className="mt-4 max-w-xl text-base text-cream/85">
+              Reach our reservations and sales teams, or connect directly with any of our nine
+              properties across India.
+            </p>
+          </div>
+        </div>
+      </section>
 
-        <div className="rounded-lg border border-forest/10 bg-white p-8 shadow-sm transition hover:shadow-md">
-          <h2 className="font-display text-xl text-forest">Property Contacts</h2>
-          <ul className="mt-4 space-y-3 text-sm">
-            {hotels.map((hotel) => {
-              const email = propertyEmails[hotel.slug];
-              return (
-                <li
-                  key={hotel.slug}
-                  className="flex flex-col gap-0.5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-3"
-                >
-                  <span>{hotel.name}</span>
-                  {email && (
-                    <a href={`mailto:${email}`} className="break-words text-gold hover:text-forest">
-                      {email}
-                    </a>
-                  )}
-                </li>
-              );
-            })}
-          </ul>
+      <div className="mx-auto max-w-5xl px-6 py-10 sm:py-16">
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2">
+          <div className="rounded-lg border border-forest/10 bg-white p-8 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+            <h2 className="font-display text-xl text-forest">Reservations &amp; Sales</h2>
+            <dl className="mt-4 space-y-3 text-sm">
+              <div>
+                <dt className="text-xs uppercase tracking-wider text-ink/50">Toll Free</dt>
+                <dd className="mt-1">1800 120 267 000</dd>
+              </div>
+              <div>
+                <dt className="text-xs uppercase tracking-wider text-ink/50">Reservations</dt>
+                <dd className="mt-1">
+                  <a
+                    href="mailto:reservations@sinclairshotels.com"
+                    className="break-words hover:text-gold"
+                  >
+                    reservations@sinclairshotels.com
+                  </a>
+                </dd>
+              </div>
+              <div>
+                <dt className="text-xs uppercase tracking-wider text-ink/50">Sales</dt>
+                <dd className="mt-1">
+                  <a
+                    href="mailto:sales@sinclairshotels.com"
+                    className="break-words hover:text-gold"
+                  >
+                    sales@sinclairshotels.com
+                  </a>
+                </dd>
+              </div>
+            </dl>
+            <Link
+              href="/enquiry"
+              className="mt-6 inline-block rounded bg-forest px-6 py-3 text-sm uppercase tracking-wider text-cream transition hover:bg-forest-dark"
+            >
+              Send an Enquiry
+            </Link>
+          </div>
+
+          <div className="rounded-lg border border-forest/10 bg-white p-8 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+            <h2 className="font-display text-xl text-forest">Property Contacts</h2>
+            <ul className="mt-4 divide-y divide-forest/10 text-sm">
+              {hotels.map((hotel) => {
+                const email = propertyEmails[hotel.slug];
+                return (
+                  <li
+                    key={hotel.slug}
+                    className="flex flex-col gap-1 py-3 first:pt-0 last:pb-0 sm:flex-row sm:items-center sm:justify-between sm:gap-3"
+                  >
+                    <div>
+                      <p className="text-ink/90">{hotel.name}</p>
+                      <p className="text-xs text-ink/50">
+                        {hotel.location}, {hotel.state}
+                      </p>
+                    </div>
+                    {email && (
+                      <a
+                        href={`mailto:${email}`}
+                        className="shrink-0 break-words text-gold hover:text-forest"
+                      >
+                        {email}
+                      </a>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
         </div>
       </div>
     </div>

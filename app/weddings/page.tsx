@@ -1,4 +1,5 @@
-import { EditorialRow } from '@/components/editorial-row';
+import { ClosingCta } from '@/components/closing-cta';
+import { HeroCarousel } from '@/components/hero-carousel';
 import {
   CakeIcon,
   CameraIcon,
@@ -7,39 +8,48 @@ import {
   HeartIcon,
   MusicIcon,
 } from '@/components/service-icons';
-import { VenueTable } from '@/components/venue-table';
+import { WeddingVenueCard } from '@/components/wedding-venue-card';
 import { hotels } from '@/content/hotels';
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import Link from 'next/link';
+
+const heroImages = [
+  '/images/weddings/Wedding-Lattice.webp',
+  '/images/weddings/Wedding-Portrait.webp',
+  '/images/hotels/udaipur/weddings/A Royal Fairytale.webp',
+];
+
+const moments = [
+  {
+    title: 'Memorable Weddings',
+    hook: 'Green lawns, poolside portraits, terrace cocktails — indoors or out, exclusively yours.',
+    image: '/images/hotels/darjeeling/weddings/Haldi.webp',
+    alt: 'Haldi ceremony celebrations at Sinclairs Darjeeling',
+  },
+  {
+    title: 'Help Us Plan Your Day',
+    hook: 'An in-house team, curated partners, and a menu crafted just for you.',
+    image: '/images/weddings/Mehendi.webp',
+    alt: 'Mehendi ceremony decor at a Sinclairs wedding',
+  },
+  {
+    title: 'A Tasteful Wedding Menu',
+    hook: 'A symphony of flavours from across India, plated with care.',
+    image: '/images/hotels/burdwan/weddings/wedding feast.webp',
+    alt: 'A wedding feast laid out at Sinclairs Burdwan',
+  },
+  {
+    title: 'Lavish Stays',
+    hook: 'Spacious suites and plush interiors for you and every guest.',
+    image: '/images/hotels/darjeeling/accommodations/kanchenjunga-room/Kanchenjunga Room 1.webp',
+    alt: 'The Kanchenjunga Room at Sinclairs Darjeeling, with panoramic mountain views',
+  },
+];
 
 export const metadata: Metadata = {
   title: 'Weddings',
   description: 'Celebrate your wedding at a Sinclairs property, from the mountains to the coast.',
 };
-
-const gallery = [
-  {
-    src: '/images/weddings/mandap-entrance.jpg',
-    alt: 'A floral mandap entrance lit up for an evening wedding',
-  },
-  {
-    src: '/images/weddings/wedding-couple-portrait.jpg',
-    alt: 'A newly married couple in traditional Indian wedding attire',
-  },
-  {
-    src: '/images/weddings/wedding-reception-dance.jpg',
-    alt: 'A couple dancing at their wedding reception under festive lights',
-  },
-  { src: '/images/weddings/celebration-toast.jpg', alt: 'Guests raising a toast in celebration' },
-];
-
-const stats = [
-  { value: '26', label: 'Event Rooms' },
-  { value: '45,570', label: 'Sq Ft of Event Space' },
-  { value: '500', label: 'Capacity, Largest Space' },
-  { value: '18', label: 'Breakout Rooms' },
-];
 
 const occasions = [
   'Roka',
@@ -62,21 +72,25 @@ const services = [
   { label: 'Honeymoon Planning', icon: HeartIcon },
 ];
 
+const weddingHotels = hotels.filter((hotel) => hotel.weddings);
+const totalVenues = hotels.reduce((sum, h) => sum + (h.eventSpaces?.venues.length ?? 0), 0);
+const totalSqFt = hotels.reduce((sum, h) => sum + (h.eventSpaces?.totalSqFt ?? 0), 0);
+const largestCapacity = Math.max(...hotels.map((h) => h.eventSpaces?.maxCapacity ?? 0));
+
+const stats = [
+  { value: String(totalVenues), label: 'Banquet Venues' },
+  { value: totalSqFt.toLocaleString('en-IN'), label: 'Sq Ft of Event Space' },
+  { value: largestCapacity.toLocaleString('en-IN'), label: 'Capacity, Largest Venue' },
+  { value: String(weddingHotels.length), label: 'Wedding Destinations' },
+];
+
 export default function WeddingsPage() {
   return (
     <div>
-      <section className="relative flex h-[58vh] min-h-[400px] items-end overflow-hidden">
-        <div className="absolute inset-0 animate-hero-zoom">
-          <Image
-            src="/images/weddings/wedding-hero-bride.jpg"
-            alt="A bride adjusting her jewellery, seen through an ornate golden lattice"
-            fill
-            priority
-            className="object-cover"
-            sizes="100vw"
-          />
-        </div>
+      <section className="relative flex h-[72vh] min-h-[480px] items-end overflow-hidden">
+        <HeroCarousel images={heroImages} alt="Weddings at Sinclairs Hotels &amp; Resorts" />
         <div className="absolute inset-0 bg-gradient-to-t from-forest-dark/95 via-forest-dark/50 to-forest-dark/15" />
+        <div className="pointer-events-none absolute inset-4 border border-cream/25 sm:inset-8" />
         <div className="relative mx-auto w-full max-w-7xl px-6 pb-16 text-cream">
           <div className="animate-fade-up">
             <div className="flex items-center gap-3">
@@ -88,7 +102,7 @@ export default function WeddingsPage() {
             <h1 className="mt-5 font-display text-4xl leading-[1.1] sm:text-6xl sm:leading-[1.05] lg:text-7xl">
               Unforgettable Elegance,
               <br />
-              Timeless Style
+              <span className="italic text-gold-light">Timeless Style</span>
             </h1>
             <p className="mt-5 max-w-2xl text-lg leading-relaxed text-cream/85">
               Your moment, your way — where happily ever after begins. At Sinclairs, we promise a
@@ -110,59 +124,43 @@ export default function WeddingsPage() {
         </div>
       </div>
 
-      <section className="bg-forest/5 pt-16">
-        <EditorialRow
-          title="Memorable Weddings"
-          body="Your fairy tale wedding will come alive at Sinclairs Hotels. Whether it means holding your ceremony on a green lawn, taking portraits by the pool, or hosting a cocktail party on the terrace, we offer intimate indoor and outdoor options, with private and exclusive use of the entire property."
-          image="/images/weddings/haldi-celebration.jpg"
-          alt="Guests showering the bride with flower petals at a Haldi celebration"
-          imageSide="right"
-        />
-        <EditorialRow
-          title="Help Us Plan Your Special Day"
-          body="Our in-house team will help you plan an unforgettable wedding tailored to your needs, collaborating with curated partners for everything from bespoke fresh florals to exquisite table details. Our Chef will prepare an exquisite menu that you and your loved ones will cherish."
-          image="/images/weddings/bride-portrait-pink.jpg"
-          alt="A bride in a pink and gold lehenga adjusting her earring"
-          imageSide="left"
-        />
-        <EditorialRow
-          title="A Tasteful Wedding Menu"
-          body="Immerse in an opulent dining experience featuring a symphony of gastronomical delights. We can customise a menu that features ingredients from all over India, from grab-and-go counters to traditional food platters."
-          image="/images/weddings/wedding-menu-spread.jpg"
-          alt="A spread of Indian wedding banquet dishes in silver and gold serving ware"
-          imageSide="right"
-        />
-        <EditorialRow
-          title="Lavish Stays at Inspiring Venues"
-          body="Nestled in the best locations, our accommodations embody sophistication and comfort. From spacious guest rooms to lavish suites, each space is a haven of tranquility. Our rooms have plush interiors and modern amenities that can accommodate all your wedding guests."
-          image="/images/weddings/couple-mandap.jpg"
-          alt="A newly engaged couple standing beneath a mandap decorated with garlands"
-          imageSide="left"
-        />
+      <section className="py-16">
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="grid grid-cols-2 gap-x-5 gap-y-10 sm:grid-cols-4">
+            {moments.map((moment, i) => (
+              <div key={moment.title} className={i % 2 === 1 ? 'sm:mt-10' : ''}>
+                <div className="relative aspect-[3/4] overflow-hidden rounded-lg shadow-sm">
+                  <Image
+                    src={moment.image}
+                    alt={moment.alt}
+                    fill
+                    sizes="(min-width: 640px) 23vw, 45vw"
+                    className="transform-gpu object-cover"
+                  />
+                </div>
+                <div className="mt-3">
+                  <span className="font-display text-lg text-gold/60">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <h3 className="mt-0.5 font-display text-base text-forest">{moment.title}</h3>
+                  <p className="mt-1 text-xs leading-relaxed text-ink/70">{moment.hook}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </section>
 
-      <section className="py-10 sm:py-16">
+      <section className="border-y border-forest/10 bg-white py-12">
         <div className="mx-auto max-w-7xl px-6">
-          <h2 className="text-center font-display text-2xl text-forest">
-            Moments We&rsquo;ve Captured
-          </h2>
-          <div className="mt-8 grid auto-rows-[200px] grid-cols-2 gap-3 sm:grid-cols-4">
-            {gallery.map((image, i) => (
-              <div
-                key={image.src}
-                className={`group relative overflow-hidden rounded-lg ${
-                  i === 0 ? 'col-span-2 row-span-2' : ''
-                }`}
-              >
-                <Image
-                  src={image.src}
-                  alt={image.alt}
-                  fill
-                  sizes="(min-width: 768px) 33vw, 50vw"
-                  className="object-cover transition duration-500 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-forest-dark/0 transition group-hover:bg-forest-dark/10" />
-              </div>
+          <h2 className="text-center font-display text-2xl text-forest">Wedding Destinations</h2>
+          <p className="mx-auto mt-3 max-w-2xl text-center text-sm text-ink/70">
+            From Himalayan hilltops to a Rajasthani palace to an oceanfront in the Andamans — nine
+            settings, each with its own character.
+          </p>
+          <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+            {weddingHotels.map((hotel) => (
+              <WeddingVenueCard key={hotel.slug} hotel={hotel} />
             ))}
           </div>
         </div>
@@ -170,75 +168,32 @@ export default function WeddingsPage() {
 
       <section className="mx-auto max-w-5xl px-6 py-12">
         <h2 className="text-center font-display text-2xl text-forest">Wedding Events</h2>
-        <div className="mx-auto mt-6 flex max-w-3xl flex-wrap justify-center gap-3">
-          {occasions.map((occasion) => (
-            <span
-              key={occasion}
-              className="rounded-full border border-gold/40 px-4 py-1.5 text-sm text-ink/80"
-            >
+        <p className="mx-auto mt-4 max-w-3xl text-center text-sm leading-loose text-ink/70">
+          {occasions.map((occasion, i) => (
+            <span key={occasion}>
               {occasion}
+              {i < occasions.length - 1 && <span className="mx-3 text-gold/50">&middot;</span>}
             </span>
           ))}
-        </div>
+        </p>
 
         <h2 className="mt-14 text-center font-display text-2xl text-forest">Our Services</h2>
-        <div className="mx-auto mt-6 flex max-w-3xl flex-wrap justify-center gap-3">
+        <div className="mx-auto mt-6 grid max-w-2xl grid-cols-2 gap-x-8 gap-y-4 sm:grid-cols-3">
           {services.map((service) => (
-            <span
-              key={service.label}
-              className="flex items-center gap-2 rounded-full bg-forest/5 px-4 py-1.5 text-sm text-ink/80"
-            >
-              <service.icon className="h-4 w-4 stroke-current fill-none stroke-2 text-gold" />
-              {service.label}
-            </span>
+            <div key={service.label} className="flex items-center gap-2.5">
+              <service.icon className="h-5 w-5 shrink-0 stroke-current fill-none stroke-2 text-gold" />
+              <span className="text-sm text-ink/80">{service.label}</span>
+            </div>
           ))}
         </div>
       </section>
 
-      <section className="border-y border-forest/10 bg-white py-12">
-        <div className="mx-auto max-w-7xl px-6">
-          <h2 className="text-center font-display text-2xl text-forest">
-            Banquet Rooms for Every Occasion
-          </h2>
-          <p className="mx-auto mt-3 max-w-2xl text-center text-sm text-ink/70">
-            From breathtaking banquet rooms to scenic outdoor spaces, Sinclairs offers a variety of
-            venues to suit every couple&rsquo;s style.
-          </p>
-          <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
-            {hotels.map((hotel) => (
-              <VenueTable key={hotel.slug} hotel={hotel} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="relative flex h-[36vh] min-h-[280px] items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 animate-hero-zoom">
-          <Image
-            src="/images/weddings/celebration-toast.jpg"
-            alt=""
-            fill
-            sizes="100vw"
-            className="object-cover"
-          />
-        </div>
-        <div className="absolute inset-0 bg-forest-dark/75" />
-        <div className="relative px-6 text-center text-cream">
-          <h2 className="font-display text-3xl drop-shadow-lg sm:text-4xl">
-            Contact Us, We Are Happy to Help
-          </h2>
-          <p className="mx-auto mt-3 max-w-md text-sm text-cream/80">
-            Share your wedding dates, guest count, and preferred property, and our events team will
-            reach out with options.
-          </p>
-          <Link
-            href="/enquiry"
-            className="mt-6 inline-block rounded bg-gold px-8 py-3 text-sm uppercase tracking-wider text-forest-dark transition duration-300 hover:bg-gold-light hover:shadow-lg"
-          >
-            Enquire Now
-          </Link>
-        </div>
-      </section>
+      <ClosingCta
+        image="/images/weddings/Wedding-Portrait.webp"
+        heading="Contact Us, We Are Happy to Help"
+        body="Share your wedding dates, guest count, and preferred property, and our events team will reach out with options."
+        href="/enquiry"
+      />
     </div>
   );
 }

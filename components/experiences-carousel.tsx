@@ -33,7 +33,7 @@ export function ExperiencesCarousel({ experiences }: { experiences: Experience[]
                 alt={experience.title}
                 fill
                 sizes="340px"
-                className="object-cover transition duration-500 group-hover:scale-105"
+                className="transform-gpu object-cover transition duration-500 group-hover:scale-105"
               />
             </div>
             <div className="p-5">

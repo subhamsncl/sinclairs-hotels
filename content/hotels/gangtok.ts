@@ -8,6 +8,8 @@ export const gangtokHotel: Hotel = {
   tagline: 'The paradise of the Northeast',
   description:
     "Strategically located at the Cherry complex in the Zero Point development area, less than a kilometre from M G Marg, Sinclairs Gangtok offers a spectacular view of the entire town against the backdrop of the Kanchenjunga range. The cozy boutique hotel has 60 rooms, including four large suites, four family rooms and four Valentine Rooms ideal for honeymooners, with the majority of rooms overlooking the alluring Himalayan range. Guests can relish authentic and international cuisine at the multi-cuisine restaurant Magnolia, unwind with a drink at the Guras Bar & Lounge, or relax by the infinity swimming pool with its adjoining kids' pool.",
+  history:
+    "The group's Himalayan property since 2020, in a town that grew from a 19th-century monastery settlement into the capital of Sikkim after the kingdom became India's 22nd state in 1975.",
   heroImage: '/images/hotels/gangtok/destination/Sinclairs-Gangtok-with-Pool.jpg',
   heroGallery: [
     '/images/hotels/gangtok/destination/Sinclairs-Gangtok-with-Pool.jpg',
@@ -208,25 +210,40 @@ export const gangtokHotel: Hotel = {
     },
   ],
   sightseeing: [
-    'Tashi View Point',
-    'Hanuman Tok',
-    'Ganesh Tok',
-    'Flower Exhibition Centre',
-    'Cottage Industry and Handicraft Centre',
-    'Namgyal Institute of Tibetology',
-    'Do-drul Chorten',
-    'Rumtek Monastery',
-    'Banjhakri Falls',
-    'Seven Sister Water Falls',
-    'Himalayan Zoological Park',
-    'Tsomgo Lake',
-    'Baba Mandir',
-    'Nathula Pass',
-    'Lachung',
-    'Yumthang Valley',
-    'Ravangla',
-    'Pelling',
-    'Pemayangtse Monastery',
+    { name: 'Tashi View Point', image: '/images/hotels/gangtok/explore/tashi view point.webp' },
+    { name: 'Hanuman Tok', image: '/images/hotels/gangtok/explore/hanuman tok.webp' },
+    { name: 'Ganesh Tok', image: '/images/hotels/gangtok/explore/ganesh tok.webp' },
+    {
+      name: 'Flower Exhibition Centre',
+      image: '/images/hotels/gangtok/explore/flower exhibition centre.webp',
+    },
+    { name: 'Cottage Industry and Handicraft Centre' },
+    {
+      name: 'Namgyal Institute of Tibetology',
+      image: '/images/hotels/gangtok/explore/namgyal institute.webp',
+    },
+    { name: 'Do-drul Chorten', image: '/images/hotels/gangtok/explore/drodul.webp' },
+    {
+      name: 'Rumtek Monastery',
+      image: '/images/hotels/gangtok/explore/rumtek monastery.webp',
+    },
+    { name: 'Banjhakri Falls', image: '/images/hotels/gangtok/explore/banjhakri.webp' },
+    { name: 'Seven Sister Water Falls', image: '/images/hotels/gangtok/explore/seven sister.webp' },
+    { name: 'Himalayan Zoological Park', image: '/images/hotels/gangtok/explore/zoo.webp' },
+    {
+      name: 'Tsomgo Lake',
+      image: '/images/hotels/gangtok/explore/Gangtok Tsogmo Lake.webp',
+    },
+    { name: 'Baba Mandir', image: '/images/hotels/gangtok/explore/baba mandir.webp' },
+    { name: 'Nathula Pass', image: '/images/hotels/gangtok/explore/nathula.webp' },
+    { name: 'Lachung', image: '/images/hotels/gangtok/explore/lachung.webp' },
+    { name: 'Yumthang Valley', image: '/images/hotels/gangtok/explore/yumgtang.webp' },
+    { name: 'Ravangla', image: '/images/hotels/gangtok/explore/ravangla.webp' },
+    { name: 'Pelling', image: '/images/hotels/gangtok/explore/pelling.webp' },
+    {
+      name: 'Pemayangtse Monastery',
+      image: '/images/hotels/gangtok/explore/pemeyanchi.webp',
+    },
   ],
   eventSpaces: {
     totalSqFt: 4728,
@@ -235,6 +252,66 @@ export const gangtokHotel: Hotel = {
       { name: 'The Cherry Hall (Lower)', areaSqFt: 2240, capacity: 110 },
       { name: 'The Cherry Hall (Upper)', areaSqFt: 1468, capacity: 80 },
       { name: 'Jasmine Hall', areaSqFt: 510, capacity: 30 },
+    ],
+  },
+  weddings: {
+    intro:
+      'Say your vows with the Kanchenjunga range as a backdrop. Sinclairs Gangtok pairs an intimate banquet hall with honeymoon-ready Valentine Rooms for a wedding that feels personal, not production-line.',
+    highlights: [
+      'The Cherry Hall seats up to 110 guests',
+      'Dedicated haldi, mehendi and sangeet arrangements',
+      'Valentine Rooms for the newlyweds',
+      'Multi-cuisine wedding menus at Magnolia',
+    ],
+    gallery: [
+      {
+        src: '/images/hotels/gangtok/weddings/Gangtok bridal shower.webp',
+        alt: 'A bridal shower celebration at Sinclairs Gangtok',
+      },
+      {
+        src: '/images/hotels/gangtok/weddings/gangtok wedding himalayan  inspired decor.webp',
+        alt: 'Himalayan-inspired wedding decor at Sinclairs Gangtok',
+      },
+      {
+        src: '/images/hotels/gangtok/weddings/Gangtok Wedding Peaceful Intimate atmosphere.webp',
+        alt: 'An intimate wedding celebration at Sinclairs Gangtok',
+      },
+      {
+        src: '/images/hotels/gangtok/weddings/Gangtok Wedding Rich cultural heritage.webp',
+        alt: 'A wedding celebrating Sikkimese cultural heritage at Sinclairs Gangtok',
+      },
+      {
+        src: '/images/hotels/gangtok/weddings/gangtok mehendi.webp',
+        alt: 'Mehendi ceremony decor at Sinclairs Gangtok',
+      },
+      {
+        src: '/images/hotels/gangtok/weddings/Gangtok Haldi Ceremony.webp',
+        alt: 'Haldi ceremony celebrations at Sinclairs Gangtok',
+      },
+    ],
+  },
+  meetings: {
+    intro:
+      'The Cherry Hall and Jasmine Hall give Sinclairs Gangtok two well-equipped conference spaces just minutes from MG Marg, backed by mountain views that make even a full-day offsite feel like a retreat.',
+    highlights: [
+      'The Cherry Hall (Lower & Upper) and Jasmine Hall',
+      'Up to 110 guests theatre-style',
+      'In-house catering at Magnolia and Guras Bar',
+      'Transfers to NJP/Bagdogra airport',
+    ],
+    gallery: [
+      {
+        src: '/images/hotels/gangtok/amenities/TheCherryHall2.webp',
+        alt: 'The Cherry Hall set up in conference style at Sinclairs Gangtok',
+      },
+      {
+        src: '/images/hotels/gangtok/amenities/TheCherryHall4.webp',
+        alt: 'The Cherry Hall banquet venue at Sinclairs Gangtok',
+      },
+      {
+        src: '/images/hotels/gangtok/amenities/JasmineHall.webp',
+        alt: 'Jasmine Hall, a versatile function room at Sinclairs Gangtok',
+      },
     ],
   },
   mapEmbedUrl:

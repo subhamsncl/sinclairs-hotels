@@ -131,7 +131,7 @@ export function Footer() {
       </div>
 
       <div className="border-t border-cream/10">
-        <div className="mx-auto flex max-w-7xl flex-col items-center gap-2 px-6 py-6 text-center text-xs text-cream/50 sm:flex-row sm:justify-between sm:text-left">
+        <div className="mx-auto flex max-w-7xl flex-col items-center gap-2 px-6 py-6 pb-24 text-center text-xs text-cream/50 sm:flex-row sm:justify-between sm:pb-6 sm:text-left">
           <p>
             © {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
           </p>

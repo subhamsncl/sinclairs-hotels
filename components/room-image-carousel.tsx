@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export function RoomImageCarousel({
   images,
@@ -14,15 +14,24 @@ export function RoomImageCarousel({
 }) {
   const [index, setIndex] = useState(0);
   const [hovering, setHovering] = useState(false);
+  const intervalMs = useRef(3800 + Math.random() * 2400);
+  const startDelay = useRef(Math.random() * 2000);
 
   useEffect(() => {
     if (images.length <= 1 || hovering) return;
-    const id = setInterval(() => setIndex((i) => (i + 1) % images.length), 4000);
-    return () => clearInterval(id);
+    const timeout = setTimeout(() => {
+      setIndex((i) => (i + 1) % images.length);
+    }, startDelay.current);
+    const id = setInterval(() => {
+      setIndex((i) => (i + 1) % images.length);
+    }, intervalMs.current);
+    return () => {
+      clearTimeout(timeout);
+      clearInterval(id);
+    };
   }, [images.length, hovering]);
 
-  const src = images[index] ?? images[0];
-  if (!src) return null;
+  if (images.length === 0) return null;
 
   const go = (delta: number) => {
     setIndex((i) => (i + delta + images.length) % images.length);
@@ -34,14 +43,22 @@ export function RoomImageCarousel({
       onMouseEnter={() => setHovering(true)}
       onMouseLeave={() => setHovering(false)}
     >
-      <Image
-        key={src}
-        src={src}
-        alt={alt}
-        fill
-        sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-        className="animate-fade-up object-cover transition duration-500 group-hover:scale-105"
-      />
+      {images.map((src, i) => (
+        <div
+          key={src}
+          className={`absolute inset-0 transition-opacity duration-[1100ms] ease-in-out ${
+            i === index ? 'opacity-100' : 'opacity-0'
+          }`}
+        >
+          <Image
+            src={src}
+            alt={alt}
+            fill
+            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+            className="transform-gpu object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+        </div>
+      ))}
       {images.length > 1 && (
         <>
           <button
@@ -52,7 +69,7 @@ export function RoomImageCarousel({
               e.stopPropagation();
               go(-1);
             }}
-            className="absolute left-2 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-forest-dark/40 text-cream opacity-0 backdrop-blur-sm transition hover:bg-forest-dark/70 group-hover/carousel:opacity-100"
+            className="absolute left-2 top-1/2 z-10 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-forest-dark/40 text-cream opacity-0 backdrop-blur-sm transition hover:bg-forest-dark/70 group-hover/carousel:opacity-100"
           >
             <svg
               viewBox="0 0 24 24"
@@ -73,7 +90,7 @@ export function RoomImageCarousel({
               e.stopPropagation();
               go(1);
             }}
-            className="absolute right-2 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-forest-dark/40 text-cream opacity-0 backdrop-blur-sm transition hover:bg-forest-dark/70 group-hover/carousel:opacity-100"
+            className="absolute right-2 top-1/2 z-10 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-forest-dark/40 text-cream opacity-0 backdrop-blur-sm transition hover:bg-forest-dark/70 group-hover/carousel:opacity-100"
           >
             <svg
               viewBox="0 0 24 24"
@@ -86,7 +103,7 @@ export function RoomImageCarousel({
               <path d="M9 18l6-6-6-6" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </button>
-          <div className="absolute inset-x-0 bottom-2 flex justify-center gap-1.5">
+          <div className="absolute inset-x-0 bottom-2 z-10 flex justify-center gap-1.5">
             {images.map((img, i) => (
               <button
                 key={img}

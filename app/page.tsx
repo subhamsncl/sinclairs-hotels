@@ -5,12 +5,23 @@ import { FoodStrip } from '@/components/food-strip';
 import { HotelCard } from '@/components/hotel-card';
 import { JourneyHero } from '@/components/journey-hero';
 import { Reveal } from '@/components/reveal';
+import { SpotlightGallery } from '@/components/spotlight-gallery';
 import { awards } from '@/content/awards';
 import { experiences } from '@/content/experiences';
 import { hotels } from '@/content/hotels';
 import { reviews } from '@/content/reviews';
 import Image from 'next/image';
 import Link from 'next/link';
+
+const sightseeingPhotos = hotels.flatMap((hotel) =>
+  hotel.sightseeing
+    .filter((spot) => spot.image)
+    .slice(0, 3)
+    .map((spot) => ({
+      src: spot.image as string,
+      alt: `${spot.name}, near ${hotel.name} in ${hotel.location}`,
+    })),
+);
 
 const cuisineDishes = [
   {
@@ -48,7 +59,7 @@ const cuisineDishes = [
 ];
 
 export default function HomePage() {
-  const [, secondaryTop, secondaryBottom] = hotels;
+  const [, , secondaryBottom] = hotels;
   const states = new Set(hotels.map((h) => h.state)).size;
   const totalDining = hotels.reduce((sum, h) => sum + h.dining.length, 0);
   const totalEventSpaces = hotels.reduce((sum, h) => sum + (h.eventSpaces?.venues.length ?? 0), 0);
@@ -144,6 +155,20 @@ export default function HomePage() {
         </div>
       </section>
 
+      <section className="mx-auto flex min-h-screen max-w-7xl flex-col justify-center px-6 py-10">
+        <Reveal className="mb-6 text-center">
+          <p className="text-xs uppercase tracking-[0.3em] text-gold">Nearby Every Property</p>
+          <h2 className="mt-3 font-display text-3xl text-forest sm:text-4xl">
+            A World to Explore, Just Outside
+          </h2>
+          <p className="mx-auto mt-3 max-w-xl text-sm text-ink/70">
+            From misty tea gardens to royal forts, ancient monasteries to island beaches — a glimpse
+            of what&rsquo;s waiting near every Sinclairs address.
+          </p>
+        </Reveal>
+        <SpotlightGallery images={sightseeingPhotos} />
+      </section>
+
       <section className="border-y border-forest/10 bg-white py-14 sm:py-20">
         <div className="mx-auto max-w-7xl px-6">
           <Reveal className="mb-10 text-center">
@@ -167,23 +192,26 @@ export default function HomePage() {
       />
 
       <section className="mx-auto max-w-6xl px-6 py-14 sm:py-20">
-        <div className="mb-10 text-center">
-          <h2 className="font-display text-3xl text-forest sm:text-4xl">
+        <Reveal className="mb-10 text-center">
+          <p className="text-xs uppercase tracking-[0.3em] text-gold">Celebrate With Us</p>
+          <h2 className="mt-4 font-display text-3xl text-forest sm:text-4xl">
             Unforgettable Events and Weddings Await You
           </h2>
-        </div>
+          <p className="mx-auto mt-4 max-w-xl text-sm text-ink/70">
+            From an intimate boardroom to a 700-guest reception, every property comes with the
+            venues, catering and service to match the occasion.
+          </p>
+        </Reveal>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-          <div className="group overflow-hidden rounded-lg border border-forest/10 bg-white shadow-sm transition hover:shadow-xl">
-            <div className="relative aspect-[4/3] overflow-hidden">
-              {secondaryTop && (
-                <Image
-                  src={secondaryTop.heroImage}
-                  alt="Events and conferences at Sinclairs"
-                  fill
-                  sizes="(min-width: 640px) 50vw, 100vw"
-                  className="object-cover transition duration-500 group-hover:scale-105"
-                />
-              )}
+          <div className="group overflow-hidden rounded-lg border border-forest/10 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+            <div className="relative aspect-[16/11] overflow-hidden">
+              <Image
+                src="/images/hotels/darjeeling/amenities/Sinclairs-Darjeeling-Pinnacle-Setup-1.webp"
+                alt="A conference set up in The Pinnacle banquet hall at Sinclairs Darjeeling"
+                fill
+                sizes="(min-width: 640px) 50vw, 100vw"
+                className="transform-gpu object-cover transition duration-700 group-hover:scale-110"
+              />
             </div>
             <div className="p-6">
               <h3 className="font-display text-xl text-forest">Events &amp; Conferences</h3>
@@ -198,14 +226,14 @@ export default function HomePage() {
               </Link>
             </div>
           </div>
-          <div className="group overflow-hidden rounded-lg border border-forest/10 bg-white shadow-sm transition hover:shadow-xl">
-            <div className="relative aspect-[4/3] overflow-hidden">
+          <div className="group overflow-hidden rounded-lg border border-forest/10 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+            <div className="relative aspect-[16/11] overflow-hidden">
               <Image
-                src="/images/weddings/wedding-hero-bride.jpg"
-                alt="Weddings at Sinclairs"
+                src="/images/weddings/Wedding-Portrait.webp"
+                alt="A wedding celebration at a Sinclairs property"
                 fill
                 sizes="(min-width: 640px) 50vw, 100vw"
-                className="object-cover transition duration-500 group-hover:scale-105"
+                className="transform-gpu object-cover transition duration-700 group-hover:scale-110"
               />
             </div>
             <div className="p-6">
@@ -225,19 +253,19 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="bg-forest/5 py-14 sm:py-20">
+      <section className="bg-forest/5 py-10 sm:py-20">
         <div className="mx-auto max-w-6xl px-6">
           <Reveal className="text-center">
             <p className="text-xs uppercase tracking-[0.3em] text-gold">Recognised Excellence</p>
-            <h2 className="mt-4 font-display text-3xl text-forest sm:text-4xl">
+            <h2 className="mt-1.5 font-display text-2xl text-forest sm:mt-4 sm:text-4xl">
               Awards and Recognitions
             </h2>
-            <p className="mx-auto mt-4 max-w-xl text-sm text-ink/70">
+            <p className="mx-auto mt-2 max-w-xl text-xs text-ink/70 sm:mt-4 sm:text-sm">
               Six of our properties have been honoured with Tripadvisor&rsquo;s Travellers&rsquo;
               Choice Award 2026, ranking among the top hotels reviewed by travellers worldwide.
             </p>
           </Reveal>
-          <Reveal className="mt-12" delay={150}>
+          <Reveal className="mt-8 sm:mt-12" delay={150}>
             <AwardsSection awards={awards} reviews={reviews} />
           </Reveal>
         </div>

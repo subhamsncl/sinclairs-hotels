@@ -43,7 +43,7 @@ export function GalleryLightbox({ images }: { images: GalleryImage[] }) {
               alt={image.alt}
               fill
               sizes="(min-width: 768px) 25vw, 50vw"
-              className="object-cover transition duration-500 group-hover:scale-110"
+              className="transform-gpu object-cover transition duration-500 group-hover:scale-110"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-forest-dark/70 via-forest-dark/0 to-forest-dark/0 opacity-0 transition duration-300 group-hover:opacity-100" />
             <span className="absolute right-2 top-2 flex h-7 w-7 items-center justify-center rounded-full bg-forest-dark/40 text-cream opacity-0 backdrop-blur-sm transition duration-300 group-hover:opacity-100">
