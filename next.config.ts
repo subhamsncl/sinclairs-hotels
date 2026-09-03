@@ -11,6 +11,10 @@ const nextConfig: NextConfig = {
     // Content is static and only changes on redeploy, so cache optimized
     // variants for as long as possible instead of the 60s default.
     minimumCacheTTL: 31536000,
+    // Default (75) is fine for cards/thumbnails. Full-bleed heroes stretch an
+    // already-compressed 1600px source up to 3840px, so a second lossy pass
+    // at 75 compounds into visible haze — those opt into 90 explicitly.
+    qualities: [75, 90],
   },
 };
 

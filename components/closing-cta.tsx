@@ -17,7 +17,7 @@ export function ClosingCta({
   return (
     <section className="relative flex h-[36vh] min-h-[280px] items-center justify-center overflow-hidden">
       <div className="absolute inset-0 animate-hero-zoom">
-        <Image src={image} alt="" fill sizes="100vw" className="object-cover" />
+        <Image src={image} alt="" fill sizes="100vw" quality={90} className="object-cover" />
       </div>
       <div className="absolute inset-0 bg-forest-dark/75" />
       <div className="relative px-6 text-center text-cream">

@@ -29,6 +29,7 @@ export function HeroCarousel({ images, alt }: { images: string[]; alt: string })
               priority={i === 0}
               className="object-cover"
               sizes="100vw"
+              quality={90}
             />
           </div>
         </div>

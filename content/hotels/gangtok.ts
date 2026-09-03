@@ -10,7 +10,7 @@ export const gangtokHotel: Hotel = {
     "Strategically located at the Cherry complex in the Zero Point development area, less than a kilometre from M G Marg, Sinclairs Gangtok offers a spectacular view of the entire town against the backdrop of the Kanchenjunga range. The cozy boutique hotel has 60 rooms, including four large suites, four family rooms and four Valentine Rooms ideal for honeymooners, with the majority of rooms overlooking the alluring Himalayan range. Guests can relish authentic and international cuisine at the multi-cuisine restaurant Magnolia, unwind with a drink at the Guras Bar & Lounge, or relax by the infinity swimming pool with its adjoining kids' pool.",
   history:
     "The group's Himalayan property since 2020, in a town that grew from a 19th-century monastery settlement into the capital of Sikkim after the kingdom became India's 22nd state in 1975.",
-  heroImage: '/images/hotels/gangtok/destination/Sinclairs-Gangtok-with-Pool.jpg',
+  heroImage: '/images/hotels/gangtok/destination/SinclairsGangtoknightview.jpg',
   heroGallery: [
     '/images/hotels/gangtok/destination/Sinclairs-Gangtok-with-Pool.jpg',
     '/images/hotels/gangtok/destination/GangtokFacade1.webp',

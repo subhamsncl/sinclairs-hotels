@@ -29,6 +29,7 @@ export default function HotelsPage() {
             priority
             className="object-cover"
             sizes="100vw"
+            quality={90}
           />
         </div>
         <div className="absolute inset-0 bg-gradient-to-t from-forest-dark/95 via-forest-dark/55 to-forest-dark/20" />

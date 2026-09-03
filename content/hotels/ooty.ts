@@ -10,14 +10,14 @@ export const ootyHotel: Hotel = {
     "Enveloped by clouds at 8,000 feet, and situated exactly where the 'Queen of the Nilgiris' was discovered, Sinclairs Ooty is the highest located resort in South India. Far away from the crowd, the resort commands a majestic view of the Ooty valley and the Blue Mountains, with pristine forests interspersed with eucalyptus trees on the other side. It is an ideal getaway to beat the heat of the plains, for honeymooners and those in search of tranquil surroundings. The resort offers rooms and suites, a multicuisine restaurant overlooking the landscaped lawns, a Spanish bar, and an entertainment area with indoor games and a fitness centre.",
   history:
     'Part of the Sinclairs group since 1995, in the hill station British administrator John Sullivan established in 1819 and developed into the summer capital of the Madras Presidency.',
-  heroImage: '/images/hotels/ooty/destination/ADS_4502.webp',
+  heroImage: '/images/hotels/ooty/gallery/Ivy Hill.webp',
   heroGallery: [
-    '/images/hotels/ooty/destination/ADS_4502.webp',
-    '/images/hotels/ooty/destination/ADS_4509.webp',
-    '/images/hotels/ooty/destination/ADS_4519.webp',
-    '/images/hotels/ooty/destination/ADS_4521.webp',
+    '/images/hotels/ooty/gallery/Ivy Hill.webp',
+    '/images/hotels/ooty/gallery/Main Lawn.webp',
+    '/images/hotels/ooty/gallery/The Terrace.webp',
+    '/images/hotels/ooty/dining/ALTO ESPIRITO.webp',
   ],
-  thumbnailImage: '/images/hotels/ooty/destination/ADS_4502.webp',
+  thumbnailImage: '/images/hotels/ooty/gallery/Ivy Hill.webp',
   amenities: [
     'Free Wi-Fi',
     'Health Club & Gym',

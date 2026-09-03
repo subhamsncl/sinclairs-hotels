@@ -35,6 +35,7 @@ export function JourneyHero({ slides }: { slides: Slide[] }) {
               priority={i === 0}
               className="object-cover"
               sizes="100vw"
+              quality={90}
             />
           </div>
         </div>
