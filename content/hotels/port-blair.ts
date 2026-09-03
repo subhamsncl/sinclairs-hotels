@@ -46,10 +46,10 @@ export const portBlairHotel: Hotel = {
       description:
         'The all new Premier room affords a stunning view of the sea. Tastefully furnished, the rooms have all that makes luxury accommodation.',
       images: [
-        '/images/hotels/port-blair/accommodations/PremierRoom1.webp',
-        '/images/hotels/port-blair/accommodations/PremierRoom2.webp',
-        '/images/hotels/port-blair/accommodations/PremierRoom3.webp',
-        '/images/hotels/port-blair/accommodations/PremierRoom4.webp',
+        '/images/hotels/port-blair/accommodations/premier-room/PremierRoom1.webp',
+        '/images/hotels/port-blair/accommodations/premier-room/PremierRoom2.webp',
+        '/images/hotels/port-blair/accommodations/premier-room/PremierRoom3.webp',
+        '/images/hotels/port-blair/accommodations/premier-room/PremierRoom4.webp',
       ],
     },
     {
@@ -57,10 +57,10 @@ export const portBlairHotel: Hotel = {
       description:
         'The Andaman Islands are a paradise for honeymooners. These corner rooms offer privacy and an unbelievable view of the sea from two sides, furnished to ensure that the newly wed spend time in a romantic setting.',
       images: [
-        '/images/hotels/port-blair/accommodations/ValentineRoom1.webp',
-        '/images/hotels/port-blair/accommodations/ValentineRoom2.webp',
-        '/images/hotels/port-blair/accommodations/ValentineRoom3.webp',
-        '/images/hotels/port-blair/accommodations/ValentineRoom4.webp',
+        '/images/hotels/port-blair/accommodations/the-valentine-room/ValentineRoom1.webp',
+        '/images/hotels/port-blair/accommodations/the-valentine-room/ValentineRoom2.webp',
+        '/images/hotels/port-blair/accommodations/the-valentine-room/ValentineRoom3.webp',
+        '/images/hotels/port-blair/accommodations/the-valentine-room/ValentineRoom4.webp',
       ],
     },
     {
@@ -68,10 +68,10 @@ export const portBlairHotel: Hotel = {
       description:
         'A spacious room where a family of four can spend their vacation together in great comfort, equipped with one king and one queen size bed. The attached three-fixture toilet is ideal for the family.',
       images: [
-        '/images/hotels/port-blair/accommodations/PremierFamilyRoom1.webp',
-        '/images/hotels/port-blair/accommodations/PremierFamilyRoom2.webp',
-        '/images/hotels/port-blair/accommodations/PremierFamilyRoom3.webp',
-        '/images/hotels/port-blair/accommodations/PremierFamilyRoom4.webp',
+        '/images/hotels/port-blair/accommodations/premier-family-room/PremierFamilyRoom1.webp',
+        '/images/hotels/port-blair/accommodations/premier-family-room/PremierFamilyRoom2.webp',
+        '/images/hotels/port-blair/accommodations/premier-family-room/PremierFamilyRoom3.webp',
+        '/images/hotels/port-blair/accommodations/premier-family-room/PremierFamilyRoom4.webp',
       ],
     },
     {
@@ -79,10 +79,10 @@ export const portBlairHotel: Hotel = {
       description:
         'The family suite combines the luxury of space and fine décor. With an arresting view of the sea, the spacious suite enables the family to stay together in comfort and style, with an attached three-fixture toilet.',
       images: [
-        '/images/hotels/port-blair/accommodations/PremierFamilyRoom12.webp',
-        '/images/hotels/port-blair/accommodations/PremierFamilyRoom13.webp',
-        '/images/hotels/port-blair/accommodations/PremierFamilyRoom5.webp',
-        '/images/hotels/port-blair/accommodations/PremierFamilyRoom6.webp',
+        '/images/hotels/port-blair/accommodations/premier-family-suite/PremierFamilyRoom12.webp',
+        '/images/hotels/port-blair/accommodations/premier-family-suite/PremierFamilyRoom13.webp',
+        '/images/hotels/port-blair/accommodations/premier-family-suite/PremierFamilyRoom5.webp',
+        '/images/hotels/port-blair/accommodations/premier-family-suite/PremierFamilyRoom6.webp',
       ],
     },
     {
@@ -90,10 +90,10 @@ export const portBlairHotel: Hotel = {
       description:
         'A family room with an attic where children can have good fun. With two queen size beds, the room is ideal for a family of four to stay together comfortably, with an attached three-fixture toilet.',
       images: [
-        '/images/hotels/port-blair/accommodations/PremierAtticRoom1.webp',
-        '/images/hotels/port-blair/accommodations/PremierAtticRoom2.webp',
-        '/images/hotels/port-blair/accommodations/PremierAtticRoom3.webp',
-        '/images/hotels/port-blair/accommodations/PremierAtticRoom4.webp',
+        '/images/hotels/port-blair/accommodations/premier-family-attic-room/PremierAtticRoom1.webp',
+        '/images/hotels/port-blair/accommodations/premier-family-attic-room/PremierAtticRoom2.webp',
+        '/images/hotels/port-blair/accommodations/premier-family-attic-room/PremierAtticRoom3.webp',
+        '/images/hotels/port-blair/accommodations/premier-family-attic-room/PremierAtticRoom4.webp',
       ],
     },
     {
@@ -101,10 +101,10 @@ export const portBlairHotel: Hotel = {
       description:
         'A spacious, elegant and functional suite where you can relax to the sound of the waves below. The wooden attic is perfect for children travelling with the family, giving them their own private space.',
       images: [
-        '/images/hotels/port-blair/accommodations/Sea facing Premier Family Suite with Attic (2).webp',
-        '/images/hotels/port-blair/accommodations/Sea facing Premier Family Suite with Attic (4).webp',
-        '/images/hotels/port-blair/accommodations/Sea facing Premier Family Suite with Attic (8).webp',
-        '/images/hotels/port-blair/accommodations/Premier suite_washroom.webp',
+        '/images/hotels/port-blair/accommodations/premier-family-suite-with-attic/Sea facing Premier Family Suite with Attic (2).webp',
+        '/images/hotels/port-blair/accommodations/premier-family-suite-with-attic/Sea facing Premier Family Suite with Attic (4).webp',
+        '/images/hotels/port-blair/accommodations/premier-family-suite-with-attic/Sea facing Premier Family Suite with Attic (8).webp',
+        '/images/hotels/port-blair/accommodations/premier-family-suite-with-attic/Premier suite_washroom.webp',
       ],
     },
   ],

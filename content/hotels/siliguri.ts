@@ -35,16 +35,25 @@ export const siliguriHotel: Hotel = {
       name: 'Premier Room',
       description:
         'Recently refurbished with modern comforts, the room is equipped with ensuite bathrooms and rain showers. Room size: 192 sq. ft., with herbal bathroom amenities, a rain shower, twin lighting options, an LCD TV with satellite channels, split AC system and free Wi-Fi.',
+      images: [
+        '/images/hotels/siliguri/accommodations/premier-room/Sinclairs-Siliguri-Premier-Room.jpg',
+      ],
     },
     {
       name: 'Garden Suite',
       description:
         'A bedroom with ensuite bathroom and shower, attached with a small seating area and a private terrace. Room size: 290 sq. ft., with a king size bed, writing desk, attached terrace garden with sit out, LCD TV with satellite channels, tea/coffee set, safe and free Wi-Fi.',
+      images: [
+        '/images/hotels/siliguri/accommodations/garden-suite/Sinclairs-Siliguri-Garden-Suite.jpg',
+      ],
     },
     {
       name: 'Premier Suite',
       description:
         'The rooms are luxurious and contemporary with a spacious bedroom, living room and two ensuite bathrooms and showers. Room size: 450 sq. ft., with a king size bed, separate living room, writing desk, two 32-inch LCD televisions, tea/coffee set, safe and free Wi-Fi.',
+      images: [
+        '/images/hotels/siliguri/accommodations/premier-suite/Sinclairs-Siliguri-Premier-Suite.jpg',
+      ],
     },
   ],
   dining: [

@@ -31,10 +31,10 @@ export const udaipurHotel: Hotel = {
       description:
         'Step into comfort and elegance in our Premier Room, designed to blend traditional Rajasthani charm with modern amenities. Enjoy spacious interiors, plush bedding, and thoughtful touches that create a relaxing retreat after a day exploring Haldighati. Room size: 334 sq. ft., with an attached bath with hot and cold shower, king-size bed, in-room dining, and mini fridge.',
       images: [
-        '/images/hotels/udaipur/accommodations/Premier room (1).webp',
-        '/images/hotels/udaipur/accommodations/Premier room (2).webp',
-        '/images/hotels/udaipur/accommodations/Premier room (3).webp',
-        '/images/hotels/udaipur/accommodations/Premier room_Bed.webp',
+        '/images/hotels/udaipur/accommodations/premier-room/Premier room (1).webp',
+        '/images/hotels/udaipur/accommodations/premier-room/Premier room (2).webp',
+        '/images/hotels/udaipur/accommodations/premier-room/Premier room (3).webp',
+        '/images/hotels/udaipur/accommodations/premier-room/Premier room_Bed.webp',
       ],
     },
     {
@@ -42,10 +42,10 @@ export const udaipurHotel: Hotel = {
       description:
         'The Premier Plus Room offers an enhanced experience with added space and premium furnishings. Bask in tasteful decor inspired by local heritage, complemented by upgraded amenities for a truly memorable stay. Room size: 363 sq. ft., with an attached bath with hot and cold shower, king-size bed, in-room dining, and mini fridge.',
       images: [
-        '/images/hotels/udaipur/accommodations/Premier Plus (1).webp',
-        '/images/hotels/udaipur/accommodations/Premier Plus (2).webp',
-        '/images/hotels/udaipur/accommodations/Premier Plus (3).webp',
-        '/images/hotels/udaipur/accommodations/Premier Plus (4).webp',
+        '/images/hotels/udaipur/accommodations/premier-plus-room/Premier Plus (1).webp',
+        '/images/hotels/udaipur/accommodations/premier-plus-room/Premier Plus (2).webp',
+        '/images/hotels/udaipur/accommodations/premier-plus-room/Premier Plus (3).webp',
+        '/images/hotels/udaipur/accommodations/premier-plus-room/Premier Plus (4).webp',
       ],
     },
     {
@@ -53,10 +53,10 @@ export const udaipurHotel: Hotel = {
       description:
         "Our Premier Suite elevates luxury with separate living and sleeping areas, perfect for families or guests seeking extra comfort. Revel in exquisite interiors, rich textures, and panoramic views that capture the spirit of Udaipur's royal legacy. Room size: 457 sq. ft., with an attached bath with hot and cold shower, king-size bed, in-room dining, and mini fridge.",
       images: [
-        '/images/hotels/udaipur/accommodations/Premier suite (1).webp',
-        '/images/hotels/udaipur/accommodations/Premier suite seating.webp',
-        '/images/hotels/udaipur/accommodations/Premier suite (2).webp',
-        '/images/hotels/udaipur/accommodations/Premier suite_washroom (2).webp',
+        '/images/hotels/udaipur/accommodations/premier-suite/Premier suite (1).webp',
+        '/images/hotels/udaipur/accommodations/premier-suite/Premier suite seating.webp',
+        '/images/hotels/udaipur/accommodations/premier-suite/Premier suite (2).webp',
+        '/images/hotels/udaipur/accommodations/premier-suite/Premier suite_washroom (2).webp',
       ],
     },
     {
@@ -64,9 +64,9 @@ export const udaipurHotel: Hotel = {
       description:
         'Experience the pinnacle of opulence in our Villa, a private haven featuring expansive living spaces, elegant decor, and exclusive amenities. Ideal for discerning guests, the villa offers unparalleled privacy along with the warmth of traditional Rajasthani hospitality. Room size: 400 sq. ft., with an attached bath with hot and cold shower, a large wardrobe and luggage rack, queen-size bed, in-room dining, and mini fridge.',
       images: [
-        '/images/hotels/udaipur/accommodations/Villa (1).webp',
-        '/images/hotels/udaipur/accommodations/Villa (2).webp',
-        '/images/hotels/udaipur/accommodations/Villa entrance.webp',
+        '/images/hotels/udaipur/accommodations/villa/Villa (1).webp',
+        '/images/hotels/udaipur/accommodations/villa/Villa (2).webp',
+        '/images/hotels/udaipur/accommodations/villa/Villa entrance.webp',
       ],
     },
   ],

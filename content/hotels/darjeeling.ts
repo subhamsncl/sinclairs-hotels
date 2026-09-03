@@ -47,11 +47,11 @@ export const darjeelingHotel: Hotel = {
       description:
         'Each of these cozy and well appointed rooms have ensuite washrooms, and are equipped with modern facilities. Room size: 223 sq. ft., with an attached bath with hot and cold shower.',
       images: [
-        '/images/hotels/darjeeling/accommodations/Deluxe Room Double.webp',
-        '/images/hotels/darjeeling/accommodations/Deluxe Room Double1.webp',
-        '/images/hotels/darjeeling/accommodations/Deluxe Room Twin Bed.webp',
-        '/images/hotels/darjeeling/accommodations/Deluxe Room Twin Bed2.webp',
-        '/images/hotels/darjeeling/accommodations/Deluxe Room Bathroom.webp',
+        '/images/hotels/darjeeling/accommodations/deluxe-room/Deluxe Room Double.webp',
+        '/images/hotels/darjeeling/accommodations/deluxe-room/Deluxe Room Double1.webp',
+        '/images/hotels/darjeeling/accommodations/deluxe-room/Deluxe Room Twin Bed.webp',
+        '/images/hotels/darjeeling/accommodations/deluxe-room/Deluxe Room Twin Bed2.webp',
+        '/images/hotels/darjeeling/accommodations/deluxe-room/Deluxe Room Bathroom.webp',
       ],
     },
     {
@@ -59,9 +59,9 @@ export const darjeelingHotel: Hotel = {
       description:
         'Enjoy beautiful mountain views with a spectacular sunrise from these rooms overlooking the Himalayas. Room size: 223 sq. ft., with a Kanchenjunga view and an attached bath with hot and cold shower.',
       images: [
-        '/images/hotels/darjeeling/accommodations/Sinclairs-Darjeeling-Premier-Room-1.webp',
-        '/images/hotels/darjeeling/accommodations/Sinclairs-Darjeeling-Premier-Room-2.webp',
-        '/images/hotels/darjeeling/accommodations/Sinclairs-Darjeeling-Premier-Room-3.webp',
+        '/images/hotels/darjeeling/accommodations/premier-room/Sinclairs-Darjeeling-Premier-Room-1.webp',
+        '/images/hotels/darjeeling/accommodations/premier-room/Sinclairs-Darjeeling-Premier-Room-2.webp',
+        '/images/hotels/darjeeling/accommodations/premier-room/Sinclairs-Darjeeling-Premier-Room-3.webp',
       ],
     },
     {
@@ -69,10 +69,10 @@ export const darjeelingHotel: Hotel = {
       description:
         'This room has a stunning view of the mountains and is ideal for newly-weds. Room size: 271 sq. ft. with a Kanchenjunga view and an attached bath with hot and cold shower.',
       images: [
-        '/images/hotels/darjeeling/accommodations/Kanchenjunga Room 1.webp',
-        '/images/hotels/darjeeling/accommodations/Kanchenjunga Room 2.webp',
-        '/images/hotels/darjeeling/accommodations/Kanchenjunga Room 3.webp',
-        '/images/hotels/darjeeling/accommodations/Kanchenjunga Room Bathroom.webp',
+        '/images/hotels/darjeeling/accommodations/kanchenjunga-room/Kanchenjunga Room 1.webp',
+        '/images/hotels/darjeeling/accommodations/kanchenjunga-room/Kanchenjunga Room 2.webp',
+        '/images/hotels/darjeeling/accommodations/kanchenjunga-room/Kanchenjunga Room 3.webp',
+        '/images/hotels/darjeeling/accommodations/kanchenjunga-room/Kanchenjunga Room Bathroom.webp',
       ],
     },
     {
@@ -80,11 +80,11 @@ export const darjeelingHotel: Hotel = {
       description:
         'This spacious suite has a bedroom and a living room with wooden floors and rich furnishings which reflect the typical hill style of the hotel. Room size: 446 sq. ft. with a Kanchenjunga view and an attached bath with hot and cold shower.',
       images: [
-        '/images/hotels/darjeeling/accommodations/Sinclairs-Darjeeling-Burra-Sahib-Suite-Bathroom-View1.webp',
-        '/images/hotels/darjeeling/accommodations/Sinclairs-Darjeeling-Burra-Sahib-Suite1.webp',
-        '/images/hotels/darjeeling/accommodations/Sinclairs-Darjeeling-Burra-Sahib-Suite2.webp',
-        '/images/hotels/darjeeling/accommodations/Sinclairs-Darjeeling-Burra-Sahib-Suite4.webp',
-        '/images/hotels/darjeeling/accommodations/Sinclairs-Darjeeling-Burra-Sahib-Suite5.webp',
+        '/images/hotels/darjeeling/accommodations/burra-sahib-suite/Sinclairs-Darjeeling-Burra-Sahib-Suite-Bathroom-View1.webp',
+        '/images/hotels/darjeeling/accommodations/burra-sahib-suite/Sinclairs-Darjeeling-Burra-Sahib-Suite1.webp',
+        '/images/hotels/darjeeling/accommodations/burra-sahib-suite/Sinclairs-Darjeeling-Burra-Sahib-Suite2.webp',
+        '/images/hotels/darjeeling/accommodations/burra-sahib-suite/Sinclairs-Darjeeling-Burra-Sahib-Suite4.webp',
+        '/images/hotels/darjeeling/accommodations/burra-sahib-suite/Sinclairs-Darjeeling-Burra-Sahib-Suite5.webp',
       ],
     },
     {
@@ -92,10 +92,10 @@ export const darjeelingHotel: Hotel = {
       description:
         'For guests with greater space requirements, this room is the ideal solution to ensure your privacy and have your family next to you in complete comfort and style. It consists of two adjoining double rooms, with the possibility of adding an extra bed in both rooms, sharing a common bathroom with separate areas for relaxing and a writing desk. Room size: 446 sq. ft.',
       images: [
-        '/images/hotels/darjeeling/accommodations/Deluxe Family Room1.webp',
-        '/images/hotels/darjeeling/accommodations/Deluxe Family Room2.webp',
-        '/images/hotels/darjeeling/accommodations/Deluxe Family Room3.webp',
-        '/images/hotels/darjeeling/accommodations/Deluxe Family Room Bathroom.webp',
+        '/images/hotels/darjeeling/accommodations/deluxe-family-room/Deluxe Family Room1.webp',
+        '/images/hotels/darjeeling/accommodations/deluxe-family-room/Deluxe Family Room2.webp',
+        '/images/hotels/darjeeling/accommodations/deluxe-family-room/Deluxe Family Room3.webp',
+        '/images/hotels/darjeeling/accommodations/deluxe-family-room/Deluxe Family Room Bathroom.webp',
       ],
     },
   ],

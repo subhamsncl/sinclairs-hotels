@@ -40,10 +40,10 @@ export const dooarsHotel: Hotel = {
       description:
         'Functional and contemporary, these rooms offer the ultimate in luxurious seclusion with a view of the main lawns. Room size 345 sq. ft., with an attached bath with hot and cold shower, herbal bathroom amenities, a queen or twin bed, writing desk, private balcony, electronic safe and tea/coffee set.',
       images: [
-        '/images/hotels/dooars/accommodations/DSC_1114.webp',
-        '/images/hotels/dooars/accommodations/DSC_1005.webp',
-        '/images/hotels/dooars/accommodations/Toilet combined.webp',
-        '/images/hotels/dooars/accommodations/Private balcony with every room.webp',
+        '/images/hotels/dooars/accommodations/deluxe-room/DSC_1114.webp',
+        '/images/hotels/dooars/accommodations/deluxe-room/DSC_1005.webp',
+        '/images/hotels/dooars/accommodations/deluxe-room/Toilet combined.webp',
+        '/images/hotels/dooars/accommodations/deluxe-room/Private balcony with every room.webp',
       ],
     },
     {
@@ -51,10 +51,10 @@ export const dooarsHotel: Hotel = {
       description:
         'Spaciously created with a bedroom, living room, dining area and additional washroom, this suite has a distinct style recreating the atmosphere of the colonial lifestyle — guests know it fondly as the "Burra Sahib Suite". Room size 690 sq. ft. plus balcony, with two baths with bathtub and rain shower, a king size bed, a separate living room with dining table and rich black lacquered furniture beneath a coffered, wood-beamed ceiling, a private garden with sit-out, two 32" LCD televisions, electronic safe, tea/coffee set and refrigerator.',
       images: [
-        '/images/hotels/dooars/accommodations/Burra Sahib Suite.webp',
-        '/images/hotels/dooars/accommodations/Living room of Burra Sahib suite.webp',
-        '/images/hotels/dooars/accommodations/DSC_1173.webp',
-        '/images/hotels/dooars/accommodations/DSC_1182.webp',
+        '/images/hotels/dooars/accommodations/premier-suite/Burra Sahib Suite.webp',
+        '/images/hotels/dooars/accommodations/premier-suite/Living room of Burra Sahib suite.webp',
+        '/images/hotels/dooars/accommodations/premier-suite/DSC_1173.webp',
+        '/images/hotels/dooars/accommodations/premier-suite/DSC_1182.webp',
       ],
     },
     {
@@ -62,10 +62,10 @@ export const dooarsHotel: Hotel = {
       description:
         'One of just two free-standing wooden cottages on the property, panelled entirely in warm pinewood beneath a vaulted, beamed ceiling, with a private sit-out looking straight into the forest. Comes with a sofa and coffee table, flat-screen TV and an attached bath with a walk-in shower — a rustic retreat for guests seeking seclusion amid the greenery.',
       images: [
-        '/images/hotels/dooars/accommodations/Wooden Cottage Room.webp',
-        '/images/hotels/dooars/accommodations/DSC_1218.webp',
-        '/images/hotels/dooars/accommodations/DSC_1222-Enhanced-NR.webp',
-        '/images/hotels/dooars/accommodations/DSC_1209-Enhanced-NR.webp',
+        '/images/hotels/dooars/accommodations/wooden-cottage/Wooden Cottage Room.webp',
+        '/images/hotels/dooars/accommodations/wooden-cottage/DSC_1218.webp',
+        '/images/hotels/dooars/accommodations/wooden-cottage/DSC_1222-Enhanced-NR.webp',
+        '/images/hotels/dooars/accommodations/wooden-cottage/DSC_1209-Enhanced-NR.webp',
       ],
     },
   ],

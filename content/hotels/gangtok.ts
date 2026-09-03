@@ -42,9 +42,9 @@ export const gangtokHotel: Hotel = {
       description:
         'The well-appointed rooms in wood finish are spacious and comfortable, blending well with the intimate and tranquil atmosphere of the hotel. Rooms overlook the forest or road side and feature a king-size bed or two twin beds, at 335 sq. ft.',
       images: [
-        '/images/hotels/gangtok/accommodations/Deluxe Double1.webp',
-        '/images/hotels/gangtok/accommodations/Deluxe Double2.webp',
-        '/images/hotels/gangtok/accommodations/Deluxe Room Washroom2.webp',
+        '/images/hotels/gangtok/accommodations/deluxe-room/Deluxe Double1.webp',
+        '/images/hotels/gangtok/accommodations/deluxe-room/Deluxe Double2.webp',
+        '/images/hotels/gangtok/accommodations/deluxe-room/Deluxe Room Washroom2.webp',
       ],
     },
     {
@@ -52,10 +52,10 @@ export const gangtokHotel: Hotel = {
       description:
         'The ideal solution for privacy while keeping family members close in complete comfort and style, the Family Room consists of two adjoining double rooms with two toilets, together spanning 554 sq. ft.',
       images: [
-        '/images/hotels/gangtok/accommodations/Sinclairs-Gangtok-Deluxe-Family-Room.jpg',
-        '/images/hotels/gangtok/accommodations/Deluxe Family Room1.webp',
-        '/images/hotels/gangtok/accommodations/Deluxe Family Room2.webp',
-        '/images/hotels/gangtok/accommodations/Deluxe Family Room Washroom.webp',
+        '/images/hotels/gangtok/accommodations/deluxe-family-room/Sinclairs-Gangtok-Deluxe-Family-Room.jpg',
+        '/images/hotels/gangtok/accommodations/deluxe-family-room/Deluxe Family Room1.webp',
+        '/images/hotels/gangtok/accommodations/deluxe-family-room/Deluxe Family Room2.webp',
+        '/images/hotels/gangtok/accommodations/deluxe-family-room/Deluxe Family Room Washroom.webp',
       ],
     },
     {
@@ -63,9 +63,9 @@ export const gangtokHotel: Hotel = {
       description:
         'These well-appointed rooms face the mountain range and Gangtok town, offering a relaxed stay for couples, with a private standing balcony affording a panoramic view of the town against the mountains. Some rooms have a triple bed, ideal for an extra adult, at 340 sq. ft.',
       images: [
-        '/images/hotels/gangtok/accommodations/Premier Room2.webp',
-        '/images/hotels/gangtok/accommodations/Premier Room4.webp',
-        '/images/hotels/gangtok/accommodations/Premier Washroom1.webp',
+        '/images/hotels/gangtok/accommodations/premier-room/Premier Room2.webp',
+        '/images/hotels/gangtok/accommodations/premier-room/Premier Room4.webp',
+        '/images/hotels/gangtok/accommodations/premier-room/Premier Washroom1.webp',
       ],
     },
     {
@@ -73,9 +73,9 @@ export const gangtokHotel: Hotel = {
       description:
         'This spacious 535 sq. ft. suite has a bedroom and a separate living room with sofa seating, wooden floors and rich furnishings that reflect the typical hill style of the hotel, along with a private balcony facing the valley.',
       images: [
-        '/images/hotels/gangtok/accommodations/Premier Suite1.webp',
-        '/images/hotels/gangtok/accommodations/Premier Suite Living Room.webp',
-        '/images/hotels/gangtok/accommodations/Premier Suite Balcony.webp',
+        '/images/hotels/gangtok/accommodations/premier-suite/Premier Suite1.webp',
+        '/images/hotels/gangtok/accommodations/premier-suite/Premier Suite Living Room.webp',
+        '/images/hotels/gangtok/accommodations/premier-suite/Premier Suite Balcony.webp',
       ],
     },
     {
@@ -83,9 +83,9 @@ export const gangtokHotel: Hotel = {
       description:
         'Specially designed for honeymooners and couples celebrating an anniversary, the alluring view, mood lighting and special accessories all add up to a romantic setting, complete with a complimentary platter of goodies, at 340 sq. ft.',
       images: [
-        '/images/hotels/gangtok/accommodations/ValentineRoom1.webp',
-        '/images/hotels/gangtok/accommodations/ValentineRoom2.webp',
-        '/images/hotels/gangtok/accommodations/Valentine Room Washroom2.webp',
+        '/images/hotels/gangtok/accommodations/valentine-room/ValentineRoom1.webp',
+        '/images/hotels/gangtok/accommodations/valentine-room/ValentineRoom2.webp',
+        '/images/hotels/gangtok/accommodations/valentine-room/Valentine Room Washroom2.webp',
       ],
     },
   ],

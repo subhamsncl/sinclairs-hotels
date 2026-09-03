@@ -47,10 +47,10 @@ export const kalimpongHotel: Hotel = {
       description:
         'The richly appointed premier rooms in dark wood finish are spacious and comfortable, blending well with the intimate and tranquil atmosphere of the resort. Each room features one king size bed or two twin beds plus a day bed, and a private balcony overlooking the mountains. Room size: 420 sq. ft.',
       images: [
-        '/images/hotels/kalimpong/accommodations/PremierRoom1.webp',
-        '/images/hotels/kalimpong/accommodations/PremierRoom2.webp',
-        '/images/hotels/kalimpong/accommodations/PremierRoomBed.webp',
-        '/images/hotels/kalimpong/accommodations/PremierRoomBathroom2.webp',
+        '/images/hotels/kalimpong/accommodations/premier-room/PremierRoom1.webp',
+        '/images/hotels/kalimpong/accommodations/premier-room/PremierRoom2.webp',
+        '/images/hotels/kalimpong/accommodations/premier-room/PremierRoomBed.webp',
+        '/images/hotels/kalimpong/accommodations/premier-room/PremierRoomBathroom2.webp',
       ],
     },
     {
@@ -58,10 +58,10 @@ export const kalimpongHotel: Hotel = {
       description:
         'These charming guest rooms provide a relaxed stay for individuals or a couple, with modern amenities such as flat screen LED televisions and wireless internet, a private balcony, a fireplace and a daybed to lounge on. Room size: 460 sq. ft.',
       images: [
-        '/images/hotels/kalimpong/accommodations/PremierPlusRoom1.webp',
-        '/images/hotels/kalimpong/accommodations/PremierPlusRoom2.webp',
-        '/images/hotels/kalimpong/accommodations/PremierPlusRoom3.webp',
-        '/images/hotels/kalimpong/accommodations/PremierPlusBath.webp',
+        '/images/hotels/kalimpong/accommodations/premier-plus-room/PremierPlusRoom1.webp',
+        '/images/hotels/kalimpong/accommodations/premier-plus-room/PremierPlusRoom2.webp',
+        '/images/hotels/kalimpong/accommodations/premier-plus-room/PremierPlusRoom3.webp',
+        '/images/hotels/kalimpong/accommodations/premier-plus-room/PremierPlusBath.webp',
       ],
     },
     {
@@ -69,10 +69,10 @@ export const kalimpongHotel: Hotel = {
       description:
         'Similar to the premier rooms but with a spacious attic reached via a wooden staircase, ideal for families — the attic has its own king size bed and a separate wardrobe for children. Room size: 524 sq. ft.',
       images: [
-        '/images/hotels/kalimpong/accommodations/PremierAtticRoom1.webp',
-        '/images/hotels/kalimpong/accommodations/PremierAtticRoom2.webp',
-        '/images/hotels/kalimpong/accommodations/PremierAtticRoom3.webp',
-        '/images/hotels/kalimpong/accommodations/PremierAtticRoom4.webp',
+        '/images/hotels/kalimpong/accommodations/premier-attic-room/PremierAtticRoom1.webp',
+        '/images/hotels/kalimpong/accommodations/premier-attic-room/PremierAtticRoom2.webp',
+        '/images/hotels/kalimpong/accommodations/premier-attic-room/PremierAtticRoom3.webp',
+        '/images/hotels/kalimpong/accommodations/premier-attic-room/PremierAtticRoom4.webp',
       ],
     },
     {
@@ -80,10 +80,10 @@ export const kalimpongHotel: Hotel = {
       description:
         'With a view of the swimming pool and the mountains, this extravagant suite has two separate rooms — a bedroom with a king bed and a mountain-facing balcony, and a living room with a full sofa set and a four-seater dining table. Room size: 900 sq. ft.',
       images: [
-        '/images/hotels/kalimpong/accommodations/PremierSuite1.webp',
-        '/images/hotels/kalimpong/accommodations/PremierSuiteLivingRoom.webp',
-        '/images/hotels/kalimpong/accommodations/PremierSuiteBed.webp',
-        '/images/hotels/kalimpong/accommodations/PremierSuitePoolView.webp',
+        '/images/hotels/kalimpong/accommodations/premier-suite/PremierSuite1.webp',
+        '/images/hotels/kalimpong/accommodations/premier-suite/PremierSuiteLivingRoom.webp',
+        '/images/hotels/kalimpong/accommodations/premier-suite/PremierSuiteBed.webp',
+        '/images/hotels/kalimpong/accommodations/premier-suite/PremierSuitePoolView.webp',
       ],
     },
     {
@@ -91,10 +91,10 @@ export const kalimpongHotel: Hotel = {
       description:
         'Made entirely out of steam-treated recyclable wood, this secluded cottage has two rooms with attached baths — even the toilets, barring the shower area, are built from wood. The king size bed has a large upholstered headboard, and the room opens onto a private sit-out area overlooking the mountains, ideal for honeymooners. Room size: 284 sq. ft.',
       images: [
-        '/images/hotels/kalimpong/accommodations/WoodenCottage1.webp',
-        '/images/hotels/kalimpong/accommodations/WoodenCottage2.webp',
-        '/images/hotels/kalimpong/accommodations/WoodenCottageView.webp',
-        '/images/hotels/kalimpong/accommodations/WoodenCottageBathroom1.webp',
+        '/images/hotels/kalimpong/accommodations/wooden-cottage-room/WoodenCottage1.webp',
+        '/images/hotels/kalimpong/accommodations/wooden-cottage-room/WoodenCottage2.webp',
+        '/images/hotels/kalimpong/accommodations/wooden-cottage-room/WoodenCottageView.webp',
+        '/images/hotels/kalimpong/accommodations/wooden-cottage-room/WoodenCottageBathroom1.webp',
       ],
     },
   ],
