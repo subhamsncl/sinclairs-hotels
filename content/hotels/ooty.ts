@@ -8,8 +8,14 @@ export const ootyHotel: Hotel = {
   tagline: 'Stunning views from the highest point in South India.',
   description:
     "Enveloped by clouds at 8,000 feet, and situated exactly where the 'Queen of the Nilgiris' was discovered, Sinclairs Ooty is the highest located resort in South India. Far away from the crowd, the resort commands a majestic view of the Ooty valley and the Blue Mountains, with pristine forests interspersed with eucalyptus trees on the other side. It is an ideal getaway to beat the heat of the plains, for honeymooners and those in search of tranquil surroundings. The resort offers rooms and suites, a multicuisine restaurant overlooking the landscaped lawns, a Spanish bar, and an entertainment area with indoor games and a fitness centre.",
-  heroImage: '/images/hotels/ooty/destination/Sinclairs-Retreat-Ooty-view.jpg',
-  thumbnailImage: '/images/hotels/ooty/destination/Sinclairs-Retreat-Ooty-view.jpg',
+  heroImage: '/images/hotels/ooty/destination/ADS_4502.webp',
+  heroGallery: [
+    '/images/hotels/ooty/destination/ADS_4502.webp',
+    '/images/hotels/ooty/destination/ADS_4509.webp',
+    '/images/hotels/ooty/destination/ADS_4519.webp',
+    '/images/hotels/ooty/destination/ADS_4521.webp',
+  ],
+  thumbnailImage: '/images/hotels/ooty/destination/ADS_4502.webp',
   amenities: [
     'Free Wi-Fi',
     'Health Club & Gym',
@@ -105,16 +111,20 @@ export const ootyHotel: Hotel = {
       name: 'Alto Espirito',
       description:
         'A stylish Spanish bar with catchy Spanish tunes, delectable Spanish snacks and dapper cocktails. Open 11 AM to 10:30 PM.',
-      images: ['/images/hotels/ooty/dining/Sinclairs-Ooty-Alto-Espirito-Bar.jpg'],
+      images: [
+        '/images/hotels/ooty/dining/ALTO ESPIRITO.webp',
+        '/images/hotels/ooty/dining/ADS_5282.webp',
+        '/images/hotels/ooty/dining/ADS_5308.webp',
+      ],
     },
   ],
   gallery: [
     {
-      src: '/images/hotels/ooty/destination/Sinclairs-Retreat-Ooty-view.jpg',
+      src: '/images/hotels/ooty/destination/ADS_4509.webp',
       alt: 'Sinclairs Ooty at dusk, its terraced lawns stepping down the hillside',
     },
     {
-      src: '/images/hotels/ooty/dining/Sinclairs-Ooty-Alto-Espirito-Bar.jpg',
+      src: '/images/hotels/ooty/dining/ALTO ESPIRITO.webp',
       alt: 'Alto Espirito, the Spanish-themed bar at Sinclairs Ooty',
     },
     {
@@ -124,6 +134,38 @@ export const ootyHotel: Hotel = {
     {
       src: '/images/hotels/ooty/accommodations/deluxe-suite/Deluxe suite.webp',
       alt: 'The Deluxe Suite living area at Sinclairs Ooty',
+    },
+    {
+      src: '/images/hotels/ooty/gallery/The Regal room.webp',
+      alt: 'The Regal Room, the largest of the event spaces at Sinclairs Ooty',
+    },
+    {
+      src: '/images/hotels/ooty/gallery/The Windsor.webp',
+      alt: 'The Windsor Hall banquet space at Sinclairs Ooty',
+    },
+    {
+      src: '/images/hotels/ooty/gallery/The Summit Hall.webp',
+      alt: 'The Summit Hall, set up for a formal event at Sinclairs Ooty',
+    },
+    {
+      src: '/images/hotels/ooty/gallery/The Terrace.webp',
+      alt: 'The Terrace, an open-air venue for evening events at Sinclairs Ooty',
+    },
+    {
+      src: '/images/hotels/ooty/gallery/Ivy Hill.webp',
+      alt: 'The Ivy Hill viewpoint overlooking the Ooty valley',
+    },
+    {
+      src: '/images/hotels/ooty/gallery/Main Lawn.webp',
+      alt: 'The Main Lawn, set up for an outdoor banquet at Sinclairs Ooty',
+    },
+    {
+      src: '/images/hotels/ooty/amenities/ADS_5028.webp',
+      alt: "The Tic Tac Toe entertainment zone's indoor games room at Sinclairs Ooty",
+    },
+    {
+      src: '/images/hotels/ooty/amenities/ADS_5069.webp',
+      alt: 'The fitness centre at Sinclairs Ooty',
     },
   ],
   sightseeing: [
