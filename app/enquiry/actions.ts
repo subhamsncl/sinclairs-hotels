@@ -1,7 +1,7 @@
 'use server';
 
 import { prisma } from '@/lib/db';
-import { isRateLimited } from '@/lib/rate-limit';
+import { clientIp, isRateLimited } from '@/lib/rate-limit';
 import { enquirySchema } from '@/lib/validation';
 import { headers } from 'next/headers';
 
@@ -16,7 +16,7 @@ export async function submitEnquiry(
   formData: FormData,
 ): Promise<EnquiryFormState> {
   const headerList = await headers();
-  const ip = headerList.get('x-forwarded-for') ?? 'unknown';
+  const ip = clientIp(headerList);
 
   if (isRateLimited(ip)) {
     return { status: 'error', message: 'Too many requests. Please try again in a minute.' };
