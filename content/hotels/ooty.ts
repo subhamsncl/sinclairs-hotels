@@ -43,23 +43,44 @@ export const ootyHotel: Hotel = {
         '/images/hotels/ooty/accommodations/deluxe-room/Deluxe (1).webp',
         '/images/hotels/ooty/accommodations/deluxe-room/Deluxe (2).webp',
         '/images/hotels/ooty/accommodations/deluxe-room/Deluxe (3).webp',
+        '/images/hotels/ooty/accommodations/deluxe-room/ADS_4880.webp',
+        '/images/hotels/ooty/accommodations/deluxe-room/ADS_4890.webp',
       ],
     },
     {
       name: 'Premier Room',
       description:
         'Offers a breathtaking view of the Blue Mountains and Ooty valley. These garden-facing rooms measure 210 sq. ft. and come with a queen-sized bed and a twin bed, a writing desk, and an attached bath with hot and cold shower.',
+      images: [
+        '/images/hotels/ooty/accommodations/premier-room/ADS_4926.webp',
+        '/images/hotels/ooty/accommodations/premier-room/ADS_4928.webp',
+        '/images/hotels/ooty/accommodations/premier-room/ADS_4936.webp',
+        '/images/hotels/ooty/accommodations/premier-room/ADS_4944.webp',
+        '/images/hotels/ooty/accommodations/premier-room/ADS_5361.webp',
+      ],
     },
     {
       name: 'Superior Room',
       description:
         'Cozy and quiet, the superior rooms overlook the pine forests. Measuring 273 sq. ft., they come with a queen-sized bed, a writing desk, and an attached bath with hot and cold shower.',
+      images: [
+        '/images/hotels/ooty/accommodations/superior-room/ADS_4285.webp',
+        '/images/hotels/ooty/accommodations/superior-room/ADS_4287.webp',
+        '/images/hotels/ooty/accommodations/superior-room/ADS_4300.webp',
+        '/images/hotels/ooty/accommodations/superior-room/ADS_4303.webp',
+        '/images/hotels/ooty/accommodations/superior-room/ADS_5424.webp',
+      ],
     },
     {
       name: 'Deluxe Suite',
       description:
         'Spacious and luxurious, the deluxe suites overlook the Blue Mountains and the Ooty valley. Measuring 397 sq. ft., they come with a queen-sized bed, sofa seating and a dining table, and an attached four-fixture bath with hot and cold shower.',
-      images: ['/images/hotels/ooty/accommodations/deluxe-suite/Deluxe suite.webp'],
+      images: [
+        '/images/hotels/ooty/accommodations/deluxe-suite/Deluxe suite.webp',
+        '/images/hotels/ooty/accommodations/deluxe-suite/ADS_4981.webp',
+        '/images/hotels/ooty/accommodations/deluxe-suite/ADS_4982.webp',
+        '/images/hotels/ooty/accommodations/deluxe-suite/ADS_4987.webp',
+      ],
     },
     {
       name: 'Nilgiri Suite',
@@ -68,6 +89,9 @@ export const ootyHotel: Hotel = {
       images: [
         '/images/hotels/ooty/accommodations/nilgiri-suite/Nilgiri suite (1).webp',
         '/images/hotels/ooty/accommodations/nilgiri-suite/Nilgiri suite (2).webp',
+        '/images/hotels/ooty/accommodations/nilgiri-suite/ADS_4369.webp',
+        '/images/hotels/ooty/accommodations/nilgiri-suite/ADS_4390.webp',
+        '/images/hotels/ooty/accommodations/nilgiri-suite/ADS_4458.webp',
       ],
     },
   ],
