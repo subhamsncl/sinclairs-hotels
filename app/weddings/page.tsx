@@ -14,9 +14,9 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 
 const heroImages = [
-  '/images/weddings/Wedding-Lattice.webp',
   '/images/weddings/Wedding-Portrait.webp',
   '/images/hotels/udaipur/weddings/A Royal Fairytale.webp',
+  '/images/weddings/Wedding-Lattice.webp',
 ];
 
 const moments = [

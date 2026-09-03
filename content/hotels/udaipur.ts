@@ -14,7 +14,7 @@ export const udaipurHotel: Hotel = {
   heroGallery: [
     '/images/hotels/udaipur/destination/Facade_night view.webp',
     '/images/hotels/udaipur/gallery/Palace (3).webp',
-    '/images/hotels/udaipur/destination/Fountain.webp',
+    '/images/hotels/udaipur/destination/Garden.webp',
     '/images/hotels/udaipur/destination/Courtyard Night view.webp',
   ],
   thumbnailImage: '/images/hotels/udaipur/gallery/Palace (3).webp',

@@ -21,7 +21,7 @@ export function HeroCarousel({ images, alt }: { images: string[]; alt: string })
             i === index ? 'opacity-100' : 'opacity-0'
           }`}
         >
-          <div className="h-full w-full animate-hero-zoom-loop">
+          <div className="relative h-full w-full animate-hero-zoom-loop">
             <Image
               src={src}
               alt={i === 0 ? alt : ''}

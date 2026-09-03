@@ -27,7 +27,7 @@ export function JourneyHero({ slides }: { slides: Slide[] }) {
             i === index ? 'opacity-100' : 'opacity-0'
           }`}
         >
-          <div className="h-full w-full animate-hero-zoom-loop">
+          <div className="relative h-full w-full animate-hero-zoom-loop">
             <Image
               src={slide.image}
               alt={slide.name}
