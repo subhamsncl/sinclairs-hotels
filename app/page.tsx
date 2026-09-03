@@ -75,12 +75,14 @@ export default function HomePage() {
     <>
       <section className="relative h-[75vh] min-h-[620px] overflow-hidden">
         <JourneyHero
-          slides={hotels.map((hotel) => ({
-            image: hotel.heroImage,
-            name: hotel.name,
-            location: `${hotel.location}, ${hotel.state}`,
-            slug: hotel.slug,
-          }))}
+          slides={[...hotels]
+            .sort((a, b) => (a.slug === 'burdwan' ? 1 : b.slug === 'burdwan' ? -1 : 0))
+            .map((hotel) => ({
+              image: hotel.heroImage,
+              name: hotel.name,
+              location: `${hotel.location}, ${hotel.state}`,
+              slug: hotel.slug,
+            }))}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-forest-dark/95 via-forest-dark/50 to-forest-dark/15" />
         <div className="absolute inset-x-0 bottom-0 pb-24 sm:pb-32">
