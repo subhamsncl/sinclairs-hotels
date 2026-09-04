@@ -38,6 +38,13 @@ export interface ContactInfo {
   email: string;
 }
 
+export interface BookingOffice {
+  name: string;
+  city: string;
+  phone: string;
+  email: string;
+}
+
 export interface SightseeingSpot {
   name: string;
   image?: string;
@@ -77,4 +84,7 @@ export interface Hotel {
   meetings?: MeetingsContent;
   mapEmbedUrl?: string;
   contact?: ContactInfo;
+  gstin?: string;
+  webCheckinUrl?: string;
+  thingsToCarryUrl?: string;
 }

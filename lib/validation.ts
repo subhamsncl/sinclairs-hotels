@@ -21,3 +21,58 @@ export const enquirySchema = z.object({
 });
 
 export type EnquiryInput = z.infer<typeof enquirySchema>;
+
+const emptyToUndefined = (val: unknown) =>
+  val === '' || val === undefined || val === null ? undefined : val;
+const optionalPercent = () =>
+  z.preprocess(emptyToUndefined, z.coerce.number().min(0).max(100).optional());
+const optionalMoney = () => z.preprocess(emptyToUndefined, z.coerce.number().min(0).optional());
+const optionalTrimmed = (max: number) => z.string().trim().max(max).optional().or(z.literal(''));
+
+export const voucherSchema = z.object({
+  hotelSlug: z.string().trim().min(1, 'Please select a hotel').max(60),
+  guestName: z.string().trim().min(2, 'Please enter the guest name').max(120),
+  guestPhone: z
+    .string()
+    .trim()
+    .min(7, 'Please enter a valid phone number')
+    .max(20)
+    .regex(/^[0-9+()\-\s]+$/, 'Please enter a valid phone number'),
+  guestEmail: z.string().trim().email('Please enter a valid email address').max(200),
+  billingAddress: z.string().trim().min(5, 'Please enter a billing address').max(500),
+  travelAgentName: optionalTrimmed(160),
+  travelAgentPan: optionalTrimmed(20),
+  travelAgentGstin: optionalTrimmed(20),
+  travelAgentState: optionalTrimmed(60),
+  commissionPct: optionalPercent(),
+  tdsPct: optionalPercent(),
+  rooms: z.preprocess(emptyToUndefined, z.coerce.number().int().min(1).max(50)),
+  checkIn: z.string().trim().min(1, 'Please select a check-in date').max(10),
+  checkOut: z.string().trim().min(1, 'Please select a check-out date').max(10),
+  rate: z.preprocess(emptyToUndefined, z.coerce.number().min(0)),
+  taxes: z.preprocess(emptyToUndefined, z.coerce.number().min(0)),
+  depositAmount: optionalMoney(),
+  depositReceiptNo: optionalTrimmed(60),
+  depositReceiptDate: z.string().trim().max(10).optional().or(z.literal('')),
+  billingInstructions: optionalTrimmed(2000),
+  arrivalDetails: optionalTrimmed(1000),
+  otherServices: optionalTrimmed(1000),
+  specialInstructions: optionalTrimmed(1000),
+  issuerName: z.string().trim().min(2, 'Please enter your name').max(120),
+  issuerPhone: z
+    .string()
+    .trim()
+    .min(7, 'Please enter a valid phone number')
+    .max(20)
+    .regex(/^[0-9+()\-\s]+$/, 'Please enter a valid phone number'),
+  bookingOffice: z.string().trim().min(1, 'Please select a booking office').max(120),
+});
+
+export type VoucherInput = z.infer<typeof voucherSchema>;
+
+export const newsletterSchema = z.object({
+  email: z.string().trim().email('Please enter a valid email address').max(200),
+  company: z.string().max(0, 'Spam detected').optional().or(z.literal('')),
+});
+
+export type NewsletterInput = z.infer<typeof newsletterSchema>;

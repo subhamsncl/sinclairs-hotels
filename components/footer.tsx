@@ -1,6 +1,7 @@
 import { hotels } from '@/content/hotels';
 import { siteConfig, socialLinks } from '@/content/site';
 import Link from 'next/link';
+import { NewsletterForm } from './newsletter-form';
 import { FacebookIcon, InstagramIcon, TwitterIcon } from './social-icons';
 
 const socialIcons = {
@@ -13,8 +14,8 @@ export function Footer() {
   return (
     <footer className="bg-forest-dark text-cream/80">
       <div className="mx-auto max-w-7xl px-6 pt-16">
-        <div className="grid gap-10 pb-16 md:grid-cols-4">
-          <div className="min-w-0">
+        <div className="grid gap-10 pb-16 md:grid-cols-5">
+          <div className="min-w-0 md:col-span-2">
             <img src="/logo.svg" alt="Sinclairs" className="h-10 w-auto" />
             <p className="mt-4 text-sm leading-relaxed">{siteConfig.description}</p>
             <div className="mt-5 flex gap-3">
@@ -33,6 +34,14 @@ export function Footer() {
                   </a>
                 );
               })}
+            </div>
+            <div className="mt-6">
+              <p className="text-xs uppercase tracking-widest text-gold-light">
+                Get Special Offers
+              </p>
+              <div className="mt-3">
+                <NewsletterForm />
+              </div>
             </div>
           </div>
 

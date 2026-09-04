@@ -1,6 +1,8 @@
 'use server';
 
 import { prisma } from '@/lib/db';
+import { enquiryNotificationHtml } from '@/lib/email-templates/enquiry-notification';
+import { STAFF_NOTIFY_EMAIL, sendMail } from '@/lib/mail';
 import { clientIp, isRateLimited } from '@/lib/rate-limit';
 import { enquirySchema } from '@/lib/validation';
 import { headers } from 'next/headers';
@@ -49,7 +51,24 @@ export async function submitEnquiry(
       guests: guests ?? null,
       checkIn: checkIn ? new Date(checkIn) : null,
       checkOut: checkOut ? new Date(checkOut) : null,
+      userIp: ip,
     },
+  });
+
+  await sendMail({
+    to: STAFF_NOTIFY_EMAIL,
+    replyTo: email,
+    subject: `New enquiry — ${property} (${name})`,
+    html: enquiryNotificationHtml({
+      name,
+      email,
+      phone,
+      property,
+      checkIn,
+      checkOut,
+      guests,
+      message,
+    }),
   });
 
   return { status: 'success', message: 'Thank you — our team will be in touch shortly.' };
