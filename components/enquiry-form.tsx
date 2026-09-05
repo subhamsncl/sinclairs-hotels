@@ -8,21 +8,34 @@ import { useActionState, useState } from 'react';
 
 const initialState = { status: 'idle' as const };
 
+const ENQUIRY_TYPES = [
+  { value: 'GENERAL', label: 'General Enquiry' },
+  { value: 'HOTEL', label: 'Hotel Booking' },
+  { value: 'WEDDING', label: 'Wedding' },
+  { value: 'MEETINGS', label: 'Meetings & Events' },
+];
+
 export function EnquiryForm({
   hotels,
   defaultProperty,
+  defaultType,
   defaultCheckIn,
   defaultCheckOut,
   defaultGuests,
 }: {
   hotels: Hotel[];
   defaultProperty?: string;
+  defaultType?: string;
   defaultCheckIn?: string;
   defaultCheckOut?: string;
   defaultGuests?: string;
 }) {
   const [state, formAction, pending] = useActionState(submitEnquiry, initialState);
   const [property, setProperty] = useState(defaultProperty ?? '');
+  const [type, setType] = useState(() => {
+    const upper = defaultType?.toUpperCase();
+    return ENQUIRY_TYPES.some((t) => t.value === upper) ? (upper as string) : 'GENERAL';
+  });
   const [checkIn, setCheckIn] = useState(defaultCheckIn ?? '');
   const [checkOut, setCheckOut] = useState(defaultCheckOut ?? '');
 
@@ -87,6 +100,21 @@ export function EnquiryForm({
                 {hotels.map((hotel) => (
                   <SelectItem key={hotel.slug} value={hotel.slug}>
                     {hotel.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        </Field>
+        <Field label="Enquiry Type" name="type">
+          <input type="hidden" name="type" value={type} />
+          <div className="input">
+            <Select value={type} onValueChange={setType}>
+              <SelectTrigger id="type" placeholder="Select an enquiry type" />
+              <SelectContent>
+                {ENQUIRY_TYPES.map((t) => (
+                  <SelectItem key={t.value} value={t.value}>
+                    {t.label}
                   </SelectItem>
                 ))}
               </SelectContent>

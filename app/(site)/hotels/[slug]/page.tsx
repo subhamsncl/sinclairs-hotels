@@ -367,7 +367,7 @@ export default async function HotelPage({ params }: { params: Promise<Params> })
         image={hotel.heroImage}
         heading={`Ready to Stay at ${hotel.name}?`}
         body="Share your travel dates and our reservations team will get back to you with availability and rates."
-        href={`/enquiry?property=${hotel.slug}`}
+        href={`/enquiry?property=${hotel.slug}&type=hotel`}
       />
     </div>
   );

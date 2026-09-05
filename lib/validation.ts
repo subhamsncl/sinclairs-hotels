@@ -10,6 +10,7 @@ export const enquirySchema = z.object({
     .max(20)
     .regex(/^[0-9+()\-\s]+$/, 'Please enter a valid phone number'),
   property: z.string().trim().min(1, 'Please select a property').max(60),
+  type: z.enum(['GENERAL', 'HOTEL', 'WEDDING', 'MEETINGS']).catch('GENERAL'),
   checkIn: z.string().trim().max(10).optional().or(z.literal('')),
   checkOut: z.string().trim().max(10).optional().or(z.literal('')),
   guests: z.preprocess(

@@ -15,12 +15,13 @@ export default async function EnquiryPage({
 }: {
   searchParams: Promise<{
     property?: string;
+    type?: string;
     checkIn?: string;
     checkOut?: string;
     guests?: string;
   }>;
 }) {
-  const { property, checkIn, checkOut, guests } = await searchParams;
+  const { property, type, checkIn, checkOut, guests } = await searchParams;
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2">
@@ -59,6 +60,7 @@ export default async function EnquiryPage({
             <EnquiryForm
               hotels={hotels}
               defaultProperty={property}
+              defaultType={type}
               defaultCheckIn={checkIn}
               defaultCheckOut={checkOut}
               defaultGuests={guests}

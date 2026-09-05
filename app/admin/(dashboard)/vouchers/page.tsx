@@ -9,7 +9,7 @@ export const dynamic = 'force-dynamic';
 
 export default async function VouchersPage() {
   const vouchers = await prisma.voucher.findMany({
-    orderBy: { voucherNo: 'desc' },
+    orderBy: { createdAt: 'desc' },
     take: 100,
   });
 
@@ -35,6 +35,7 @@ export default async function VouchersPage() {
         <table className="w-full text-left text-sm">
           <thead className="border-b border-ink/10 text-xs uppercase tracking-wider text-ink/50">
             <tr>
+              <th className="px-4 py-3">Created</th>
               <th className="px-4 py-3">Voucher #</th>
               <th className="px-4 py-3">Guest</th>
               <th className="px-4 py-3">Hotel</th>
@@ -46,6 +47,9 @@ export default async function VouchersPage() {
           <tbody>
             {vouchers.map((voucher) => (
               <tr key={voucher.id} className="border-b border-ink/5 last:border-0">
+                <td className="whitespace-nowrap px-4 py-3 text-ink/70">
+                  {voucher.createdAt.toLocaleDateString('en-IN')}
+                </td>
                 <td className="px-4 py-3 font-medium">{voucher.voucherNo}</td>
                 <td className="px-4 py-3">{voucher.guestName}</td>
                 <td className="px-4 py-3">
@@ -67,7 +71,7 @@ export default async function VouchersPage() {
             ))}
             {vouchers.length === 0 && (
               <tr>
-                <td colSpan={6} className="px-4 py-8 text-center text-ink/50">
+                <td colSpan={7} className="px-4 py-8 text-center text-ink/50">
                   No vouchers yet.
                 </td>
               </tr>

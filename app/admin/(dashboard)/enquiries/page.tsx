@@ -11,6 +11,13 @@ const statusStyles: Record<string, string> = {
   CLOSED: 'bg-ink/10 text-ink/60',
 };
 
+const typeLabels: Record<string, string> = {
+  GENERAL: 'General',
+  HOTEL: 'Hotel Booking',
+  WEDDING: 'Wedding',
+  MEETINGS: 'Meetings & Events',
+};
+
 export default async function EnquiriesPage() {
   const enquiries = await prisma.enquiry.findMany({
     orderBy: { createdAt: 'desc' },
@@ -30,6 +37,7 @@ export default async function EnquiriesPage() {
             <tr>
               <th className="px-4 py-3">Date</th>
               <th className="px-4 py-3">Guest</th>
+              <th className="px-4 py-3">Type</th>
               <th className="px-4 py-3">Property</th>
               <th className="px-4 py-3">Dates</th>
               <th className="px-4 py-3">Message</th>
@@ -49,6 +57,9 @@ export default async function EnquiriesPage() {
                   <div className="font-medium">{enquiry.name}</div>
                   <div className="text-xs text-ink/60">{enquiry.email}</div>
                   <div className="text-xs text-ink/60">{enquiry.phone}</div>
+                </td>
+                <td className="px-4 py-3 text-ink/70">
+                  {typeLabels[enquiry.type] ?? enquiry.type}
                 </td>
                 <td className="px-4 py-3">
                   {getHotelBySlug(enquiry.property)?.name ?? enquiry.property}
@@ -75,7 +86,7 @@ export default async function EnquiriesPage() {
             ))}
             {enquiries.length === 0 && (
               <tr>
-                <td colSpan={6} className="px-4 py-8 text-center text-ink/50">
+                <td colSpan={7} className="px-4 py-8 text-center text-ink/50">
                   No enquiries yet.
                 </td>
               </tr>

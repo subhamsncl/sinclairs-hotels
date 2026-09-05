@@ -159,7 +159,7 @@ export default function MeetingsEventsPage() {
         image="/images/hotels/ooty/gallery/The Regal room.webp"
         heading="Plan Your Event"
         body="Tell us about your requirements and our sales team will get back to you with venue options and a quote."
-        href="/enquiry"
+        href="/enquiry?type=meetings"
       />
     </div>
   );

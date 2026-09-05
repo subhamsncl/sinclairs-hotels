@@ -13,12 +13,20 @@ enum EnquiryStatus {
   CLOSED
 }
 
+enum EnquiryType {
+  GENERAL
+  HOTEL
+  WEDDING
+  MEETINGS
+}
+
 model Enquiry {
   id            String        @id @default(cuid())
   name          String
   email         String
   phone         String
   property      String
+  type          EnquiryType   @default(GENERAL)
   checkIn       DateTime?
   checkOut      DateTime?
   guests        Int?

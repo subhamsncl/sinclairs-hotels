@@ -8,6 +8,7 @@ describe('enquiryNotificationHtml', () => {
       email: 'test@example.com',
       phone: '+91 9876543210',
       property: 'gangtok',
+      type: 'General',
       message: 'Smoke test <script>alert(1)</script> & "quotes" \'here\'',
     });
 
@@ -23,6 +24,7 @@ describe('enquiryNotificationHtml', () => {
       email: 'test@example.com',
       phone: '+91 9876543210',
       property: 'gangtok',
+      type: 'General',
       checkIn: '2026-01-10',
       checkOut: '2026-01-12',
       guests: 2,

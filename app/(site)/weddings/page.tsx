@@ -195,7 +195,7 @@ export default function WeddingsPage() {
         image="/images/weddings/Wedding-Portrait.webp"
         heading="Contact Us, We Are Happy to Help"
         body="Share your wedding dates, guest count, and preferred property, and our events team will reach out with options."
-        href="/enquiry"
+        href="/enquiry?type=wedding"
       />
     </div>
   );

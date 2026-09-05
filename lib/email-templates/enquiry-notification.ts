@@ -5,6 +5,7 @@ export function enquiryNotificationHtml(data: {
   email: string;
   phone: string;
   property: string;
+  type: string;
   checkIn?: string;
   checkOut?: string;
   guests?: number;
@@ -14,6 +15,7 @@ export function enquiryNotificationHtml(data: {
     ['Name', data.name],
     ['Email', data.email],
     ['Phone', data.phone],
+    ['Enquiry Type', data.type],
     ['Property', data.property],
   ];
 

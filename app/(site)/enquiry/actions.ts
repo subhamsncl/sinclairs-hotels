@@ -13,6 +13,13 @@ export type EnquiryFormState = {
   fieldErrors?: Record<string, string[]>;
 };
 
+const ENQUIRY_TYPE_LABELS: Record<string, string> = {
+  GENERAL: 'General',
+  HOTEL: 'Hotel Booking',
+  WEDDING: 'Wedding',
+  MEETINGS: 'Meetings & Events',
+};
+
 export async function submitEnquiry(
   _prevState: EnquiryFormState,
   formData: FormData,
@@ -39,7 +46,8 @@ export async function submitEnquiry(
     return { status: 'success' };
   }
 
-  const { name, email, phone, property, checkIn, checkOut, guests, message } = parsed.data;
+  const { name, email, phone, property, type, checkIn, checkOut, guests, message } = parsed.data;
+  const typeLabel = ENQUIRY_TYPE_LABELS[type] ?? type;
 
   await prisma.enquiry.create({
     data: {
@@ -47,6 +55,7 @@ export async function submitEnquiry(
       email,
       phone,
       property,
+      type,
       message,
       guests: guests ?? null,
       checkIn: checkIn ? new Date(checkIn) : null,
@@ -58,12 +67,13 @@ export async function submitEnquiry(
   await sendMail({
     to: STAFF_NOTIFY_EMAIL,
     replyTo: email,
-    subject: `New enquiry — ${property} (${name})`,
+    subject: `New ${typeLabel} enquiry — ${property} (${name})`,
     html: enquiryNotificationHtml({
       name,
       email,
       phone,
       property,
+      type: typeLabel,
       checkIn,
       checkOut,
       guests,
