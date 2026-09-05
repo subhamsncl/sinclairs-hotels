@@ -1,7 +1,4 @@
-import { Footer } from '@/components/footer';
 import { JsonLd } from '@/components/json-ld';
-import { Nav } from '@/components/nav';
-import { WhatsAppButton } from '@/components/whatsapp-button';
 import { siteConfig, socialLinks } from '@/content/site';
 import type { Metadata } from 'next';
 import { Inter, Playfair_Display } from 'next/font/google';
@@ -59,10 +56,7 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
     <html lang="en" className={`${inter.variable} ${playfair.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col bg-cream text-ink">
         <JsonLd data={organizationJsonLd} />
-        <Nav />
-        <main className="flex-1">{children}</main>
-        <Footer />
-        <WhatsAppButton />
+        {children}
       </body>
     </html>
   );

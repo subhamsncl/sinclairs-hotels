@@ -1,6 +1,6 @@
 'use client';
 
-import { submitEnquiry } from '@/app/enquiry/actions';
+import { submitEnquiry } from '@/app/(site)/enquiry/actions';
 import { DatePicker } from '@/components/ui/date-picker';
 import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/ui/select';
 import type { Hotel } from '@/content/types';

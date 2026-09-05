@@ -1,6 +1,6 @@
 'use client';
 
-import { subscribeNewsletter } from '@/app/newsletter/actions';
+import { subscribeNewsletter } from '@/app/(site)/newsletter/actions';
 import { useActionState } from 'react';
 
 const initialState = { status: 'idle' as const };
