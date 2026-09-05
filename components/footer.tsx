@@ -2,12 +2,22 @@ import { hotels } from '@/content/hotels';
 import { siteConfig, socialLinks } from '@/content/site';
 import Link from 'next/link';
 import { NewsletterForm } from './newsletter-form';
-import { FacebookIcon, InstagramIcon, TwitterIcon } from './social-icons';
+import {
+  FacebookIcon,
+  InstagramIcon,
+  LinkedInIcon,
+  PinterestIcon,
+  TwitterIcon,
+  YouTubeIcon,
+} from './social-icons';
 
 const socialIcons = {
   Facebook: FacebookIcon,
   Instagram: InstagramIcon,
   Twitter: TwitterIcon,
+  YouTube: YouTubeIcon,
+  LinkedIn: LinkedInIcon,
+  Pinterest: PinterestIcon,
 } as const;
 
 export function Footer() {
@@ -94,6 +104,14 @@ export function Footer() {
                   className="transition hover:text-gold-light hover:underline hover:underline-offset-4"
                 >
                   Contact Us
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/media"
+                  className="transition hover:text-gold-light hover:underline hover:underline-offset-4"
+                >
+                  Press &amp; Media
                 </Link>
               </li>
             </ul>

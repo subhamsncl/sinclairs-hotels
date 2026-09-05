@@ -3,7 +3,15 @@ import { siteConfig } from '@/content/site';
 import type { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticPaths = ['', '/hotels', '/weddings', '/meetings-events', '/contact', '/enquiry'];
+  const staticPaths = [
+    '',
+    '/hotels',
+    '/weddings',
+    '/meetings-events',
+    '/contact',
+    '/enquiry',
+    '/media',
+  ];
 
   return [
     ...staticPaths.map((path) => ({

@@ -1,10 +1,11 @@
 @import "tailwindcss";
 
 :root {
-  --color-brand-forest: #16352a;
-  --color-brand-forest-dark: #0d2119;
-  --color-brand-gold: #bd9455;
-  --color-brand-gold-light: #dcc08a;
+  /* Brand guidelines: Ultramarine Green #006b54, Pantone Golden Poppy #fcc201 */
+  --color-brand-forest: #006b54;
+  --color-brand-forest-dark: #00382c;
+  --color-brand-gold: #fcc201;
+  --color-brand-gold-light: #fed85a;
   --color-brand-cream: #faf7f1;
   --color-brand-ink: #1c1c1a;
 
@@ -22,7 +23,7 @@
   --color-cream: var(--color-brand-cream);
   --color-ink: var(--color-brand-ink);
   --font-sans: var(--font-inter);
-  --font-display: var(--font-playfair);
+  --font-display: var(--font-libre-baskerville);
 }
 
 body {
