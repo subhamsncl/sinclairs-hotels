@@ -1,6 +1,7 @@
 import { getHotelBySlug } from '@/content/hotels';
 import { prisma } from '@/lib/db';
 import type { Metadata } from 'next';
+import { headers } from 'next/headers';
 import Link from 'next/link';
 
 export const metadata: Metadata = { robots: { index: false, follow: false } };
@@ -11,6 +12,12 @@ export default async function VouchersPage() {
     orderBy: { voucherNo: 'desc' },
     take: 100,
   });
+
+  // The view page lives on the public host, not staff.* — proxy.ts redirects
+  // any non-/admin path on the staff host, so a relative link would bounce
+  // straight back to /admin/vouchers.
+  const host = (await headers()).get('host') ?? '';
+  const publicHost = host.replace(/^staff\./, '');
 
   return (
     <div>
@@ -48,7 +55,7 @@ export default async function VouchersPage() {
                 <td className="px-4 py-3">{voucher.checkOut.toLocaleDateString('en-IN')}</td>
                 <td className="px-4 py-3">
                   <a
-                    href={`/v/${voucher.viewToken}`}
+                    href={`https://${publicHost}/v/${voucher.viewToken}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-forest underline"
