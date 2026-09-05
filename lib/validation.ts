@@ -76,3 +76,24 @@ export const newsletterSchema = z.object({
 });
 
 export type NewsletterInput = z.infer<typeof newsletterSchema>;
+
+export const ipaySchema = z.object({
+  hotelSlug: z.string().trim().min(1, 'Please select a hotel').max(60),
+  amount: z.coerce.number().positive('Please enter an amount').max(1_000_000),
+  guestName: z.string().trim().min(2, 'Please enter your full name').max(120),
+  guestEmail: z.string().trim().email('Please enter a valid email address').max(200),
+  guestPhone: z
+    .string()
+    .trim()
+    .min(7, 'Please enter a valid phone number')
+    .max(20)
+    .regex(/^[0-9+()\-\s]+$/, 'Please enter a valid phone number'),
+  billingAddress: optionalTrimmed(500),
+  remark: optionalTrimmed(500),
+  reservationNo: optionalTrimmed(20),
+  checkIn: z.string().trim().max(10).optional().or(z.literal('')),
+  checkOut: z.string().trim().max(10).optional().or(z.literal('')),
+  company: z.string().max(0, 'Spam detected').optional().or(z.literal('')),
+});
+
+export type IpayInput = z.infer<typeof ipaySchema>;

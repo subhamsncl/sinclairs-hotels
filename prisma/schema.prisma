@@ -85,3 +85,38 @@ model Newsletter {
   subscribedAt   DateTime  @default(now())
   unsubscribedAt DateTime?
 }
+
+enum PaymentStatus {
+  INITIATED
+  SUCCESS
+  FAILURE
+  ABORTED
+}
+
+// One row per i-Pay attempt, created before the guest is redirected to
+// CCAvenue and updated only from CCAvenue's own encrypted callback — never
+// from a plain redirect query param, which anyone could forge.
+model Payment {
+  id             String        @id @default(cuid())
+  orderId        String        @unique
+  hotelSlug      String
+  amount         Decimal       @db.Decimal(10, 2)
+  guestName      String
+  guestEmail     String
+  guestPhone     String
+  billingAddress String?
+  remark         String?
+  reservationNo  String?
+  checkIn        DateTime?
+  checkOut       DateTime?
+  status         PaymentStatus @default(INITIATED)
+  trackingId     String?
+  bankRefNo      String?
+  failureMessage String?
+  userIp         String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@index([hotelSlug])
+  @@index([createdAt])
+}

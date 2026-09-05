@@ -35,7 +35,11 @@ const nextConfig: NextConfig = {
       "connect-src 'self'",
       "object-src 'none'",
       "base-uri 'self'",
-      "form-action 'self'",
+      // i-Pay auto-submits a POST straight to CCAvenue's hosted payment page —
+      // that's the whole point (card details never touch this app), so it
+      // needs an explicit form-action allowance or the browser silently
+      // blocks the redirect.
+      "form-action 'self' https://secure.ccavenue.com",
       "frame-ancestors 'none'",
       'upgrade-insecure-requests',
     ].join('; ');
