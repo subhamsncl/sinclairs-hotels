@@ -27,6 +27,7 @@ export const primaryNav = [
   { label: 'Hotels', href: '/hotels' },
   { label: 'Meetings', href: '/meetings-events' },
   { label: 'Weddings', href: '/weddings' },
+  { label: 'Media', href: '/media' },
   { label: 'Enquire Now', href: '/enquiry' },
   { label: 'Contact', href: '/contact' },
 ] as const;
