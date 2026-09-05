@@ -2,7 +2,7 @@ import { VOUCHER_TERMS_HTML } from '@/content/legal';
 import type { Hotel } from '@/content/types';
 import type { Voucher } from '@prisma/client';
 import { voucherGuestFields } from '../voucher-view';
-import { emailLayout, escapeHtml, fieldRowsHtml } from './layout';
+import { buttonHtml, emailLayout, escapeHtml, fieldRowsHtml } from './layout';
 
 export function voucherGuestHtml({
   voucher,
@@ -26,9 +26,9 @@ export function voucherGuestHtml({
     <p style="font-size:14px; margin:0 0 20px;">Please find your booking voucher details below.</p>
     ${fieldRowsHtml(voucherGuestFields(voucher, hotel))}
     ${contactHtml}
-    <p style="font-size:13px; margin:20px 0;">
-      <a href="${viewUrl}" style="color:#16352a; font-weight:bold;">View this voucher as a webpage</a>
-    </p>
+    <div style="margin:20px 0;">
+      ${buttonHtml(viewUrl, 'View This Voucher Online')}
+    </div>
     ${VOUCHER_TERMS_HTML}
   `;
 

@@ -2,13 +2,14 @@
 
 import { randomBytes } from 'node:crypto';
 import { getHotelBySlug } from '@/content/hotels';
-import { bookingOffices, siteConfig } from '@/content/site';
+import { bookingOffices } from '@/content/site';
 import { ADMIN_COOKIE_NAME, verifySessionCookieValue } from '@/lib/admin-auth';
 import { prisma } from '@/lib/db';
 import { voucherAdminHtml } from '@/lib/email-templates/voucher-admin';
 import { voucherGuestHtml } from '@/lib/email-templates/voucher-guest';
 import { sendMail } from '@/lib/mail';
 import { clientIp, isRateLimited } from '@/lib/rate-limit';
+import { publicSiteUrl } from '@/lib/site-url';
 import { voucherSchema } from '@/lib/validation';
 import { cookies, headers } from 'next/headers';
 
@@ -82,7 +83,7 @@ export async function createVoucher(
   });
 
   const hotel = getHotelBySlug(voucher.hotelSlug);
-  const viewUrl = `${siteConfig.url}/v/${voucher.viewToken}`;
+  const viewUrl = `${publicSiteUrl}/v/${voucher.viewToken}`;
   const office = bookingOffices.find((o) => o.name === voucher.bookingOffice);
 
   await sendMail({
