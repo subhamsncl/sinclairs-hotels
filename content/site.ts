@@ -17,8 +17,6 @@ export const socialLinks = [
   { label: 'Facebook', href: 'https://www.facebook.com/sinclairshotelsandresorts/' },
   { label: 'Instagram', href: 'https://www.instagram.com/sinclairshotelsandresorts/' },
   { label: 'Twitter', href: 'https://www.twitter.com/sinclairshotels' },
-  { label: 'YouTube', href: 'https://www.youtube.com/channel/UCqRQxKJYja1CR3CYa-nDRxQ' },
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/company/sinclairs-hotels-&-resorts' },
 ] as const;
 
 export const primaryNav = [

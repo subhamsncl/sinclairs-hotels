@@ -62,7 +62,7 @@ export default function MediaPage() {
         </p>
         {featured.map((mention, i) => (
           <EditorialRow
-            key={mention.title}
+            key={`${mention.outlet}-${mention.date}-${mention.title}`}
             image={mention.image}
             alt={mention.title}
             imageSide={i % 2 === 0 ? 'left' : 'right'}
@@ -81,7 +81,7 @@ export default function MediaPage() {
           {inTheNews.map((mention) =>
             'url' in mention ? (
               <a
-                key={mention.title}
+                key={`${mention.outlet}-${mention.date}-${mention.title}`}
                 href={mention.url}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -97,7 +97,7 @@ export default function MediaPage() {
               </a>
             ) : (
               <div
-                key={mention.title}
+                key={`${mention.outlet}-${mention.date}-${mention.title}`}
                 className="group relative flex flex-col rounded-lg border border-forest/10 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl"
               >
                 <span className="font-display text-4xl leading-none text-gold/30">&ldquo;</span>

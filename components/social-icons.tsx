@@ -33,19 +33,3 @@ export function TwitterIcon({ className = base }: IconProps) {
     </svg>
   );
 }
-
-export function YouTubeIcon({ className = base }: IconProps) {
-  return (
-    <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
-      <path d="M21.6 7.6c-.2-1.2-1.1-2.1-2.3-2.3C17.5 5 12 5 12 5s-5.5 0-7.3.3c-1.2.2-2.1 1.1-2.3 2.3C2 9.4 2 12 2 12s0 2.6.4 4.4c.2 1.2 1.1 2.1 2.3 2.3 1.8.3 7.3.3 7.3.3s5.5 0 7.3-.3c1.2-.2 2.1-1.1 2.3-2.3.4-1.8.4-4.4.4-4.4s0-2.6-.4-4.4ZM10 15V9l5.2 3-5.2 3Z" />
-    </svg>
-  );
-}
-
-export function LinkedInIcon({ className = base }: IconProps) {
-  return (
-    <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
-      <path d="M6.9 8.9H3.9V20h3V8.9ZM5.4 4c-1 0-1.8.8-1.8 1.8 0 1 .8 1.8 1.8 1.8s1.8-.8 1.8-1.8C7.2 4.8 6.4 4 5.4 4ZM14.6 8.6c-1.4 0-2.4.6-2.9 1.4V8.9H8.7V20h3V14c0-1.6.3-3.1 2.3-3.1 1.9 0 2 1.8 2 3.2V20h3v-6.4c0-3-.6-5-3.4-5Z" />
-    </svg>
-  );
-}
