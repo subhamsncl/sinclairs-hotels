@@ -6,7 +6,6 @@ import {
   FacebookIcon,
   InstagramIcon,
   LinkedInIcon,
-  PinterestIcon,
   TwitterIcon,
   YouTubeIcon,
 } from './social-icons';
@@ -17,7 +16,6 @@ const socialIcons = {
   Twitter: TwitterIcon,
   YouTube: YouTubeIcon,
   LinkedIn: LinkedInIcon,
-  Pinterest: PinterestIcon,
 } as const;
 
 export function Footer() {
