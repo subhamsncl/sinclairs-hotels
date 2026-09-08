@@ -3,6 +3,7 @@ import Link from 'next/link';
 
 const navItems = [
   { label: 'Vouchers', href: '/admin/vouchers' },
+  { label: 'Payments', href: '/admin/payments' },
   { label: 'Enquiries', href: '/admin/enquiries' },
   { label: 'Newsletter', href: '/admin/newsletter' },
 ];
