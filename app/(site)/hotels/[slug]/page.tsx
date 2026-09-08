@@ -176,7 +176,7 @@ export default async function HotelPage({ params }: { params: Promise<Params> })
 
         {hotel.history && (
           <div className="mt-8 rounded-lg border-l-4 border-gold bg-forest/5 p-6">
-            <p className="text-xs uppercase tracking-[0.3em] text-gold">Heritage</p>
+            <p className="text-xs uppercase tracking-[0.3em] text-gold-dark">Heritage</p>
             <p className="mt-3 font-display text-lg italic leading-relaxed text-forest">
               {hotel.history}
             </p>

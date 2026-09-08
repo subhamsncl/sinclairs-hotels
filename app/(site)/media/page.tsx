@@ -57,7 +57,7 @@ export default function MediaPage() {
       </div>
 
       <div className="mt-12 sm:mt-16">
-        <p className="mx-auto max-w-5xl px-6 text-xs uppercase tracking-[0.3em] text-gold">
+        <p className="mx-auto max-w-5xl px-6 text-xs uppercase tracking-[0.3em] text-gold-dark">
           Featured Coverage
         </p>
         {featured.map((mention, i) => (
@@ -73,7 +73,7 @@ export default function MediaPage() {
       </div>
 
       <div className="mx-auto max-w-5xl px-6 py-16 sm:py-20">
-        <p className="text-xs uppercase tracking-[0.3em] text-gold">In The News</p>
+        <p className="text-xs uppercase tracking-[0.3em] text-gold-dark">In The News</p>
         <h2 className="mt-3 font-display text-3xl text-forest sm:text-4xl">
           Also Making Headlines
         </h2>

@@ -21,6 +21,13 @@ export const STAFF_NOTIFY_EMAIL =
 // staff-notification ones. Blank by default so production doesn't Bcc anyone.
 const OWNER_BCC_EMAIL = process.env.OWNER_BCC_EMAIL || undefined;
 
+// Pre-launch safety valve: real guest/hotel addresses typed into the Voucher and
+// Enquiry forms would otherwise be emailed for real. When set, every outbound
+// mail is redirected here instead — the original recipient(s) are kept in the
+// subject line so nothing about what *would* have sent is lost. Unset once the
+// team is ready for vouchers/enquiries to reach real guests and hotels.
+const RECIPIENT_OVERRIDE = process.env.MAIL_RECIPIENT_OVERRIDE || undefined;
+
 function withOwnerBcc(bcc?: string | string[]): string | string[] | undefined {
   if (!OWNER_BCC_EMAIL) return bcc;
   const existing = bcc ? (Array.isArray(bcc) ? bcc : [bcc]) : [];
@@ -40,19 +47,28 @@ export async function sendMail({
   subject: string;
   html: string;
 }): Promise<void> {
-  const finalBcc = withOwnerBcc(bcc);
+  const finalTo = RECIPIENT_OVERRIDE ?? to;
+  const finalBcc = RECIPIENT_OVERRIDE ? undefined : withOwnerBcc(bcc);
+  const finalSubject = RECIPIENT_OVERRIDE
+    ? `[TEST → ${Array.isArray(to) ? to.join(', ') : to}] ${subject}`
+    : subject;
 
   if (!resend) {
-    console.log('[mail:dev-fallback]', { to, bcc: finalBcc, replyTo, subject });
+    console.log('[mail:dev-fallback]', {
+      to: finalTo,
+      bcc: finalBcc,
+      replyTo,
+      subject: finalSubject,
+    });
     return;
   }
 
   const { error } = await resend.emails.send({
     from: FROM_ADDRESS,
-    to,
+    to: finalTo,
     bcc: finalBcc,
     replyTo,
-    subject,
+    subject: finalSubject,
     html,
   });
   if (error) {

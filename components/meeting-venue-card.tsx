@@ -54,7 +54,7 @@ export function MeetingVenueCard({ hotel }: { hotel: Hotel }) {
         <p className="mt-0.5 text-xs text-ink/50">
           {hotel.location}, {hotel.state}
         </p>
-        <p className="mt-2 text-xs uppercase tracking-wider text-gold">
+        <p className="mt-2 text-xs uppercase tracking-wider text-gold-dark">
           {spaces.venues.length} {spaces.venues.length === 1 ? 'Room' : 'Rooms'} ·{' '}
           {spaces.totalSqFt.toLocaleString('en-IN')} sq ft · Up to{' '}
           {spaces.maxCapacity.toLocaleString('en-IN')} guests

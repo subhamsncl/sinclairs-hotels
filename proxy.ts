@@ -32,6 +32,13 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL('/admin/login', request.url));
   }
 
+  // Bare /admin (or /admin/) has no page of its own — only the subroutes below
+  // it do — so send an authenticated visit there to the same default landing
+  // spot as the non-admin-path redirect above, instead of a dead-end 404.
+  if (request.nextUrl.pathname === '/admin' || request.nextUrl.pathname === '/admin/') {
+    return NextResponse.redirect(new URL('/admin/vouchers', request.url));
+  }
+
   return NextResponse.next();
 }
 

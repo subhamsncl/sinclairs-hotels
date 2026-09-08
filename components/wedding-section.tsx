@@ -37,7 +37,7 @@ export function WeddingSection({ hotel }: { hotel: Hotel }) {
           )}
           <div className="order-2 flex flex-col justify-center lg:order-1 lg:col-span-3">
             <Reveal>
-              <p className="text-xs uppercase tracking-[0.3em] text-gold">Weddings</p>
+              <p className="text-xs uppercase tracking-[0.3em] text-gold-dark">Weddings</p>
               <h2 className="mt-3 font-display text-2xl text-forest sm:text-3xl">
                 Weddings at {hotel.name}
               </h2>

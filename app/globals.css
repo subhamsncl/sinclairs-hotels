@@ -6,6 +6,11 @@
   --color-brand-forest-dark: #00382c;
   --color-brand-gold: #fcc201;
   --color-brand-gold-light: #fed85a;
+  /* Same hue as brand gold (~46°), darkened for ~5.9:1 contrast on white/cream —
+     #fcc201 itself is ~1.6:1 there, unreadable for text (only usable on the dark
+     forest/forest-dark backgrounds it was designed for). Use this for gold-toned
+     text/labels on light backgrounds instead of --color-gold. */
+  --color-brand-gold-dark: #7c6003;
   --color-brand-cream: #faf7f1;
   --color-brand-ink: #1c1c1a;
 
@@ -20,6 +25,7 @@
   --color-forest-dark: var(--color-brand-forest-dark);
   --color-gold: var(--color-brand-gold);
   --color-gold-light: var(--color-brand-gold-light);
+  --color-gold-dark: var(--color-brand-gold-dark);
   --color-cream: var(--color-brand-cream);
   --color-ink: var(--color-brand-ink);
   --font-sans: var(--font-inter);

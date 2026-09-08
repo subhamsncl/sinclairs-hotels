@@ -16,7 +16,7 @@ export function MeetingsSection({ hotel }: { hotel: Hotel }) {
     >
       <div className="mx-auto max-w-6xl px-6">
         <Reveal>
-          <p className="text-xs uppercase tracking-[0.3em] text-gold">Meetings &amp; Events</p>
+          <p className="text-xs uppercase tracking-[0.3em] text-gold-dark">Meetings &amp; Events</p>
           <h2 className="mt-3 font-display text-2xl text-forest sm:text-3xl">
             Meetings &amp; Conferences at {hotel.name}
           </h2>

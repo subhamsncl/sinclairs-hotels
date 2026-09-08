@@ -42,7 +42,7 @@ export function VoucherForm({
       )}
 
       <fieldset className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-        <legend className="mb-2 text-xs uppercase tracking-widest text-gold-light">Booking</legend>
+        <legend className="mb-2 text-xs uppercase tracking-widest text-gold-dark">Booking</legend>
         <Field label="Hotel" name="hotelSlug" error={fieldError('hotelSlug')}>
           <input type="hidden" name="hotelSlug" value={hotelSlug} />
           <div className="input">
@@ -126,7 +126,7 @@ export function VoucherForm({
       </fieldset>
 
       <fieldset className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-        <legend className="mb-2 text-xs uppercase tracking-widest text-gold-light">Guest</legend>
+        <legend className="mb-2 text-xs uppercase tracking-widest text-gold-dark">Guest</legend>
         <Field label="Guest Name" name="guestName" error={fieldError('guestName')}>
           <input id="guestName" type="text" name="guestName" required className="input" />
         </Field>
@@ -142,7 +142,7 @@ export function VoucherForm({
       </fieldset>
 
       <fieldset className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-        <legend className="mb-2 text-xs uppercase tracking-widest text-gold-light">
+        <legend className="mb-2 text-xs uppercase tracking-widest text-gold-dark">
           Travel Agent (optional)
         </legend>
         <Field label="Travel Agent Name" name="travelAgentName">
@@ -182,7 +182,7 @@ export function VoucherForm({
       </fieldset>
 
       <fieldset className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-        <legend className="mb-2 text-xs uppercase tracking-widest text-gold-light">
+        <legend className="mb-2 text-xs uppercase tracking-widest text-gold-dark">
           Deposit &amp; Billing (optional)
         </legend>
         <Field label="Deposit Amount (₹)" name="depositAmount">
@@ -233,9 +233,7 @@ export function VoucherForm({
       </fieldset>
 
       <fieldset className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-        <legend className="mb-2 text-xs uppercase tracking-widest text-gold-light">
-          Issued By
-        </legend>
+        <legend className="mb-2 text-xs uppercase tracking-widest text-gold-dark">Issued By</legend>
         <Field label="Your Name" name="issuerName" error={fieldError('issuerName')}>
           <input id="issuerName" type="text" name="issuerName" required className="input" />
         </Field>

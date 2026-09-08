@@ -113,7 +113,7 @@ export default function ContactPage() {
                     {email && (
                       <a
                         href={`mailto:${email}`}
-                        className="shrink-0 break-words text-gold hover:text-forest"
+                        className="shrink-0 break-words text-gold-dark hover:text-gold"
                       >
                         {email}
                       </a>

@@ -105,7 +105,7 @@ export default function MeetingsEventsPage() {
 
       <section className="pt-16">
         <div className="mx-auto max-w-3xl px-6 text-center">
-          <p className="text-xs uppercase tracking-[0.3em] text-gold">Our Commitment</p>
+          <p className="text-xs uppercase tracking-[0.3em] text-gold-dark">Our Commitment</p>
           <p className="mt-4 text-base leading-relaxed text-ink/70">
             At Sinclairs Hotels, we focus on creativity and luxury. Host your events with us for
             organised, innovative, and flawless experiences — set against the backdrop of the

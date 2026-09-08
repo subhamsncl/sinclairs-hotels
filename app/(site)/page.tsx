@@ -142,7 +142,7 @@ export default function HomePage() {
 
       <section className="mx-auto max-w-7xl px-6 py-14 sm:py-20">
         <Reveal className="mb-12 text-center">
-          <p className="text-xs uppercase tracking-[0.3em] text-gold">Featured Properties</p>
+          <p className="text-xs uppercase tracking-[0.3em] text-gold-dark">Featured Properties</p>
           <h2 className="mt-4 font-display text-3xl text-forest sm:text-4xl">Hotels and Resorts</h2>
           <p className="mx-auto mt-4 max-w-xl text-sm text-ink/70">
             Whether staying for business or leisure, discover our properties across India.
@@ -159,7 +159,7 @@ export default function HomePage() {
 
       <section className="mx-auto flex min-h-screen max-w-7xl flex-col justify-center px-6 py-10">
         <Reveal className="mb-6 text-center">
-          <p className="text-xs uppercase tracking-[0.3em] text-gold">Nearby Every Property</p>
+          <p className="text-xs uppercase tracking-[0.3em] text-gold-dark">Nearby Every Property</p>
           <h2 className="mt-3 font-display text-3xl text-forest sm:text-4xl">
             A World to Explore, Just Outside
           </h2>
@@ -174,7 +174,9 @@ export default function HomePage() {
       <section className="border-y border-forest/10 bg-white py-14 sm:py-20">
         <div className="mx-auto max-w-7xl px-6">
           <Reveal className="mb-10 text-center">
-            <p className="text-xs uppercase tracking-[0.3em] text-gold">Signature Experiences</p>
+            <p className="text-xs uppercase tracking-[0.3em] text-gold-dark">
+              Signature Experiences
+            </p>
             <h2 className="mt-4 font-display text-3xl text-forest sm:text-4xl">
               Memories that last a lifetime
             </h2>
@@ -195,7 +197,7 @@ export default function HomePage() {
 
       <section className="mx-auto max-w-6xl px-6 py-14 sm:py-20">
         <Reveal className="mb-10 text-center">
-          <p className="text-xs uppercase tracking-[0.3em] text-gold">Celebrate With Us</p>
+          <p className="text-xs uppercase tracking-[0.3em] text-gold-dark">Celebrate With Us</p>
           <h2 className="mt-4 font-display text-3xl text-forest sm:text-4xl">
             Unforgettable Events and Weddings Await You
           </h2>
@@ -258,7 +260,9 @@ export default function HomePage() {
       <section className="bg-forest/5 py-10 sm:py-20">
         <div className="mx-auto max-w-6xl px-6">
           <Reveal className="text-center">
-            <p className="text-xs uppercase tracking-[0.3em] text-gold">Recognised Excellence</p>
+            <p className="text-xs uppercase tracking-[0.3em] text-gold-dark">
+              Recognised Excellence
+            </p>
             <h2 className="mt-1.5 font-display text-2xl text-forest sm:mt-4 sm:text-4xl">
               Awards and Recognitions
             </h2>

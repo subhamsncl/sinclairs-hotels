@@ -12,7 +12,7 @@ export function ExploreSection({ hotel }: { hotel: Hotel }) {
     <section id="explore" className="scroll-mt-32 py-10 sm:py-16">
       <div className="mx-auto max-w-7xl px-6">
         <Reveal>
-          <p className="text-xs uppercase tracking-[0.3em] text-gold">Nearby</p>
+          <p className="text-xs uppercase tracking-[0.3em] text-gold-dark">Nearby</p>
           <h2 className="mt-3 font-display text-2xl text-forest sm:text-3xl">
             Explore {hotel.location}
           </h2>

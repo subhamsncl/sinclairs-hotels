@@ -41,7 +41,7 @@ export default function IpayPage() {
       <div className="bg-forest/5 px-6 py-10 sm:py-16 lg:px-16 lg:py-24">
         <div className="mx-auto max-w-lg lg:mx-0">
           <div className="mb-10">
-            <p className="text-xs uppercase tracking-[0.3em] text-gold">Secure Payment</p>
+            <p className="text-xs uppercase tracking-[0.3em] text-gold-dark">Secure Payment</p>
             <h1 className="mt-4 font-display text-4xl text-forest">i-Pay</h1>
             <p className="mt-4 text-sm text-ink/70">
               Enter your details below to make a secure online payment. You will be redirected to
