@@ -1,7 +1,13 @@
 import { getHotelBySlug } from '@/content/hotels';
 import { prisma } from '@/lib/db';
 import { ipayConfirmationHtml } from '@/lib/email-templates/ipay-confirmation';
-import { iciciConfig, isIciciSuccess, parseIciciPaymentResponse, verifyHashV1 } from '@/lib/icici';
+import {
+  iciciConfig,
+  isIciciSuccess,
+  parseIciciPaymentResponse,
+  rawFormFields,
+  verifyHashV1,
+} from '@/lib/icici';
 import { STAFF_NOTIFY_EMAIL, sendMail } from '@/lib/mail';
 import { NextResponse } from 'next/server';
 
@@ -26,8 +32,12 @@ export async function POST(request: Request): Promise<NextResponse> {
   // Only the gateway's own signed response — never a plain redirect query
   // param a guest's browser could otherwise supply — is trusted as proof of
   // what happened to the payment. See lib/icici.ts for why this is hash v1.
-  const { secureHash, ...hashable } = resp;
-  if (!verifyHashV1(hashable, secureHash, hmacKey)) {
+  // Verified against every raw field ICICI actually sent (not just the
+  // fields this route acts on) — a curated field list caused a real
+  // secureHash mismatch in UAT testing, since the response payload varies
+  // by payment method (UPI/card/netbanking each include different fields).
+  const { secureHash, ...rawFields } = rawFormFields(formData);
+  if (!verifyHashV1(rawFields, secureHash ?? '', hmacKey)) {
     console.error('[ipay:callback] secureHash mismatch for order', orderId);
     return NextResponse.redirect(`${baseUrl}/ipay/result?order=${orderId}`, 303);
   }

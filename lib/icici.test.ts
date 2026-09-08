@@ -7,6 +7,7 @@ import {
   initiateSaleAccepted,
   isIciciSuccess,
   parseIciciPaymentResponse,
+  rawFormFields,
   verifyHashV1,
 } from './icici';
 
@@ -170,6 +171,29 @@ describe('parseIciciPaymentResponse', () => {
       txnAuthID: '811069696857',
       addlParam1: undefined,
       addlParam2: undefined,
+      secureHash: 'abc123',
+    });
+  });
+});
+
+describe('rawFormFields', () => {
+  it('captures every field verbatim, including ones no named accessor reads', () => {
+    // Real UAT evidence: a UPI callback includes fields (paymentMode,
+    // customerEmailID, customerMobileNo, ...) that a curated field list
+    // omits, causing a real secureHash mismatch — this must never drop a
+    // field just because this integration doesn't otherwise act on it.
+    const form = new FormData();
+    form.set('responseCode', '0000');
+    form.set('merchantTxnNo', 'M1');
+    form.set('paymentMode', 'UPI');
+    form.set('customerEmailID', 'test@example.com');
+    form.set('secureHash', 'abc123');
+
+    expect(rawFormFields(form)).toEqual({
+      responseCode: '0000',
+      merchantTxnNo: 'M1',
+      paymentMode: 'UPI',
+      customerEmailID: 'test@example.com',
       secureHash: 'abc123',
     });
   });

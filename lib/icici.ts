@@ -141,6 +141,22 @@ export async function callInitiateSale(
   return (await res.json()) as InitiateSaleResponse;
 }
 
+// Confirmed against a real UAT callback (a UPI attempt): ICICI's payment
+// response includes fields well beyond the ones this integration acts on
+// (paymentMode, customerEmailID, customerMobileNo, etc., varying by payment
+// method used). Per spec Note 1, every field must go into the hash
+// verification, undocumented or not — a curated field list caused a real
+// secureHash mismatch in testing. So hash verification uses every raw field
+// in the form (see rawFormFields), and this typed accessor is only for the
+// handful of named fields the callback route actually acts on.
+export function rawFormFields(formData: FormData): Record<string, string> {
+  const fields: Record<string, string> = {};
+  for (const [key, value] of formData.entries()) {
+    if (typeof value === 'string') fields[key] = value;
+  }
+  return fields;
+}
+
 // Posted back (form url-encoded) to returnURL after the browser completes
 // authentication/authorization on ICICI's domain. Field naming is
 // inconsistent between the spec's Authorize (Ch.6) and Authorization
@@ -162,10 +178,6 @@ export type IciciPaymentResponse = {
   secureHash: string;
 };
 
-// Every field ICICI actually sends back must go into the hash verification
-// (Note 1 in the spec: don't drop a field just because it's not in the
-// published list) — so this captures aggregatorID/addlParam1/addlParam2 too,
-// not just the fields this integration currently acts on.
 export function parseIciciPaymentResponse(formData: FormData): IciciPaymentResponse {
   const get = (name: string) => {
     const v = formData.get(name);
