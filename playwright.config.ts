@@ -1,5 +1,14 @@
 import { defineConfig, devices } from '@playwright/test';
 
+// Needed by specs that log in as staff (ADMIN_PASSWORD) or clean up rows they
+// created (DATABASE_URL) — Playwright doesn't load .env.local on its own the
+// way Next's dev/start process does. Each worker process re-requires this
+// config, so this runs per-worker; a missing file (e.g. in CI, which injects
+// real env vars instead) is expected, not an error.
+try {
+  process.loadEnvFile('.env.local');
+} catch {}
+
 export default defineConfig({
   testDir: './e2e',
   fullyParallel: true,
