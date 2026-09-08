@@ -169,6 +169,7 @@ export type IciciPaymentResponse = {
   merchantId: string;
   aggregatorID?: string;
   merchantTxnNo: string;
+  amount?: string;
   txnID?: string;
   paymentDateTime?: string;
   paymentID?: string;
@@ -190,6 +191,7 @@ export function parseIciciPaymentResponse(formData: FormData): IciciPaymentRespo
     merchantId: get('merchantId') ?? '',
     aggregatorID: get('aggregatorID'),
     merchantTxnNo: get('merchantTxnNo') ?? '',
+    amount: get('amount'),
     txnID: get('txnID'),
     paymentDateTime: get('paymentDateTime'),
     paymentID: get('paymentID'),

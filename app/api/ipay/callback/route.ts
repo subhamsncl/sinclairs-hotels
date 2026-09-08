@@ -54,7 +54,25 @@ export async function POST(request: Request): Promise<NextResponse> {
     return NextResponse.redirect(`${baseUrl}/ipay/result?order=${orderId}`, 303);
   }
 
-  const status: 'SUCCESS' | 'FAILURE' = isIciciSuccess(resp.responseCode) ? 'SUCCESS' : 'FAILURE';
+  // The gateway's own signed response is trusted for pass/fail, but a
+  // reported amount that doesn't match what this order was created for is
+  // a tamper/replay signal worth failing closed on, not just recording
+  // alongside a SUCCESS — never let a mismatched amount confirm a payment.
+  const amountMismatch =
+    resp.amount !== undefined && Number(resp.amount) !== Number(payment.amount);
+  if (amountMismatch) {
+    console.error(
+      '[ipay:callback] amount mismatch for order',
+      orderId,
+      'expected',
+      payment.amount.toFixed(2),
+      'got',
+      resp.amount,
+    );
+  }
+
+  const status: 'SUCCESS' | 'FAILURE' =
+    isIciciSuccess(resp.responseCode) && !amountMismatch ? 'SUCCESS' : 'FAILURE';
 
   const updated = await prisma.payment.update({
     where: { orderId },
@@ -62,7 +80,12 @@ export async function POST(request: Request): Promise<NextResponse> {
       status,
       trackingId: resp.txnID || null,
       bankRefNo: resp.paymentID || resp.txnAuthID || null,
-      failureMessage: status === 'FAILURE' ? resp.respDescription || resp.responseCode : null,
+      failureMessage:
+        status === 'FAILURE'
+          ? amountMismatch
+            ? `Amount mismatch: expected ${payment.amount.toFixed(2)}, gateway reported ${resp.amount}`
+            : resp.respDescription || resp.responseCode
+          : null,
     },
   });
 
