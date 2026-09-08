@@ -37,9 +37,25 @@ body {
   color: var(--foreground);
 }
 
-.input {
-  @apply w-full rounded border border-forest/20 bg-white px-3 py-2 text-sm text-ink;
-  @apply focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold;
+/* Wrapped in @layer components so a utility class at the call site (e.g. w-auto
+   to shrink an admin filter <select> that would otherwise default to w-full)
+   can actually override it — Tailwind v4's cascade layers mean unlayered plain
+   CSS always beats @layer utilities regardless of source order, so without this
+   a plain `.input`/`.select` rule here would silently win over any utility. */
+@layer components {
+  .input {
+    @apply w-full rounded border border-forest/20 bg-white px-3 py-2 text-sm text-ink;
+    @apply focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold;
+  }
+
+  /* Native <select> used only in the internal admin dashboard's GET-based filter
+     forms — the site-wide "no native select" rule is about guest-facing forms
+     needing a fully themed popup (see components/ui/select.tsx); admin already
+     uses plain inputs/buttons rather than the marketing design system. */
+  .select {
+    @apply w-full rounded border border-forest/20 bg-white px-3 py-2 text-sm text-ink;
+    @apply focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold;
+  }
 }
 
 @keyframes hero-zoom {

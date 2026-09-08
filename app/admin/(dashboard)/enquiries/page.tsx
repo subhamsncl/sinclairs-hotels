@@ -1,6 +1,16 @@
+import { AdminPagination } from '@/components/admin/pagination';
+import { StatTiles } from '@/components/admin/stat-tiles';
 import { getHotelBySlug } from '@/content/hotels';
+import { formatDate, parsePageSize } from '@/lib/admin-format';
 import { prisma } from '@/lib/db';
+import { EnquiryStatus, EnquiryType, type Prisma } from '@prisma/client';
 import type { Metadata } from 'next';
+
+const STATUS_LABELS: Record<EnquiryStatus, string> = {
+  NEW: 'New',
+  CONTACTED: 'Contacted',
+  CLOSED: 'Closed',
+};
 
 export const metadata: Metadata = { robots: { index: false, follow: false } };
 export const dynamic = 'force-dynamic';
@@ -18,37 +28,175 @@ const typeLabels: Record<string, string> = {
   MEETINGS: 'Meetings & Events',
 };
 
-export default async function EnquiriesPage() {
-  const enquiries = await prisma.enquiry.findMany({
-    orderBy: { createdAt: 'desc' },
-    take: 100,
-  });
+export default async function EnquiriesPage({
+  searchParams,
+}: {
+  searchParams: Promise<{
+    q?: string;
+    page?: string;
+    pageSize?: string;
+    status?: string;
+    type?: string;
+    property?: string;
+  }>;
+}) {
+  const {
+    q,
+    page: pageParam,
+    pageSize: pageSizeParam,
+    status,
+    type,
+    property,
+  } = await searchParams;
+  const query = q?.trim() ?? '';
+  const page = Math.max(1, Number.parseInt(pageParam ?? '1', 10) || 1);
+  const pageSize = parsePageSize(pageSizeParam);
+
+  const where: Prisma.EnquiryWhereInput = {
+    ...(query
+      ? {
+          OR: [
+            { name: { contains: query, mode: 'insensitive' } },
+            { email: { contains: query, mode: 'insensitive' } },
+            { phone: { contains: query, mode: 'insensitive' } },
+            { legacyTicket: { contains: query, mode: 'insensitive' } },
+          ],
+        }
+      : {}),
+    ...(status && status in EnquiryStatus ? { status: status as EnquiryStatus } : {}),
+    ...(type && type in EnquiryType ? { type: type as EnquiryType } : {}),
+    ...(property ? { property } : {}),
+  };
+
+  const [enquiries, total, statusCounts, typeCounts, propertyCounts] = await Promise.all([
+    prisma.enquiry.findMany({
+      where,
+      orderBy: { createdAt: 'desc' },
+      take: pageSize,
+      skip: (page - 1) * pageSize,
+    }),
+    prisma.enquiry.count({ where }),
+    prisma.enquiry.groupBy({ by: ['status'], _count: true }),
+    prisma.enquiry.groupBy({ by: ['type'], _count: true }),
+    prisma.enquiry.groupBy({ by: ['property'], _count: true }),
+  ]);
+
+  const countFor = (s: string) => statusCounts.find((c) => c.status === s)?._count ?? 0;
+  const availableTypes = typeCounts.map((t) => t.type);
+  const availableProperties = propertyCounts
+    .map((p) => p.property)
+    .sort((a, b) => (getHotelBySlug(a)?.name ?? a).localeCompare(getHotelBySlug(b)?.name ?? b));
+
+  const totalPages = Math.max(1, Math.ceil(total / pageSize));
+  const buildHref = (p: number) =>
+    `/admin/enquiries?${new URLSearchParams({
+      ...(query ? { q: query } : {}),
+      ...(status ? { status } : {}),
+      ...(type ? { type } : {}),
+      ...(property ? { property } : {}),
+      pageSize: String(pageSize),
+      page: String(p),
+    })}`;
+  const buildPageSizeHref = (size: number) =>
+    `/admin/enquiries?${new URLSearchParams({
+      ...(query ? { q: query } : {}),
+      ...(status ? { status } : {}),
+      ...(type ? { type } : {}),
+      ...(property ? { property } : {}),
+      pageSize: String(size),
+      page: '1',
+    })}`;
 
   return (
-    <div>
-      <p className="font-display text-2xl text-forest">Enquiries</p>
-      <p className="mt-1 text-sm text-ink/60">
-        Guest enquiries submitted from the website, newest first.
-      </p>
+    <div className="flex h-full min-h-0 flex-col">
+      <div className="h-[20%] shrink-0">
+        <div className="flex items-baseline justify-between gap-4">
+          <p className="font-display text-xl text-forest">Enquiries</p>
+          <StatTiles
+            tiles={[
+              { label: 'New', value: countFor('NEW') },
+              { label: 'Contacted', value: countFor('CONTACTED') },
+              { label: 'Closed', value: countFor('CLOSED') },
+            ]}
+          />
+        </div>
 
-      <div className="mt-6 overflow-x-auto rounded-lg border border-ink/10 bg-white">
+        <form method="get" className="mt-3 flex flex-nowrap items-center gap-2 overflow-x-auto">
+          <input
+            type="search"
+            name="q"
+            defaultValue={query}
+            placeholder="Search by name, email, phone, or ticket"
+            className="input min-w-[180px] flex-1 py-1.5 text-sm"
+          />
+          <select
+            name="status"
+            defaultValue={status ?? ''}
+            className="select w-auto shrink-0 py-1.5 text-sm"
+          >
+            <option value="">All statuses</option>
+            {(Object.keys(STATUS_LABELS) as EnquiryStatus[])
+              .filter((s) => countFor(s) > 0)
+              .map((s) => (
+                <option key={s} value={s}>
+                  {STATUS_LABELS[s]}
+                </option>
+              ))}
+          </select>
+          <select
+            name="type"
+            defaultValue={type ?? ''}
+            className="select w-auto shrink-0 py-1.5 text-sm"
+          >
+            <option value="">All types</option>
+            {availableTypes.map((t) => (
+              <option key={t} value={t}>
+                {typeLabels[t] ?? t}
+              </option>
+            ))}
+          </select>
+          <select
+            name="property"
+            defaultValue={property ?? ''}
+            className="select w-auto shrink-0 py-1.5 text-sm"
+          >
+            <option value="">All properties</option>
+            {availableProperties.map((p) => (
+              <option key={p} value={p}>
+                {getHotelBySlug(p)?.name ?? p}
+              </option>
+            ))}
+          </select>
+          <button
+            type="submit"
+            className="shrink-0 whitespace-nowrap rounded bg-forest px-4 py-1.5 text-sm font-medium text-cream transition hover:bg-forest-dark"
+          >
+            Filter
+          </button>
+        </form>
+      </div>
+
+      <div className="mt-3 min-h-0 flex-1 overflow-auto rounded-lg border border-ink/10 bg-white">
         <table className="w-full text-left text-sm">
-          <thead className="border-b border-ink/10 text-xs uppercase tracking-wider text-ink/50">
+          <thead className="sticky top-0 z-10 border-b border-gold/40 bg-forest text-[11px] uppercase tracking-wide text-cream/90">
             <tr>
-              <th className="px-4 py-3">Date</th>
-              <th className="px-4 py-3">Guest</th>
-              <th className="px-4 py-3">Type</th>
-              <th className="px-4 py-3">Property</th>
-              <th className="px-4 py-3">Dates</th>
-              <th className="px-4 py-3">Message</th>
-              <th className="px-4 py-3">Status</th>
+              <th className="whitespace-nowrap px-4 py-3">Date</th>
+              <th className="whitespace-nowrap px-4 py-3">Guest</th>
+              <th className="whitespace-nowrap px-4 py-3">Type</th>
+              <th className="whitespace-nowrap px-4 py-3">Property</th>
+              <th className="whitespace-nowrap px-4 py-3">Dates</th>
+              <th className="whitespace-nowrap px-4 py-3">Message</th>
+              <th className="whitespace-nowrap px-4 py-3">Status</th>
             </tr>
           </thead>
           <tbody>
             {enquiries.map((enquiry) => (
-              <tr key={enquiry.id} className="border-b border-ink/5 align-top last:border-0">
+              <tr
+                key={enquiry.id}
+                className="border-b border-ink/5 align-top transition-colors last:border-0 odd:bg-white even:bg-forest/[0.025] hover:bg-forest/[0.08]"
+              >
                 <td className="whitespace-nowrap px-4 py-3 text-ink/70">
-                  {enquiry.createdAt.toLocaleDateString('en-IN')}
+                  {formatDate(enquiry.createdAt)}
                   {enquiry.legacyTicket && (
                     <div className="mt-1 text-xs text-ink/40">{enquiry.legacyTicket}</div>
                   )}
@@ -65,9 +213,9 @@ export default async function EnquiriesPage() {
                   {getHotelBySlug(enquiry.property)?.name ?? enquiry.property}
                 </td>
                 <td className="whitespace-nowrap px-4 py-3 text-ink/70">
-                  {enquiry.checkIn ? enquiry.checkIn.toLocaleDateString('en-IN') : '—'}
+                  {enquiry.checkIn ? formatDate(enquiry.checkIn) : '—'}
                   {' → '}
-                  {enquiry.checkOut ? enquiry.checkOut.toLocaleDateString('en-IN') : '—'}
+                  {enquiry.checkOut ? formatDate(enquiry.checkOut) : '—'}
                   {enquiry.guests && (
                     <div className="text-xs text-ink/50">{enquiry.guests} guests</div>
                   )}
@@ -87,13 +235,24 @@ export default async function EnquiriesPage() {
             {enquiries.length === 0 && (
               <tr>
                 <td colSpan={7} className="px-4 py-8 text-center text-ink/50">
-                  No enquiries yet.
+                  No enquiries match the current filters.
                 </td>
               </tr>
             )}
           </tbody>
         </table>
       </div>
+
+      <AdminPagination
+        page={page}
+        totalPages={totalPages}
+        total={total}
+        itemLabel="enquiry"
+        itemLabelPlural="enquiries"
+        buildHref={buildHref}
+        pageSize={pageSize}
+        buildPageSizeHref={buildPageSizeHref}
+      />
     </div>
   );
 }

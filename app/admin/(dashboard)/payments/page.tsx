@@ -1,14 +1,14 @@
+import { AdminPagination } from '@/components/admin/pagination';
+import { StatTiles } from '@/components/admin/stat-tiles';
 import { getHotelBySlug } from '@/content/hotels';
+import { formatDate, formatTime, parsePageSize } from '@/lib/admin-format';
 import { prisma } from '@/lib/db';
-import type { Prisma } from '@prisma/client';
+import { PaymentStatus, type Prisma } from '@prisma/client';
 import type { Metadata } from 'next';
 import { headers } from 'next/headers';
-import Link from 'next/link';
 
 export const metadata: Metadata = { robots: { index: false, follow: false } };
 export const dynamic = 'force-dynamic';
-
-const PAGE_SIZE = 50;
 
 const statusStyles: Record<string, string> = {
   SUCCESS: 'bg-forest/10 text-forest',
@@ -17,96 +17,172 @@ const statusStyles: Record<string, string> = {
   ABORTED: 'bg-ink/10 text-ink/60',
 };
 
+const STATUS_LABELS: Record<PaymentStatus, string> = {
+  SUCCESS: 'Success',
+  INITIATED: 'Initiated',
+  FAILURE: 'Failure',
+  ABORTED: 'Aborted',
+};
+
 export default async function PaymentsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string; page?: string }>;
+  searchParams: Promise<{
+    q?: string;
+    page?: string;
+    pageSize?: string;
+    status?: string;
+    hotel?: string;
+  }>;
 }) {
-  const { q, page: pageParam } = await searchParams;
+  const { q, page: pageParam, pageSize: pageSizeParam, status, hotel } = await searchParams;
   const query = q?.trim() ?? '';
   const page = Math.max(1, Number.parseInt(pageParam ?? '1', 10) || 1);
+  const pageSize = parsePageSize(pageSizeParam);
 
-  const where: Prisma.PaymentWhereInput = query
-    ? {
-        OR: [
-          { guestName: { contains: query, mode: 'insensitive' } },
-          { guestEmail: { contains: query, mode: 'insensitive' } },
-          { orderId: { contains: query, mode: 'insensitive' } },
-        ],
-      }
-    : {};
+  const where: Prisma.PaymentWhereInput = {
+    ...(query
+      ? {
+          OR: [
+            { guestName: { contains: query, mode: 'insensitive' } },
+            { guestEmail: { contains: query, mode: 'insensitive' } },
+            { orderId: { contains: query, mode: 'insensitive' } },
+          ],
+        }
+      : {}),
+    ...(status && status in PaymentStatus ? { status: status as PaymentStatus } : {}),
+    ...(hotel ? { hotelSlug: hotel } : {}),
+  };
 
-  const [payments, total] = await Promise.all([
+  const [payments, total, statusCounts, hotelCounts] = await Promise.all([
     prisma.payment.findMany({
       where,
       orderBy: { createdAt: 'desc' },
-      take: PAGE_SIZE,
-      skip: (page - 1) * PAGE_SIZE,
+      take: pageSize,
+      skip: (page - 1) * pageSize,
     }),
     prisma.payment.count({ where }),
+    prisma.payment.groupBy({ by: ['status'], _count: true }),
+    prisma.payment.groupBy({ by: ['hotelSlug'], _count: true }),
   ]);
 
-  const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
-  const pageLink = (p: number) =>
-    `/admin/payments?${new URLSearchParams({ ...(query ? { q: query } : {}), page: String(p) })}`;
+  const countFor = (s: string) => statusCounts.find((c) => c.status === s)?._count ?? 0;
+  const availableHotels = hotelCounts
+    .map((h) => h.hotelSlug)
+    .sort((a, b) => (getHotelBySlug(a)?.name ?? a).localeCompare(getHotelBySlug(b)?.name ?? b));
+
+  const totalPages = Math.max(1, Math.ceil(total / pageSize));
+  const buildHref = (p: number) =>
+    `/admin/payments?${new URLSearchParams({
+      ...(query ? { q: query } : {}),
+      ...(status ? { status } : {}),
+      ...(hotel ? { hotel } : {}),
+      pageSize: String(pageSize),
+      page: String(p),
+    })}`;
+  const buildPageSizeHref = (size: number) =>
+    `/admin/payments?${new URLSearchParams({
+      ...(query ? { q: query } : {}),
+      ...(status ? { status } : {}),
+      ...(hotel ? { hotel } : {}),
+      pageSize: String(size),
+      page: '1',
+    })}`;
 
   // /ipay/result lives on the public host, not staff.* — proxy.ts redirects any
   // non-/admin path on the staff host, so a relative link would bounce
   // straight back to /admin/payments (same reasoning as the Vouchers page).
-  const host = (await headers()).get('host') ?? '';
+  // Protocol can't be hardcoded to https: local dev serves plain http.
+  const requestHeaders = await headers();
+  const host = requestHeaders.get('host') ?? '';
   const publicHost = host.replace(/^staff\./, '');
+  const protocol =
+    requestHeaders.get('x-forwarded-proto') ??
+    (publicHost.startsWith('localhost') ? 'http' : 'https');
 
   return (
-    <div>
-      <p className="font-display text-2xl text-forest">Payments</p>
-      <p className="mt-1 text-sm text-ink/60">
-        i-Pay transactions (ICICI Payment Gateway), newest first.
-      </p>
+    <div className="flex h-full min-h-0 flex-col">
+      <div className="h-[20%] shrink-0">
+        <div className="flex items-baseline justify-between gap-4">
+          <p className="font-display text-xl text-forest">Payments</p>
+          <StatTiles
+            tiles={[
+              { label: 'Success', value: countFor('SUCCESS') },
+              { label: 'Initiated', value: countFor('INITIATED') },
+              { label: 'Failed/Aborted', value: countFor('FAILURE') + countFor('ABORTED') },
+            ]}
+          />
+        </div>
 
-      <form method="get" className="mt-4 flex gap-2">
-        <input
-          type="search"
-          name="q"
-          defaultValue={query}
-          placeholder="Search by guest name, email, or transaction no."
-          className="input max-w-sm"
-        />
-        <button
-          type="submit"
-          className="rounded border border-ink/10 px-4 py-2 text-sm text-ink/70 transition hover:border-ink/20"
-        >
-          Search
-        </button>
-      </form>
+        <form method="get" className="mt-3 flex flex-nowrap items-center gap-2 overflow-x-auto">
+          <input
+            type="search"
+            name="q"
+            defaultValue={query}
+            placeholder="Search by guest name, email, or transaction no."
+            className="input min-w-[180px] flex-1 py-1.5 text-sm"
+          />
+          <select
+            name="status"
+            defaultValue={status ?? ''}
+            className="select w-auto shrink-0 py-1.5 text-sm"
+          >
+            <option value="">All statuses</option>
+            {(Object.keys(STATUS_LABELS) as PaymentStatus[])
+              .filter((s) => countFor(s) > 0)
+              .map((s) => (
+                <option key={s} value={s}>
+                  {STATUS_LABELS[s]}
+                </option>
+              ))}
+          </select>
+          <select
+            name="hotel"
+            defaultValue={hotel ?? ''}
+            className="select w-auto shrink-0 py-1.5 text-sm"
+          >
+            <option value="">All hotels</option>
+            {availableHotels.map((slug) => (
+              <option key={slug} value={slug}>
+                {getHotelBySlug(slug)?.name ?? slug}
+              </option>
+            ))}
+          </select>
+          <button
+            type="submit"
+            className="shrink-0 whitespace-nowrap rounded bg-forest px-4 py-1.5 text-sm font-medium text-cream transition hover:bg-forest-dark"
+          >
+            Filter
+          </button>
+        </form>
+      </div>
 
-      <div className="mt-6 overflow-x-auto rounded-lg border border-ink/10 bg-white">
+      <div className="mt-3 min-h-0 flex-1 overflow-auto rounded-lg border border-ink/10 bg-white">
         <table className="w-full text-left text-sm">
-          <thead className="border-b border-ink/10 text-xs uppercase tracking-wider text-ink/50">
+          <thead className="sticky top-0 z-10 border-b border-gold/40 bg-forest text-[11px] uppercase tracking-wide text-cream/90">
             <tr>
-              <th className="px-4 py-3">Date</th>
-              <th className="px-4 py-3">Transaction No.</th>
-              <th className="px-4 py-3">Guest</th>
-              <th className="px-4 py-3">Hotel</th>
-              <th className="px-4 py-3">Amount</th>
-              <th className="px-4 py-3">Status</th>
-              <th className="px-4 py-3">Gateway Ref.</th>
+              <th className="whitespace-nowrap px-4 py-3">Date</th>
+              <th className="whitespace-nowrap px-4 py-3">Transaction No.</th>
+              <th className="whitespace-nowrap px-4 py-3">Guest</th>
+              <th className="whitespace-nowrap px-4 py-3">Hotel</th>
+              <th className="whitespace-nowrap px-4 py-3">Amount</th>
+              <th className="whitespace-nowrap px-4 py-3">Status</th>
+              <th className="whitespace-nowrap px-4 py-3">Gateway Ref.</th>
             </tr>
           </thead>
           <tbody>
             {payments.map((payment) => (
-              <tr key={payment.id} className="border-b border-ink/5 align-top last:border-0">
+              <tr
+                key={payment.id}
+                className="border-b border-ink/5 align-top transition-colors last:border-0 odd:bg-white even:bg-forest/[0.025] hover:bg-forest/[0.08]"
+              >
                 <td className="whitespace-nowrap px-4 py-3 text-ink/70">
-                  {payment.createdAt.toLocaleDateString('en-IN')}
-                  <div className="text-xs text-ink/40">
-                    {payment.createdAt.toLocaleTimeString('en-IN', {
-                      hour: '2-digit',
-                      minute: '2-digit',
-                    })}
-                  </div>
+                  {formatDate(payment.createdAt)}
+                  <div className="text-xs text-ink/40">{formatTime(payment.createdAt)}</div>
                 </td>
                 <td className="px-4 py-3 font-medium">
                   <a
-                    href={`https://${publicHost}/ipay/result?order=${payment.orderId}`}
+                    href={`${protocol}://${publicHost}/ipay/result?order=${payment.orderId}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-forest underline"
@@ -147,7 +223,9 @@ export default async function PaymentsPage({
             {payments.length === 0 && (
               <tr>
                 <td colSpan={7} className="px-4 py-8 text-center text-ink/50">
-                  {query ? `No payments match "${query}".` : 'No payments yet.'}
+                  {query || status || hotel
+                    ? 'No payments match the current filters.'
+                    : 'No payments yet.'}
                 </td>
               </tr>
             )}
@@ -155,25 +233,15 @@ export default async function PaymentsPage({
         </table>
       </div>
 
-      {totalPages > 1 && (
-        <div className="mt-4 flex items-center justify-between text-sm text-ink/60">
-          <p>
-            Page {page} of {totalPages} &middot; {total} payment{total === 1 ? '' : 's'}
-          </p>
-          <div className="flex gap-3">
-            {page > 1 && (
-              <Link href={pageLink(page - 1)} className="text-forest underline">
-                Previous
-              </Link>
-            )}
-            {page < totalPages && (
-              <Link href={pageLink(page + 1)} className="text-forest underline">
-                Next
-              </Link>
-            )}
-          </div>
-        </div>
-      )}
+      <AdminPagination
+        page={page}
+        totalPages={totalPages}
+        total={total}
+        itemLabel="payment"
+        buildHref={buildHref}
+        pageSize={pageSize}
+        buildPageSizeHref={buildPageSizeHref}
+      />
     </div>
   );
 }
