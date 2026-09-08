@@ -11,9 +11,12 @@
     "typecheck": "next typegen && tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:ci-local": "CI=true vitest run",
     "test:e2e": "playwright test",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
+    "prisma:migrate:deploy": "prisma migrate deploy",
+    "verify:ci": "pnpm prisma:migrate:deploy && pnpm lint && pnpm typecheck && pnpm test:ci-local && pnpm build",
     "postinstall": "prisma generate"
   },
   "dependencies": {

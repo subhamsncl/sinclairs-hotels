@@ -1,8 +1,13 @@
 import { createSessionCookieValue } from '@/lib/admin-auth';
 import { prisma } from '@/lib/db';
 import { sendMail } from '@/lib/mail';
-import { afterAll, beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import { createVoucher } from './actions';
+
+// createSessionCookieValue() needs this set — locally it comes from .env.local
+// (loaded by vitest.config.ts), but CI has no such file, so this test must not
+// depend on the ambient environment for it.
+const originalAdminSecret = process.env.ADMIN_SESSION_SECRET;
 
 const mockState = vi.hoisted(() => ({
   cookieValue: undefined as string | undefined,
@@ -53,6 +58,10 @@ function voucherFormData(overrides: Record<string, string> = {}): FormData {
 }
 
 describe('createVoucher', () => {
+  beforeAll(() => {
+    process.env.ADMIN_SESSION_SECRET = 'test-secret-do-not-use-in-production';
+  });
+
   beforeEach(() => {
     mockState.cookieValue = undefined;
     mockState.ip = `actions-test-${Math.random()}`;
@@ -61,6 +70,13 @@ describe('createVoucher', () => {
 
   afterAll(async () => {
     await prisma.voucher.deleteMany({ where: { guestEmail: { endsWith: TEST_EMAIL_DOMAIN } } });
+
+    if (originalAdminSecret === undefined) {
+      // biome-ignore lint/performance/noDelete: process.env stringifies assignments; delete is required here
+      delete process.env.ADMIN_SESSION_SECRET;
+    } else {
+      process.env.ADMIN_SESSION_SECRET = originalAdminSecret;
+    }
   });
 
   it('rejects an unauthenticated request without creating a row', async () => {

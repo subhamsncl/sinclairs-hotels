@@ -182,8 +182,14 @@ across all 9 properties). Follow that pattern for new icon needs rather than add
 - Playwright smoke suite covers the golden paths: home → hotel page → enquiry
   form submit end-to-end, nav dropdown works, 404s don't happen on any nav link.
 - Run tests locally before every push: `pnpm test` (Vitest) and
-  `pnpm test:e2e` (Playwright). CI (GitHub Actions) runs `pnpm lint`, `pnpm typecheck`,
-  `pnpm test`, and `pnpm build`, in that order, on every PR and push to `main`.
+  `pnpm test:e2e` (Playwright). CI (GitHub Actions, `.github/workflows/ci.yml`) runs
+  `pnpm prisma migrate deploy`, `pnpm lint`, `pnpm typecheck`, `pnpm test`, and `pnpm build`,
+  in that order, on every PR and push to `main` — with only `DATABASE_URL` set (a real
+  Postgres service container), nothing else. Plain local `pnpm test` is not the same
+  check: `vitest.config.ts` loads `.env.local` locally (for `ADMIN_SESSION_SECRET`, etc.)
+  which CI doesn't have, so a test that reads one of those vars without setting it itself
+  can pass locally and fail in CI. Run `pnpm verify:ci` before pushing — it mirrors the
+  CI job exactly (env included) so that class of bug shows up locally, not after the push.
 
 ## Commands
 
@@ -198,12 +204,20 @@ across all 9 properties). Follow that pattern for new icon needs rather than add
   using it — worked locally only because a leftover `.next` from an earlier build
   masked it.
 - `pnpm test` / `pnpm test:watch` — Vitest
+- `pnpm test:ci-local` — Vitest with `CI=true`, which makes `vitest.config.ts` skip loading
+  `.env.local` — the same env shape the real CI job runs with (`DATABASE_URL` only)
 - `pnpm test:e2e` — Playwright smoke suite
-- `pnpm prisma:generate` / `pnpm prisma:migrate` — Prisma client / migrations
+- `pnpm prisma:generate` / `pnpm prisma:migrate` — Prisma client / migrations (dev)
+- `pnpm prisma:migrate:deploy` — `prisma migrate deploy`, the non-interactive form CI uses
+- `pnpm verify:ci` — `prisma migrate deploy && lint && typecheck && test:ci-local && build`,
+  i.e. the exact CI job (`.github/workflows/ci.yml`), runnable locally against the same
+  local Postgres `pnpm dev` already uses
 
 Run `pnpm typecheck && pnpm lint:fix && pnpm test` after any content or component
 change, before considering it done — this is the standard verification loop used
-throughout this project's history, not optional polish.
+throughout this project's history, not optional polish. Before pushing (and before
+any deploy), run `pnpm verify:ci` — it catches the class of bug that only shows up
+in CI's leaner environment, which the quicker loop above cannot.
 
 Deployed via `vercel deploy` (add `--prod` for production) from
 `subham-5497`'s Vercel account, project `sinclairs-hotels` — live at
