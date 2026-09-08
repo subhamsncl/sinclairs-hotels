@@ -1,3 +1,4 @@
+import crypto from 'node:crypto';
 import { describe, expect, it } from 'vitest';
 import {
   hashV1,
@@ -33,6 +34,43 @@ describe('ICICI hash v1 (concatenation)', () => {
   it('produces a lowercase hex string', () => {
     const hash = hashV1({ merchantId: 'T_S00067', amount: '150.00' }, key);
     expect(hash).toMatch(/^[0-9a-f]{64}$/);
+  });
+
+  it("matches the exact field order from ICICI's own worked initiateSale example", () => {
+    // From Sinclairs' UAT onboarding kit ("Initiate Pay Request & Response
+    // 4.txt"): ICICI states the concatenation order as
+    // addlParam1+addlParam2+aggregatorID+amount+currencyCode+customerEmailID+
+    // customerMobileNo+customerName+merchantId+merchantTxnNo+payType+
+    // returnURL+transactionType+txnDate — and gives the resulting HashText.
+    // This is real evidence (not the spec PDF's generic example) that
+    // initiateSale really does use hash v1, resolving the ambiguity noted
+    // above lib/icici.ts's BASE_URL.
+    const fields = {
+      addlParam1: '000',
+      addlParam2: '111',
+      aggregatorID: 'A100000000007164',
+      amount: '100.00',
+      currencyCode: '356',
+      customerEmailID: 'narayan.kapase@phicommerce.com',
+      customerMobileNo: '917709356362',
+      customerName: 'Narayan',
+      merchantId: 'T_S0001',
+      merchantTxnNo: '757585887575',
+      payType: '0',
+      returnURL: 'https://pgpayuat.icicibank.com/tsp/pg/api/merchant',
+      transactionType: 'SALE',
+      txnDate: '20241121115413',
+    };
+    const expectedConcatenation =
+      '000111A100000000007164100.00356narayan.kapase@phicommerce.com917709356362' +
+      'NarayanT_S00017575858875750https://pgpayuat.icicibank.com/tsp/pg/api/merchantSALE20241121115413';
+
+    const expectedHash = crypto
+      .createHmac('sha256', key)
+      .update(expectedConcatenation, 'utf8')
+      .digest('hex');
+
+    expect(hashV1(fields, key)).toBe(expectedHash);
   });
 
   it('verifyHashV1 accepts a matching hash and rejects a tampered field', () => {
@@ -124,11 +162,14 @@ describe('parseIciciPaymentResponse', () => {
       responseCode: '000',
       respDescription: 'SUCCESS',
       merchantId: 'T_S00067',
+      aggregatorID: undefined,
       merchantTxnNo: 'M99887766',
       txnID: '7700206371536',
       paymentDateTime: '20260908140509',
       paymentID: undefined,
       txnAuthID: '811069696857',
+      addlParam1: undefined,
+      addlParam2: undefined,
       secureHash: 'abc123',
     });
   });

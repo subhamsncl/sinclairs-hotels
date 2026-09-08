@@ -67,7 +67,7 @@ export async function initiatePayment(
     checkOut,
   } = parsed.data;
 
-  const { merchantId, hmacKey, baseUrl: iciciBaseUrl } = iciciConfig();
+  const { merchantId, aggregatorID, hmacKey, baseUrl: iciciBaseUrl } = iciciConfig();
 
   if (!merchantId || !hmacKey) {
     console.log('[ipay:dev-fallback] ICICI credentials not configured — cannot process payment');
@@ -103,6 +103,7 @@ export async function initiatePayment(
     saleResponse = await callInitiateSale(
       {
         merchantId,
+        aggregatorID,
         merchantTxnNo: orderId,
         amount: amount.toFixed(2),
         currencyCode: '356',

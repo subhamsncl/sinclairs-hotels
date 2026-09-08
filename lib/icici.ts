@@ -11,16 +11,26 @@ import crypto from 'node:crypto';
 
 type IciciEnv = 'uat' | 'production';
 
+// The API host (initiateSale/command) and the browser-facing redirect host
+// are genuinely different domains — confirmed from Sinclairs' own onboarding
+// materials (a worked UAT example calls initiateSale at icici.bank.in, but
+// the redirectURI it returns points at icicibank.com). Only the API host is
+// configured here; the redirect host always comes from the API's own
+// response, never hardcoded.
+// Production API host follows the same icici.bank.in pattern confirmed for
+// UAT, but that specific mapping is inferred, not confirmed from a real
+// production example — verify with ICICI before the first production call.
 const BASE_URL: Record<IciciEnv, string> = {
-  uat: 'https://pgpayuat.icicibank.com/tsp/pg',
-  production: 'https://pgpay.icicibank.com/pg',
+  uat: 'https://pgpayuat.icici.bank.in/tsp/pg',
+  production: 'https://pgpay.icici.bank.in/pg',
 };
 
 export function iciciConfig() {
   const merchantId = process.env.ICICI_MERCHANT_ID;
+  const aggregatorID = process.env.ICICI_AGGREGATOR_ID || undefined;
   const hmacKey = process.env.ICICI_HMAC_KEY;
   const env: IciciEnv = process.env.ICICI_ENV === 'production' ? 'production' : 'uat';
-  return { merchantId, hmacKey, env, baseUrl: BASE_URL[env] };
+  return { merchantId, aggregatorID, hmacKey, env, baseUrl: BASE_URL[env] };
 }
 
 // Hash Calculation (v1): concatenate parameter values — skipping null/empty
@@ -78,6 +88,7 @@ export function iciciTimestamp(date = new Date()): string {
 
 export type InitiateSaleRequest = {
   merchantId: string;
+  aggregatorID?: string;
   merchantTxnNo: string;
   amount: string;
   currencyCode: '356';
@@ -140,14 +151,21 @@ export type IciciPaymentResponse = {
   responseCode: string;
   respDescription?: string;
   merchantId: string;
+  aggregatorID?: string;
   merchantTxnNo: string;
   txnID?: string;
   paymentDateTime?: string;
   paymentID?: string;
   txnAuthID?: string;
+  addlParam1?: string;
+  addlParam2?: string;
   secureHash: string;
 };
 
+// Every field ICICI actually sends back must go into the hash verification
+// (Note 1 in the spec: don't drop a field just because it's not in the
+// published list) — so this captures aggregatorID/addlParam1/addlParam2 too,
+// not just the fields this integration currently acts on.
 export function parseIciciPaymentResponse(formData: FormData): IciciPaymentResponse {
   const get = (name: string) => {
     const v = formData.get(name);
@@ -158,11 +176,14 @@ export function parseIciciPaymentResponse(formData: FormData): IciciPaymentRespo
     responseCode: get('responseCode') ?? '',
     respDescription: get('respDescription'),
     merchantId: get('merchantId') ?? '',
+    aggregatorID: get('aggregatorID'),
     merchantTxnNo: get('merchantTxnNo') ?? '',
     txnID: get('txnID'),
     paymentDateTime: get('paymentDateTime'),
     paymentID: get('paymentID'),
     txnAuthID: get('txnAuthID'),
+    addlParam1: get('addlParam1'),
+    addlParam2: get('addlParam2'),
     secureHash: get('secureHash') ?? '',
   };
 }
