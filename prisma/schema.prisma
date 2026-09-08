@@ -33,7 +33,7 @@ model Enquiry {
   message       String
   status        EnquiryStatus @default(NEW)
   userIp        String?
-  legacyTicket  String?
+  legacyTicket  String?       @unique
   createdAt     DateTime      @default(now())
 
   @@index([createdAt])
@@ -78,7 +78,7 @@ model Voucher {
   issuerPhone         String
   bookingOffice       String
 
-  legacyId            Int?
+  legacyId            Int?      @unique
 
   createdAt           DateTime  @default(now())
 
