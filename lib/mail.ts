@@ -63,7 +63,7 @@ export async function sendMail({
     return;
   }
 
-  const { error } = await resend.emails.send({
+  const { data, error } = await resend.emails.send({
     from: FROM_ADDRESS,
     to: finalTo,
     bcc: finalBcc,
@@ -73,5 +73,11 @@ export async function sendMail({
   });
   if (error) {
     console.error('[mail:send-failed]', error);
+  } else {
+    // Resend accepting the request (an id back, no error) isn't the same as
+    // the email actually landing — an id here with no inbox delivery points
+    // at a Resend-side/recipient-side issue (e.g. the onboarding@resend.dev
+    // sandbox sender's real-recipient restriction), not a bug in this code.
+    console.log('[mail:sent]', { id: data?.id, to: finalTo, subject: finalSubject });
   }
 }
