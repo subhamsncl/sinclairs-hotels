@@ -27,15 +27,18 @@ export function ExploreSection({ hotel }: { hotel: Hotel }) {
         )}
 
         {withoutImage.length > 0 && (
-          <div className="mt-6 flex flex-wrap gap-2">
-            {withoutImage.map((spot) => (
-              <span
-                key={spot.name}
-                className="rounded-full border border-forest/15 px-3 py-1.5 text-sm text-ink/80"
-              >
-                {spot.name}
-              </span>
-            ))}
+          <div className={withImage.length > 0 ? 'mt-6' : 'mt-8'}>
+            <p className="text-xs uppercase tracking-wider text-ink/40">Also Nearby</p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {withoutImage.map((spot) => (
+                <span
+                  key={spot.name}
+                  className="rounded-full border border-forest/15 px-3 py-1.5 text-sm text-ink/80"
+                >
+                  {spot.name}
+                </span>
+              ))}
+            </div>
           </div>
         )}
       </div>

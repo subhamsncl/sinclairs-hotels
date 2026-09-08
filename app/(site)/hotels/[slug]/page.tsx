@@ -1,5 +1,6 @@
 import { getAmenityIcon } from '@/components/amenity-icon';
 import { ClosingCta } from '@/components/closing-cta';
+import { EmailText } from '@/components/email-text';
 import { ExploreSection } from '@/components/explore-section';
 import { FoodStrip } from '@/components/food-strip';
 import { GalleryLightbox } from '@/components/gallery-lightbox';
@@ -341,7 +342,7 @@ export default async function HotelPage({ params }: { params: Promise<Params> })
                           href={`mailto:${hotel.contact.email}`}
                           className="break-words hover:text-forest"
                         >
-                          {hotel.contact.email}
+                          <EmailText email={hotel.contact.email} />
                         </a>
                       </dd>
                     </div>

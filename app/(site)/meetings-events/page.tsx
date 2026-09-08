@@ -77,7 +77,7 @@ export default function MeetingsEventsPage() {
                 Business &amp; Events
               </p>
             </div>
-            <h1 className="mt-5 font-display text-4xl leading-[1.1] sm:text-6xl sm:leading-[1.05] lg:text-7xl">
+            <h1 className="mt-5 font-display text-4xl leading-[1.1] sm:text-5xl sm:leading-[1.1] lg:text-6xl">
               Where Business Meets
               <br />
               Impeccable Hospitality

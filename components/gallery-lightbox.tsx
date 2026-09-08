@@ -144,9 +144,10 @@ export function GalleryLightbox({ images }: { images: GalleryImage[] }) {
             />
           </div>
 
-          <p className="absolute bottom-4 left-1/2 max-w-xl -translate-x-1/2 px-4 text-center text-sm text-cream/80 sm:bottom-6">
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-forest-dark/90 to-transparent" />
+          <p className="absolute bottom-8 left-1/2 max-w-xl -translate-x-1/2 px-4 text-center text-sm text-cream sm:bottom-10">
             {current.alt}
-            <span className="ml-2 text-cream/50">
+            <span className="ml-2 text-cream/60">
               {(openIndex ?? 0) + 1} / {images.length}
             </span>
           </p>

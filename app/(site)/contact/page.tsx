@@ -1,3 +1,4 @@
+import { EmailText } from '@/components/email-text';
 import { hotels } from '@/content/hotels';
 import { pageMetadata } from '@/lib/seo';
 import type { Metadata } from 'next';
@@ -70,7 +71,7 @@ export default function ContactPage() {
                     href="mailto:reservations@sinclairshotels.com"
                     className="break-words hover:text-gold"
                   >
-                    reservations@sinclairshotels.com
+                    <EmailText email="reservations@sinclairshotels.com" />
                   </a>
                 </dd>
               </div>
@@ -81,7 +82,7 @@ export default function ContactPage() {
                     href="mailto:sales@sinclairshotels.com"
                     className="break-words hover:text-gold"
                   >
-                    sales@sinclairshotels.com
+                    <EmailText email="sales@sinclairshotels.com" />
                   </a>
                 </dd>
               </div>
@@ -115,7 +116,7 @@ export default function ContactPage() {
                         href={`mailto:${email}`}
                         className="shrink-0 break-words text-gold-dark hover:text-gold"
                       >
-                        {email}
+                        <EmailText email={email} />
                       </a>
                     )}
                   </li>

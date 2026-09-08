@@ -1,6 +1,7 @@
 import { hotels } from '@/content/hotels';
 import { siteConfig, socialLinks } from '@/content/site';
 import Link from 'next/link';
+import { EmailText } from './email-text';
 import { NewsletterForm } from './newsletter-form';
 import { FacebookIcon, InstagramIcon, TwitterIcon } from './social-icons';
 
@@ -125,7 +126,7 @@ export function Footer() {
                     href="mailto:reservations@sinclairshotels.com"
                     className="break-words transition hover:text-gold-light"
                   >
-                    reservations@sinclairshotels.com
+                    <EmailText email="reservations@sinclairshotels.com" />
                   </a>
                 </dd>
               </div>
