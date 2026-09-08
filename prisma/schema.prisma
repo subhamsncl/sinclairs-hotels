@@ -102,8 +102,9 @@ enum PaymentStatus {
 }
 
 // One row per i-Pay attempt, created before the guest is redirected to
-// CCAvenue and updated only from CCAvenue's own encrypted callback — never
-// from a plain redirect query param, which anyone could forge.
+// ICICI's payment page and updated only from ICICI's own signed callback —
+// never from a plain redirect query param, which anyone could forge.
+// trackingId/bankRefNo hold ICICI's txnID/paymentID.
 model Payment {
   id             String        @id @default(cuid())
   orderId        String        @unique
@@ -122,8 +123,8 @@ model Payment {
   bankRefNo      String?
   failureMessage String?
   userIp         String?
-  createdAt      DateTime      @default(now())
-  updatedAt      DateTime      @updatedAt
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
 
   @@index([hotelSlug])
   @@index([createdAt])

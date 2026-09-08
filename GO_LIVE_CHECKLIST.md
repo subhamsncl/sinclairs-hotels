@@ -24,17 +24,36 @@ off as they're actually done, not just started.
 - [ ] Confirm real staff distribution list for the daily digest (currently
       `raviplanet@gmail.com` + `admin@sinclairshotels.com` Bcc, per legacy).
 
-## i-Pay (CCAvenue payments)
+## i-Pay (ICICI Payment Gateway, Standard mode)
 
-- [ ] Get the real `CCAVENUE_WORKING_KEY` and `CCAVENUE_ACCESS_CODE` from Ravi
-      (email drafted, not sent yet) and add to `.env.local` / Vercel env.
-      Merchant ID (`2006182`) is already correct — same as legacy.
-- [ ] Do at least one real round-trip test against CCAvenue (sandbox if
-      available, otherwise a small real transaction) before relying on it for
-      guest payments — the integration has never been exercised against the
-      real gateway, only against the dev fallback.
-- [ ] Confirm the `redirect_url`/`cancel_url` CCAvenue is configured to POST
-      back to match the deployed domain (not `localhost`) once live.
+CCAvenue (the legacy gateway) has been retired from the codebase — ICICI is
+now the only payment gateway, in Standard/redirect mode (card data is
+captured on ICICI's own domain, never on this app, keeping it at PCI-DSS
+SAQ-A rather than SAQ-D).
+
+- [ ] Get the real `ICICI_MERCHANT_ID` and `ICICI_HMAC_KEY` from ICICI's
+      merchant onboarding and add to `.env.local` / Vercel env. Code is built
+      (`lib/icici.ts`, `app/(site)/ipay/actions.ts`, `app/api/ipay/callback/route.ts`)
+      but has never run against ICICI's own UAT sandbox — no credentials
+      exist yet.
+- [ ] Do at least one real round-trip test against `pgpayuat.icicibank.com`
+      before relying on it for guest payments.
+- [ ] **Resolve the field-naming ambiguity in ICICI's own spec** — Chapter 6
+      (Authorize) calls the auth reference `paymentID`, Chapter 7
+      (Authorization Redirect) calls the same-looking value `txnAuthID` in
+      its sample response. `lib/icici.ts` accepts both defensively, but this
+      needs confirming against a real UAT response before launch.
+- [ ] Confirm which hash version applies to `initiateSale` — the doc's intro
+      calls it "a json request" but never explicitly says "Hash Calculation
+      v2" for it (only Get Card Bin / UserCancel / Get Service Charges do).
+      Implemented as v1 per the doc's own default rule (Note 2); verify this
+      is right against a real sandbox response before trusting it with a
+      live transaction.
+- [ ] Out of scope so far, deferred until actually needed: Refund/Void,
+      Transaction Status, Settlement Summary/Details reconciliation, Generate
+      QR, Get Card Bin, Get Service Charges, UserCancel. None of these block
+      a guest completing a payment; add them when the business needs
+      refunds or settlement reconciliation through the app itself.
 
 ## Data
 

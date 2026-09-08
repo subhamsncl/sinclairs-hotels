@@ -1,24 +1,23 @@
 'use server';
 
 import crypto from 'node:crypto';
-import { ccavEncrypt } from '@/lib/ccavenue';
 import { prisma } from '@/lib/db';
+import { callInitiateSale, iciciConfig, iciciTimestamp, initiateSaleAccepted } from '@/lib/icici';
 import { clientIp, isRateLimited } from '@/lib/rate-limit';
 import { ipaySchema } from '@/lib/validation';
 import { headers } from 'next/headers';
+import { redirect } from 'next/navigation';
 
 export type IpayFormState = {
-  status: 'idle' | 'error' | 'redirecting';
+  status: 'idle' | 'error';
   message?: string;
   fieldErrors?: Record<string, string[]>;
-  encRequest?: string;
-  accessCode?: string;
 };
 
 // Mirrors the legacy site's transaction-number shape (YYMMDD + random suffix,
 // e.g. "260905ZJGQ8618") purely so a guest comparing an old and new receipt
-// isn't confused by a totally different format — CCAvenue itself doesn't
-// require this exact shape, any unique order_id works.
+// isn't confused by a totally different format — the gateway itself doesn't
+// require this exact shape, any unique reference works.
 function generateOrderId(): string {
   const datePart = new Date()
     .toLocaleDateString('en-GB', { year: '2-digit', month: '2-digit', day: '2-digit' })
@@ -55,18 +54,6 @@ export async function initiatePayment(
     return { status: 'error', message: 'Something went wrong. Please try again.' };
   }
 
-  const merchantId = process.env.CCAVENUE_MERCHANT_ID || '2006182';
-  const workingKey = process.env.CCAVENUE_WORKING_KEY;
-  const accessCode = process.env.CCAVENUE_ACCESS_CODE;
-
-  if (!workingKey || !accessCode) {
-    console.log('[ipay:dev-fallback] CCAvenue credentials not configured — cannot process payment');
-    return {
-      status: 'error',
-      message: 'Online payment is temporarily unavailable. Please contact the hotel directly.',
-    };
-  }
-
   const {
     hotelSlug,
     amount,
@@ -79,6 +66,16 @@ export async function initiatePayment(
     checkIn,
     checkOut,
   } = parsed.data;
+
+  const { merchantId, hmacKey, baseUrl: iciciBaseUrl } = iciciConfig();
+
+  if (!merchantId || !hmacKey) {
+    console.log('[ipay:dev-fallback] ICICI credentials not configured — cannot process payment');
+    return {
+      status: 'error',
+      message: 'Online payment is temporarily unavailable. Please contact the hotel directly.',
+    };
+  }
 
   const orderId = generateOrderId();
   const host = headerList.get('host') ?? '';
@@ -101,26 +98,53 @@ export async function initiatePayment(
     },
   });
 
-  const params = new URLSearchParams({
-    merchant_id: merchantId,
-    order_id: orderId,
-    currency: 'INR',
-    amount: amount.toFixed(2),
-    redirect_url: `${baseUrl}/api/ipay/callback`,
-    cancel_url: `${baseUrl}/api/ipay/callback`,
-    language: 'EN',
-    billing_name: guestName,
-    billing_email: guestEmail,
-    billing_tel: guestPhone,
-    billing_address: billingAddress || '',
-    merchant_param1: hotelSlug,
-    merchant_param2: remark || '',
-    merchant_param3: reservationNo || '',
-    merchant_param4: checkIn || '',
-    merchant_param5: checkOut || '',
-  });
+  let saleResponse: Awaited<ReturnType<typeof callInitiateSale>>;
+  try {
+    saleResponse = await callInitiateSale(
+      {
+        merchantId,
+        merchantTxnNo: orderId,
+        amount: amount.toFixed(2),
+        currencyCode: '356',
+        payType: '0',
+        customerEmailID: guestEmail,
+        transactionType: 'SALE',
+        returnURL: `${baseUrl}/api/ipay/callback`,
+        txnDate: iciciTimestamp(),
+        customerMobileNo: guestPhone,
+        customerName: guestName,
+      },
+      hmacKey,
+      iciciBaseUrl,
+    );
+  } catch (err) {
+    console.error('[ipay] initiateSale request failed', err);
+    await prisma.payment.update({
+      where: { orderId },
+      data: { status: 'FAILURE', failureMessage: 'initiateSale request failed' },
+    });
+    return {
+      status: 'error',
+      message: 'We could not reach the payment gateway. Please try again shortly.',
+    };
+  }
 
-  const encRequest = ccavEncrypt(params.toString(), workingKey);
+  if (!initiateSaleAccepted(saleResponse)) {
+    console.error('[ipay] initiateSale rejected', saleResponse);
+    await prisma.payment.update({
+      where: { orderId },
+      data: {
+        status: 'FAILURE',
+        failureMessage: saleResponse.responseDescription || saleResponse.responseCode,
+      },
+    });
+    return {
+      status: 'error',
+      message: 'The payment gateway declined this request. Please try again.',
+    };
+  }
 
-  return { status: 'redirecting', encRequest, accessCode };
+  // Standard mode: ICICI's own domain collects payment details, so this is a
+  // plain browser redirect — no client-side form POST involved.
+  redirect(`${saleResponse.redirectURI}?tranCtx=${encodeURIComponent(saleResponse.tranCtx ?? '')}`);
 }

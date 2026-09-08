@@ -4,10 +4,7 @@ import { type IpayFormState, initiatePayment } from '@/app/(site)/ipay/actions';
 import { DatePicker } from '@/components/ui/date-picker';
 import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/ui/select';
 import type { Hotel } from '@/content/types';
-import { useActionState, useEffect, useRef, useState } from 'react';
-
-const CCAVENUE_URL =
-  'https://secure.ccavenue.com/transaction/transaction.do?command=initiateTransaction';
+import { useActionState, useState } from 'react';
 
 const initialState: IpayFormState = { status: 'idle' };
 
@@ -16,26 +13,6 @@ export function IpayForm({ hotels }: { hotels: Hotel[] }) {
   const [hotelSlug, setHotelSlug] = useState('');
   const [checkIn, setCheckIn] = useState('');
   const [checkOut, setCheckOut] = useState('');
-  const redirectFormRef = useRef<HTMLFormElement>(null);
-
-  useEffect(() => {
-    if (state.status === 'redirecting' && redirectFormRef.current) {
-      redirectFormRef.current.submit();
-    }
-  }, [state]);
-
-  if (state.status === 'redirecting') {
-    return (
-      <div className="rounded-lg border border-forest/20 bg-forest/5 p-8 text-center">
-        <p className="font-display text-xl text-forest">Redirecting to secure payment…</p>
-        <p className="mt-2 text-sm text-ink/70">Please do not close this window.</p>
-        <form ref={redirectFormRef} method="post" action={CCAVENUE_URL} className="hidden">
-          <input type="hidden" name="encRequest" value={state.encRequest} />
-          <input type="hidden" name="access_code" value={state.accessCode} />
-        </form>
-      </div>
-    );
-  }
 
   const fieldError = (field: string) => state.fieldErrors?.[field]?.[0];
 
