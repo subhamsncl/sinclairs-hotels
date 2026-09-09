@@ -1,7 +1,8 @@
 import { AdminPagination } from '@/components/admin/pagination';
+import { RefundForm } from '@/components/admin/refund-form';
 import { StatTiles } from '@/components/admin/stat-tiles';
 import { getHotelBySlug } from '@/content/hotels';
-import { formatDate, formatTime, parsePageSize } from '@/lib/admin-format';
+import { formatDate, formatTime, maskedInstrument, parsePageSize } from '@/lib/admin-format';
 import { prisma } from '@/lib/db';
 import { PaymentStatus, type Prisma } from '@prisma/client';
 import type { Metadata } from 'next';
@@ -60,6 +61,7 @@ export default async function PaymentsPage({
       orderBy: { createdAt: 'desc' },
       take: pageSize,
       skip: (page - 1) * pageSize,
+      include: { refunds: { orderBy: { createdAt: 'desc' } } },
     }),
     prisma.payment.count({ where }),
     prisma.payment.groupBy({ by: ['status'], _count: true }),
@@ -168,6 +170,7 @@ export default async function PaymentsPage({
               <th className="whitespace-nowrap px-4 py-3">Amount</th>
               <th className="whitespace-nowrap px-4 py-3">Status</th>
               <th className="whitespace-nowrap px-4 py-3">Gateway Ref.</th>
+              <th className="whitespace-nowrap px-4 py-3">Refund</th>
             </tr>
           </thead>
           <tbody>
@@ -218,11 +221,36 @@ export default async function PaymentsPage({
                   {payment.bankRefNo && <div>Ref: {payment.bankRefNo}</div>}
                   {!payment.trackingId && !payment.bankRefNo && '—'}
                 </td>
+                <td className="px-4 py-3">
+                  {payment.status === 'SUCCESS' &&
+                    (() => {
+                      const refundedTotal = payment.refunds
+                        .filter((r) => r.status === 'SUCCESS')
+                        .reduce((sum, r) => sum + Number(r.amount), 0);
+                      const remaining = Number(payment.amount) - refundedTotal;
+                      return (
+                        <RefundForm
+                          orderId={payment.orderId}
+                          remaining={remaining}
+                          sourceLabel={maskedInstrument(payment.paymentMode, payment.paymentInstId)}
+                          history={payment.refunds.map((refund) => ({
+                            id: refund.id,
+                            amount: Number(refund.amount),
+                            status: refund.status,
+                            txnID: refund.txnID,
+                            respDescription: refund.respDescription,
+                            date: formatDate(refund.createdAt),
+                            time: formatTime(refund.createdAt),
+                          }))}
+                        />
+                      );
+                    })()}
+                </td>
               </tr>
             ))}
             {payments.length === 0 && (
               <tr>
-                <td colSpan={7} className="px-4 py-8 text-center text-ink/50">
+                <td colSpan={8} className="px-4 py-8 text-center text-ink/50">
                   {query || status || hotel
                     ? 'No payments match the current filters.'
                     : 'No payments yet.'}

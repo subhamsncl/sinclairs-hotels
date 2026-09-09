@@ -6,6 +6,7 @@ import {
   iciciTimestamp,
   initiateSaleAccepted,
   isIciciSuccess,
+  isRefundAccepted,
   parseIciciPaymentResponse,
   rawFormFields,
   verifyHashV1,
@@ -173,6 +174,30 @@ describe('parseIciciPaymentResponse', () => {
       addlParam2: undefined,
       secureHash: 'abc123',
     });
+  });
+});
+
+describe('isRefundAccepted', () => {
+  it('treats R1000 as the refund itself having been processed', () => {
+    expect(
+      isRefundAccepted({
+        responseCode: 'R1000',
+        merchantId: 'T_S00067',
+        merchantTxnNo: 'RF1',
+        secureHash: 'x',
+      }),
+    ).toBe(true);
+  });
+
+  it('rejects any other response code', () => {
+    expect(
+      isRefundAccepted({
+        responseCode: 'R1001',
+        merchantId: 'T_S00067',
+        merchantTxnNo: 'RF1',
+        secureHash: 'x',
+      }),
+    ).toBe(false);
   });
 });
 

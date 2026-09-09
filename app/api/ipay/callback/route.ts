@@ -87,6 +87,8 @@ export async function POST(request: Request): Promise<NextResponse> {
       status,
       trackingId: resp.txnID || null,
       bankRefNo: resp.paymentID || resp.txnAuthID || null,
+      paymentMode: resp.paymentMode || null,
+      paymentInstId: resp.paymentInstId || null,
       failureMessage:
         status === 'FAILURE'
           ? amountMismatch

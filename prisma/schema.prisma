@@ -121,11 +121,50 @@ model Payment {
   status         PaymentStatus @default(INITIATED)
   trackingId     String?
   bankRefNo      String?
+  // How the guest actually paid, from ICICI's own signed callback
+  // (paymentMode/paymentInstId — Ch.6/7 of the ISD) — never guessed or
+  // entered by staff. paymentInstId's shape varies by paymentMode ("6XXX
+  // XXXX XXXX 3677" for a card, a VPA for UPI, ...); lib/admin-format.ts's
+  // maskedInstrument() renders it. A refund always returns to this same
+  // instrument — there's no separate "destination account" to collect.
+  // Absent on payments older than this column (legacy-migrated rows, and
+  // ones taken before this was added) and on non-SUCCESS payments.
+  paymentMode    String?
+  paymentInstId  String?
   failureMessage String?
   userIp         String?
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
 
+  refunds        Refund[]
+
   @@index([hotelSlug])
   @@index([createdAt])
+}
+
+enum RefundStatus {
+  SUCCESS
+  FAILURE
+}
+
+// One row per refund attempt against a Payment (a SUCCESS payment can be
+// refunded more than once, partially, from the admin Payments page).
+// merchantTxnNo is a fresh reference this app generates for the refund
+// request itself — distinct from the original Payment.orderId, which is
+// sent as originalTxnNo. status/responseCode/txnID come straight from
+// ICICI's own signed /api/command response, same trust boundary as the
+// i-Pay callback.
+model Refund {
+  id              String       @id @default(cuid())
+  paymentId       String
+  payment         Payment      @relation(fields: [paymentId], references: [id])
+  merchantTxnNo   String       @unique
+  amount          Decimal      @db.Decimal(10, 2)
+  status          RefundStatus
+  responseCode    String?
+  respDescription String?
+  txnID           String?
+  createdAt       DateTime     @default(now())
+
+  @@index([paymentId])
 }

@@ -29,3 +29,27 @@ export function parsePageSize(param: string | undefined): number {
   const n = Number.parseInt(param ?? '', 10);
   return (PAGE_SIZE_OPTIONS as readonly number[]).includes(n) ? n : DEFAULT_PAGE_SIZE;
 }
+
+// paymentInstId's shape depends on paymentMode and isn't otherwise
+// documented for every mode — a card comes back masked as e.g.
+// "6XXX XXXX XXXX 3677" (ICICI does the masking, never the raw PAN), so the
+// last run of digits is safe to surface as "ending 3677". Anything else
+// (a UPI VPA, a bank name for net banking, ...) is shown verbatim rather
+// than guessing at a mask, since misrepresenting it would be worse than an
+// unstyled raw value.
+export function maskedInstrument(
+  paymentMode: string | null | undefined,
+  paymentInstId: string | null | undefined,
+): string | null {
+  if (!paymentInstId) return null;
+
+  const trailingDigits = paymentInstId.match(/(\d{4})\D*$/)?.[1];
+  const looksMasked = /[Xx*]/.test(paymentInstId);
+
+  if (trailingDigits && looksMasked) {
+    const label = paymentMode === 'Card' ? 'Card' : (paymentMode ?? 'Card');
+    return `${label} ending ${trailingDigits}`;
+  }
+
+  return paymentMode ? `${paymentMode}: ${paymentInstId}` : paymentInstId;
+}

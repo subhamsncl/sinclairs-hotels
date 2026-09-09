@@ -176,6 +176,13 @@ export type IciciPaymentResponse = {
   txnAuthID?: string;
   addlParam1?: string;
   addlParam2?: string;
+  // How the guest paid, and which instrument — a refund always returns to
+  // this same instrument, so this is what admin/payments shows staff as
+  // "where the refund goes back to". paymentInstId's shape varies by
+  // paymentMode (a masked card PAN like "6XXX XXXX XXXX 3677", a UPI VPA,
+  // ...) — see lib/admin-format.ts's maskedInstrument().
+  paymentMode?: string;
+  paymentInstId?: string;
   secureHash: string;
 };
 
@@ -198,6 +205,8 @@ export function parseIciciPaymentResponse(formData: FormData): IciciPaymentRespo
     txnAuthID: get('txnAuthID'),
     addlParam1: get('addlParam1'),
     addlParam2: get('addlParam2'),
+    paymentMode: get('paymentMode'),
+    paymentInstId: get('paymentInstId'),
     secureHash: get('secureHash') ?? '',
   };
 }
@@ -205,4 +214,56 @@ export function parseIciciPaymentResponse(formData: FormData): IciciPaymentRespo
 // 000 and 0000 both appear in the spec as "Success" depending on chapter.
 export function isIciciSuccess(responseCode: string): boolean {
   return responseCode === '000' || responseCode === '0000';
+}
+
+// Refund (and Status Check, not implemented here) are both server-to-server
+// calls against the same /api/command endpoint, distinguished by
+// transactionType — synchronous, unlike initiateSale: the response below is
+// the final outcome, there's no separate browser redirect or callback.
+export type RefundRequest = {
+  merchantId: string;
+  aggregatorID?: string;
+  merchantTxnNo: string;
+  originalTxnNo: string;
+  amount: string;
+  transactionType: 'REFUND';
+};
+
+export type RefundResponse = {
+  responseCode: string;
+  respDescription?: string;
+  merchantId: string;
+  aggregatorID?: string;
+  merchantTxnNo: string;
+  txnID?: string;
+  secureHash: string;
+};
+
+// Per the worked example, R1000 here means the refund itself was processed
+// (respDescription "Request processed successfully") — a different meaning
+// than initiateSale's R1000, which only means "request accepted" pending an
+// async outcome. There's no separate confirmation step for a refund.
+export function isRefundAccepted(res: RefundResponse): boolean {
+  return res.responseCode === 'R1000';
+}
+
+export async function callRefund(
+  req: RefundRequest,
+  key: string,
+  baseUrl: string,
+): Promise<RefundResponse> {
+  const secureHash = hashV1(req, key);
+  const body = { ...req, secureHash };
+
+  const res = await fetch(`${baseUrl}/api/command`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+
+  if (!res.ok) {
+    throw new Error(`ICICI refund HTTP ${res.status}`);
+  }
+
+  return (await res.json()) as RefundResponse;
 }

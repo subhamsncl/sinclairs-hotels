@@ -98,3 +98,10 @@ export const ipaySchema = z.object({
 });
 
 export type IpayInput = z.infer<typeof ipaySchema>;
+
+export const refundSchema = z.object({
+  orderId: z.string().trim().min(1),
+  amount: z.coerce.number().positive('Please enter an amount').max(1_000_000),
+});
+
+export type RefundInput = z.infer<typeof refundSchema>;
