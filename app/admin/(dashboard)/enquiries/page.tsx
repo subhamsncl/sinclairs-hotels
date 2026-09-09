@@ -28,6 +28,22 @@ const typeLabels: Record<string, string> = {
   MEETINGS: 'Meetings & Events',
 };
 
+// Imported legacy rows (scripts/migrate-legacy-data.ts) fold fields the
+// current schema has no column for — subject/room/persons/source — into this
+// message, marked off after the guest's own query text. Live enquiries
+// submitted through the actual site (app/(site)/enquiry/actions.ts) never
+// contain this marker — enquirySchema requires a real 10-2000 char message,
+// so those always render as plain text with no legacy block below.
+const LEGACY_MESSAGE_MARKER = '[Legacy enquiry details]';
+
+function splitLegacyMessage(message: string): { main: string; legacyDetails: string | null } {
+  const idx = message.indexOf(LEGACY_MESSAGE_MARKER);
+  if (idx === -1) return { main: message, legacyDetails: null };
+  const main = message.slice(0, idx).trim();
+  const legacyDetails = message.slice(idx + LEGACY_MESSAGE_MARKER.length).trim();
+  return { main, legacyDetails: legacyDetails || null };
+}
+
 export default async function EnquiriesPage({
   searchParams,
 }: {
@@ -190,48 +206,59 @@ export default async function EnquiriesPage({
             </tr>
           </thead>
           <tbody>
-            {enquiries.map((enquiry) => (
-              <tr
-                key={enquiry.id}
-                className="border-b border-ink/5 align-top transition-colors last:border-0 odd:bg-white even:bg-forest/[0.025] hover:bg-forest/[0.08]"
-              >
-                <td className="whitespace-nowrap px-4 py-3 text-ink/70">
-                  {formatDate(enquiry.createdAt)}
-                  {enquiry.legacyTicket && (
-                    <div className="mt-1 text-xs text-ink/40">{enquiry.legacyTicket}</div>
-                  )}
-                </td>
-                <td className="px-4 py-3">
-                  <div className="font-medium">{enquiry.name}</div>
-                  <div className="text-xs text-ink/60">{enquiry.email}</div>
-                  <div className="text-xs text-ink/60">{enquiry.phone}</div>
-                </td>
-                <td className="px-4 py-3 text-ink/70">
-                  {typeLabels[enquiry.type] ?? enquiry.type}
-                </td>
-                <td className="px-4 py-3">
-                  {getHotelBySlug(enquiry.property)?.name ?? enquiry.property}
-                </td>
-                <td className="whitespace-nowrap px-4 py-3 text-ink/70">
-                  {enquiry.checkIn ? formatDate(enquiry.checkIn) : '—'}
-                  {' → '}
-                  {enquiry.checkOut ? formatDate(enquiry.checkOut) : '—'}
-                  {enquiry.guests && (
-                    <div className="text-xs text-ink/50">{enquiry.guests} guests</div>
-                  )}
-                </td>
-                <td className="max-w-xs px-4 py-3 text-ink/70">
-                  <p className="line-clamp-3 whitespace-pre-line">{enquiry.message}</p>
-                </td>
-                <td className="px-4 py-3">
-                  <span
-                    className={`rounded-full px-2 py-1 text-xs font-medium ${statusStyles[enquiry.status] ?? 'bg-ink/10 text-ink/60'}`}
-                  >
-                    {enquiry.status}
-                  </span>
-                </td>
-              </tr>
-            ))}
+            {enquiries.map((enquiry) => {
+              const { main, legacyDetails } = splitLegacyMessage(enquiry.message);
+              return (
+                <tr
+                  key={enquiry.id}
+                  className="border-b border-ink/5 align-top transition-colors last:border-0 odd:bg-white even:bg-forest/[0.025] hover:bg-forest/[0.08]"
+                >
+                  <td className="whitespace-nowrap px-4 py-3 text-ink/70">
+                    {formatDate(enquiry.createdAt)}
+                    {enquiry.legacyTicket && (
+                      <div className="mt-1 text-xs text-ink/40">{enquiry.legacyTicket}</div>
+                    )}
+                  </td>
+                  <td className="px-4 py-3">
+                    <div className="font-medium">{enquiry.name}</div>
+                    <div className="text-xs text-ink/60">{enquiry.email}</div>
+                    <div className="text-xs text-ink/60">{enquiry.phone}</div>
+                  </td>
+                  <td className="px-4 py-3 text-ink/70">
+                    {typeLabels[enquiry.type] ?? enquiry.type}
+                  </td>
+                  <td className="px-4 py-3">
+                    {getHotelBySlug(enquiry.property)?.name ?? enquiry.property}
+                  </td>
+                  <td className="whitespace-nowrap px-4 py-3 text-ink/70">
+                    {enquiry.checkIn ? formatDate(enquiry.checkIn) : '—'}
+                    {' → '}
+                    {enquiry.checkOut ? formatDate(enquiry.checkOut) : '—'}
+                    {enquiry.guests && (
+                      <div className="text-xs text-ink/50">{enquiry.guests} guests</div>
+                    )}
+                  </td>
+                  <td className="max-w-sm px-4 py-3 text-ink/70">
+                    {main && <p className="whitespace-pre-line">{main}</p>}
+                    {legacyDetails && (
+                      <p
+                        className={`whitespace-pre-line text-xs text-ink/40 ${main ? 'mt-2' : ''}`}
+                      >
+                        {legacyDetails}
+                      </p>
+                    )}
+                    {!main && !legacyDetails && <span className="text-ink/30">—</span>}
+                  </td>
+                  <td className="px-4 py-3">
+                    <span
+                      className={`rounded-full px-2 py-1 text-xs font-medium ${statusStyles[enquiry.status] ?? 'bg-ink/10 text-ink/60'}`}
+                    >
+                      {enquiry.status}
+                    </span>
+                  </td>
+                </tr>
+              );
+            })}
             {enquiries.length === 0 && (
               <tr>
                 <td colSpan={7} className="px-4 py-8 text-center text-ink/50">

@@ -1,9 +1,15 @@
-// One-time import of legacy MySQL data (enquiry, voucher_detail, newsletter_signup)
-// from the old GoDaddy-hosted PHP site into this app's Postgres. Not part of the
-// running app — run once via `pnpm tsx scripts/migrate-legacy-data.ts`, then it can
-// be deleted or kept for reference. Safe to re-run: every insert target has a real
-// unique constraint (voucherNo, legacyId, legacyTicket, email) so createMany with
-// skipDuplicates just skips rows already imported.
+// One-time import of legacy MySQL data (enquiry, voucher_detail,
+// newsletter_signup, cca_status) from the old GoDaddy-hosted PHP site into
+// this app's Postgres. Not part of the running app — run once via
+// `pnpm tsx scripts/migrate-legacy-data.ts`, then it can be deleted or kept
+// for reference. Safe to re-run: every insert target has a real unique
+// constraint (voucherNo, legacyId, legacyTicket, email, orderId) so
+// createMany with skipDuplicates just skips rows already imported.
+//
+// Three separate legacy MySQL databases feed this: sinclairsltd_official
+// (enquiry, newsletter_signup), sinclairsltd_voucher (voucher_detail), and
+// sinclairsltd_hdfcmpgs (cca_status — the CCAvenue/HDFC gateway transaction
+// log, missed in the first migration pass and added later).
 //
 // Reads mysqldump files from ~/Desktop/sinclairs-wp-backup/legacy-php-site/dumps/
 // (gitignored, outside the repo — never committed). The legacy schema is looser
@@ -16,7 +22,13 @@ import { randomBytes } from 'node:crypto';
 import { readFileSync, writeFileSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { join } from 'node:path';
-import { EnquiryStatus, EnquiryType, type Prisma, PrismaClient } from '@prisma/client';
+import {
+  EnquiryStatus,
+  EnquiryType,
+  PaymentStatus,
+  type Prisma,
+  PrismaClient,
+} from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -188,6 +200,31 @@ function parseDMY(raw: string): Date | null {
   if (year < 100) year += year < 70 ? 2000 : 1900;
   const d = new Date(Date.UTC(year, month - 1, day));
   return Number.isNaN(d.getTime()) || d.getUTCMonth() !== month - 1 ? null : d;
+}
+
+// cca_status's trans_date is mostly "DD/MM/YYYY HH:MM:SS" IST wall-clock (same
+// double-encoding concern as parseISODateTime — converted explicitly rather
+// than trusting the host's timezone), but a handful of later rows use
+// "YYYY-MM-DD HH:MM:SS[.ms]" instead (falls back to parseISODateTime). Its
+// time_stamp column is NOT the real transaction time (it's an
+// `ON UPDATE current_timestamp()` column that's identical across unrelated
+// rows in samples, i.e. a batch-touch marker) — trans_date is the only
+// trustworthy timestamp in this table.
+function parseTransDate(raw: string | null): Date | null {
+  if (!raw) return null;
+  const m = raw.trim().match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})\s+(\d{1,2}):(\d{2}):(\d{2})/);
+  if (!m) return parseISODateTime(raw);
+  const [, d, mo, y, h, mi, s] = m;
+  const utcMs = Date.UTC(
+    Number.parseInt(y ?? '', 10),
+    Number.parseInt(mo ?? '', 10) - 1,
+    Number.parseInt(d ?? '', 10),
+    Number.parseInt(h ?? '', 10),
+    Number.parseInt(mi ?? '', 10),
+    Number.parseInt(s ?? '', 10),
+  );
+  const date = new Date(utcMs - IST_OFFSET_MS);
+  return Number.isNaN(date.getTime()) ? null : date;
 }
 
 // check_in/check_out/dates can hold multiple dates for one legacy voucher row
@@ -600,9 +637,114 @@ async function migrateNewsletter(): Promise<Report> {
 }
 
 // ---------------------------------------------------------------------------
+// Payment (legacy cca_status — CCAvenue/HDFC gateway transaction log, a third
+// legacy MySQL database, sinclairsltd_hdfcmpgs, missed in the first pass)
+// ---------------------------------------------------------------------------
+
+const CCA_STATUS_COLS = [
+  'dbid',
+  'order_id',
+  'order_status',
+  'tracking_id',
+  'bank_ref_no',
+  'failure_message',
+  'amount',
+  'billing_name',
+  'billing_email',
+  'trans_date',
+  'hotel',
+  'time_stamp',
+] as const;
+
+// Legacy statuses don't map 1:1 onto the current 4-value enum — TIMEOUT/INVALID
+// collapse into FAILURE and AWAITED into INITIATED, with the original legacy
+// label preserved in failureMessage so nothing is silently reclassified away.
+const CCA_STATUS_MAP: Record<string, PaymentStatus> = {
+  success: PaymentStatus.SUCCESS,
+  failure: PaymentStatus.FAILURE,
+  aborted: PaymentStatus.ABORTED,
+  initiated: PaymentStatus.INITIATED,
+  timeout: PaymentStatus.FAILURE,
+  invalid: PaymentStatus.FAILURE,
+  awaited: PaymentStatus.INITIATED,
+};
+
+async function migratePayment(): Promise<Report> {
+  const report = newReport('Payment');
+  const sql = readFileSync(join(DUMPS_DIR, 'cca_status.sql'), 'latin1');
+  const rows = parseInsertRows(sql, 'cca_status');
+  report.totalRows = rows.length;
+
+  const data: Prisma.PaymentCreateManyInput[] = [];
+
+  for (const fields of rows) {
+    const get = (name: (typeof CCA_STATUS_COLS)[number]) =>
+      unq(fields[CCA_STATUS_COLS.indexOf(name)]);
+    const raw = fields.join(',');
+
+    const orderId = get('order_id');
+    if (!orderId) {
+      skip(report, 'missing order_id', raw.slice(0, 120));
+      continue;
+    }
+    const hotelSlug = mapHotel(get('hotel'));
+    if (!hotelSlug) {
+      skip(report, `unmapped hotel: "${get('hotel')}"`, raw.slice(0, 120));
+      continue;
+    }
+    const createdAt = parseTransDate(get('trans_date'));
+    if (!createdAt) {
+      skip(report, `unparseable trans_date: "${get('trans_date')}"`, raw.slice(0, 160));
+      continue;
+    }
+
+    const legacyStatus = get('order_status')?.trim().toLowerCase() ?? '';
+    const status = CCA_STATUS_MAP[legacyStatus];
+    if (!status) {
+      skip(report, `unmapped order_status: "${get('order_status')}"`, raw.slice(0, 120));
+      continue;
+    }
+
+    const failureMessage = joinNotes([
+      get('failure_message'),
+      ['timeout', 'invalid', 'awaited'].includes(legacyStatus)
+        ? `Legacy status (legacy): ${get('order_status')}`
+        : null,
+    ]);
+
+    data.push({
+      orderId,
+      hotelSlug,
+      amount: parseMoney(get('amount')) ?? 0,
+      guestName: get('billing_name') ?? '',
+      guestEmail: get('billing_email') ?? '',
+      guestPhone: '',
+      status,
+      trackingId: get('tracking_id'),
+      bankRefNo: get('bank_ref_no'),
+      failureMessage,
+      createdAt,
+      updatedAt: createdAt,
+    });
+  }
+
+  for (let i = 0; i < data.length; i += BATCH_SIZE) {
+    const batch = data.slice(i, i + BATCH_SIZE);
+    const { count } = await prisma.payment.createMany({ data: batch, skipDuplicates: true });
+    report.inserted += count;
+  }
+  return report;
+}
+
+// ---------------------------------------------------------------------------
 
 async function main() {
-  const reports = [await migrateEnquiry(), await migrateVoucher(), await migrateNewsletter()];
+  const reports = [
+    await migrateEnquiry(),
+    await migrateVoucher(),
+    await migrateNewsletter(),
+    await migratePayment(),
+  ];
 
   for (const r of reports) {
     console.log(`\n=== ${r.table} ===`);
