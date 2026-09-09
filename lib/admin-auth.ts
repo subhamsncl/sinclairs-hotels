@@ -19,7 +19,10 @@ async function hmacHex(message: string): Promise<string> {
     .join('');
 }
 
-function constantTimeEqual(a: string, b: string): boolean {
+// Exported so any other secret comparison in the app (the login password,
+// a cron bearer token) gets the same timing-attack protection as the
+// session signature check below, rather than a plain `!==`.
+export function constantTimeEqual(a: string, b: string): boolean {
   const maxLength = Math.max(a.length, b.length);
   let mismatch = a.length === b.length ? 0 : 1;
   for (let i = 0; i < maxLength; i++) {

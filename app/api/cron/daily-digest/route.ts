@@ -1,4 +1,5 @@
 import { getHotelBySlug } from '@/content/hotels';
+import { constantTimeEqual } from '@/lib/admin-auth';
 import { prisma } from '@/lib/db';
 import { dailyDigestHtml } from '@/lib/email-templates/daily-digest';
 import { sendMail } from '@/lib/mail';
@@ -32,8 +33,9 @@ function getPreviousIstDay(now: Date) {
 }
 
 export async function GET(request: Request) {
-  const authHeader = request.headers.get('authorization');
-  if (!process.env.CRON_SECRET || authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+  const authHeader = request.headers.get('authorization') ?? '';
+  const cronSecret = process.env.CRON_SECRET;
+  if (!cronSecret || !constantTimeEqual(authHeader, `Bearer ${cronSecret}`)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 

@@ -3,6 +3,7 @@
 import {
   ADMIN_COOKIE_NAME,
   ADMIN_SESSION_MAX_AGE_SECONDS,
+  constantTimeEqual,
   createSessionCookieValue,
 } from '@/lib/admin-auth';
 import { clientIp, isRateLimited } from '@/lib/rate-limit';
@@ -28,7 +29,7 @@ export async function login(
   const password = String(formData.get('password') ?? '');
   const expected = process.env.ADMIN_PASSWORD;
 
-  if (!expected || password !== expected) {
+  if (!expected || !constantTimeEqual(password, expected)) {
     return { status: 'error', message: 'Incorrect password.' };
   }
 
