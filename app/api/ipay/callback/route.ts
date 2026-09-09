@@ -12,8 +12,15 @@ import { STAFF_NOTIFY_EMAIL, sendMail } from '@/lib/mail';
 import { NextResponse } from 'next/server';
 
 export async function POST(request: Request): Promise<NextResponse> {
+  // Protocol can't be hardcoded to https: local dev serves plain http, and a
+  // hardcoded https:// redirect back to localhost fails with
+  // ERR_SSL_PROTOCOL_ERROR — x-forwarded-proto (set by Vercel) gives the real
+  // scheme in production; localhost is the only case without that header.
+  // See vouchers/page.tsx for the same pattern.
   const host = request.headers.get('host') ?? '';
-  const baseUrl = `https://${host}`;
+  const protocol =
+    request.headers.get('x-forwarded-proto') ?? (host.startsWith('localhost') ? 'http' : 'https');
+  const baseUrl = `${protocol}://${host}`;
 
   const { hmacKey } = iciciConfig();
   if (!hmacKey) {

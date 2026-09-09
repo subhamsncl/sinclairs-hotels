@@ -78,8 +78,16 @@ export async function initiatePayment(
   }
 
   const orderId = generateOrderId();
+  // Protocol can't be hardcoded to https: local dev serves plain http, and a
+  // hardcoded https:// returnURL sent to ICICI sends the post-payment
+  // redirect to a URL local dev can't actually serve (ERR_SSL_PROTOCOL_ERROR)
+  // — x-forwarded-proto (set by Vercel) gives the real scheme in production;
+  // localhost is the only case without that header. See vouchers/page.tsx
+  // for the same pattern.
   const host = headerList.get('host') ?? '';
-  const baseUrl = `https://${host}`;
+  const protocol =
+    headerList.get('x-forwarded-proto') ?? (host.startsWith('localhost') ? 'http' : 'https');
+  const baseUrl = `${protocol}://${host}`;
 
   await prisma.payment.create({
     data: {
