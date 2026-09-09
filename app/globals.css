@@ -37,6 +37,33 @@ body {
   color: var(--foreground);
 }
 
+/* Tailwind v4's preflight deliberately stopped forcing cursor: pointer on
+   buttons (matching the raw browser default, which is a plain arrow) — so
+   every <button> across both the guest-facing forms (enquiry, i-Pay,
+   newsletter, booking widget) and the staff admin forms (voucher, refund,
+   login, table filters) needs it restored explicitly. This also covers
+   every Radix Trigger (Select/Dialog/Popover all render a real <button>
+   under the hood) and react-day-picker's day cells for free, since those
+   are buttons too — one rule instead of hunting down every call site.
+   Select.Item in components/ui/select.tsx still sets its own cursor-pointer
+   because Radix renders options as <div role="option">, not buttons. */
+@layer base {
+  button:not(:disabled),
+  [type="button"]:not(:disabled),
+  [type="submit"]:not(:disabled),
+  [type="reset"]:not(:disabled),
+  select {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  [type="button"]:disabled,
+  [type="submit"]:disabled,
+  [type="reset"]:disabled {
+    cursor: not-allowed;
+  }
+}
+
 /* Wrapped in @layer components so a utility class at the call site (e.g. w-auto
    to shrink an admin filter <select> that would otherwise default to w-full)
    can actually override it — Tailwind v4's cascade layers mean unlayered plain
