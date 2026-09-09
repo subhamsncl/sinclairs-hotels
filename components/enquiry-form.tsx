@@ -4,7 +4,8 @@ import { submitEnquiry } from '@/app/(site)/enquiry/actions';
 import { DatePicker } from '@/components/ui/date-picker';
 import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/ui/select';
 import type { Hotel } from '@/content/types';
-import { useActionState, useState } from 'react';
+import { pushDataLayerEvent } from '@/lib/analytics';
+import { useActionState, useEffect, useState } from 'react';
 
 const initialState = { status: 'idle' as const };
 
@@ -38,6 +39,13 @@ export function EnquiryForm({
   });
   const [checkIn, setCheckIn] = useState(defaultCheckIn ?? '');
   const [checkOut, setCheckOut] = useState(defaultCheckOut ?? '');
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: only the success transition itself should fire this, not every property/type edit
+  useEffect(() => {
+    if (state.status === 'success' && state.leadCaptured) {
+      pushDataLayerEvent('generate_lead', { property, enquiry_type: type });
+    }
+  }, [state.status]);
 
   if (state.status === 'success') {
     return (

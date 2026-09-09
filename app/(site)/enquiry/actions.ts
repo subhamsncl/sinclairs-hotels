@@ -11,6 +11,9 @@ export type EnquiryFormState = {
   status: 'idle' | 'success' | 'error';
   message?: string;
   fieldErrors?: Record<string, string[]>;
+  // Distinguishes a real submission from the honeypot's silent fake-success
+  // reply, so the client only fires an analytics conversion on a real lead.
+  leadCaptured?: boolean;
 };
 
 const ENQUIRY_TYPE_LABELS: Record<string, string> = {
@@ -81,5 +84,9 @@ export async function submitEnquiry(
     }),
   });
 
-  return { status: 'success', message: 'Thank you — our team will be in touch shortly.' };
+  return {
+    status: 'success',
+    message: 'Thank you — our team will be in touch shortly.',
+    leadCaptured: true,
+  };
 }

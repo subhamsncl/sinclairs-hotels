@@ -7,11 +7,12 @@ import { GalleryLightbox } from '@/components/gallery-lightbox';
 import { HeroCarousel } from '@/components/hero-carousel';
 import { JsonLd } from '@/components/json-ld';
 import { MeetingsSection } from '@/components/meetings-section';
+import { ReservationLink } from '@/components/reservation-link';
 import { RoomImageCarousel } from '@/components/room-image-carousel';
 import { WeddingSection } from '@/components/wedding-section';
 import { awards } from '@/content/awards';
 import { getHotelBySlug, hotels } from '@/content/hotels';
-import { reservationUrl, siteConfig } from '@/content/site';
+import { siteConfig } from '@/content/site';
 import { pageMetadata } from '@/lib/seo';
 import type { Metadata } from 'next';
 import Image from 'next/image';
@@ -147,14 +148,13 @@ export default async function HotelPage({ params }: { params: Promise<Params> })
             )}
             <Stat value={String(hotel.amenities.length)} label="Amenities" />
           </div>
-          <a
-            href={reservationUrl}
-            target="_blank"
-            rel="noopener noreferrer"
+          <ReservationLink
+            source="hotel_stat_bar"
+            params={{ property: hotel.slug }}
             className="rounded bg-gold px-6 py-3 text-sm uppercase tracking-wider text-forest-dark transition hover:bg-gold-light"
           >
             Check Availability
-          </a>
+          </ReservationLink>
         </div>
       </div>
 
@@ -224,14 +224,13 @@ export default async function HotelPage({ params }: { params: Promise<Params> })
                     <p className="mt-2 flex-1 text-sm leading-relaxed text-ink/70">
                       {room.description}
                     </p>
-                    <a
-                      href={reservationUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <ReservationLink
+                      source="hotel_room_card"
+                      params={{ property: hotel.slug, room: room.name }}
                       className="mt-5 block rounded bg-forest-dark py-2.5 text-center text-xs uppercase tracking-wider text-cream transition hover:bg-forest"
                     >
                       Book Now
-                    </a>
+                    </ReservationLink>
                   </div>
                 </div>
               ))}

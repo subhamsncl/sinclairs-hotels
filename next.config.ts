@@ -24,15 +24,23 @@ const nextConfig: NextConfig = {
       // middleware to thread a per-request nonce, so 'unsafe-inline' here is
       // a deliberate tradeoff for compatibility. The other directives below
       // still block the exfiltration and embedding vectors that matter most.
-      "script-src 'self' 'unsafe-inline'",
+      // googletagmanager.com is GTM's own script host, needed once
+      // NEXT_PUBLIC_GTM_ID is set (see app/layout.tsx) — GTM then loads GA4
+      // itself from the same host, so no separate google-analytics.com entry
+      // is needed here. 'unsafe-eval' is dev-only: Next/React's Fast Refresh
+      // and dev-mode stack-trace reconstruction use eval(), which a strict
+      // script-src otherwise silently blocks (console warning, no visible
+      // error) — React itself never calls eval() in production, so prod stays
+      // without it.
+      `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV !== 'production' ? " 'unsafe-eval'" : ''} https://www.googletagmanager.com`,
       // Radix (Select/Popover) and react-day-picker position themselves via
       // inline style attributes, so style-src needs 'unsafe-inline' too.
       "style-src 'self' 'unsafe-inline'",
       "img-src 'self' data:",
       "font-src 'self' data:",
-      // Only external embed on the site: the per-hotel Google Maps iframe.
-      'frame-src https://maps.google.com https://www.google.com',
-      "connect-src 'self'",
+      // Google Maps iframe on hotel pages, plus GTM's <noscript> fallback iframe.
+      'frame-src https://maps.google.com https://www.google.com https://www.googletagmanager.com',
+      "connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://region1.google-analytics.com",
       "object-src 'none'",
       "base-uri 'self'",
       "form-action 'self'",

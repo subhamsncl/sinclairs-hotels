@@ -1,3 +1,4 @@
+import { IpayResultTracking } from '@/components/ipay-result-tracking';
 import { getHotelBySlug } from '@/content/hotels';
 import { prisma } from '@/lib/db';
 import { pageMetadata } from '@/lib/seo';
@@ -46,6 +47,12 @@ export default async function IpayResultPage({
 
   return (
     <div className="mx-auto max-w-lg px-6 py-24 text-center">
+      <IpayResultTracking
+        status={payment.status}
+        orderId={payment.orderId}
+        amount={Number(payment.amount)}
+        hotelSlug={payment.hotelSlug}
+      />
       <p className={`font-display text-2xl ${isSuccess ? 'text-forest' : 'text-red-700'}`}>
         {isSuccess ? 'Payment Successful' : 'Payment Not Completed'}
       </p>

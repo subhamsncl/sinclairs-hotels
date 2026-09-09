@@ -1,5 +1,7 @@
 import { JsonLd } from '@/components/json-ld';
+import { PageViewTracker } from '@/components/page-view-tracker';
 import { siteConfig, socialLinks } from '@/content/site';
+import { GoogleTagManager } from '@next/third-parties/google';
 import type { Metadata } from 'next';
 import { Inter, Libre_Baskerville } from 'next/font/google';
 import './globals.css';
@@ -53,12 +55,16 @@ const organizationJsonLd = {
 };
 
 export default function RootLayout({ children }: LayoutProps<'/'>) {
+  const gtmId = process.env.NEXT_PUBLIC_GTM_ID;
+
   return (
     <html lang="en" className={`${inter.variable} ${libreBaskerville.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col bg-cream text-ink">
         <JsonLd data={organizationJsonLd} />
+        {gtmId && <PageViewTracker />}
         {children}
       </body>
+      {gtmId && <GoogleTagManager gtmId={gtmId} />}
     </html>
   );
 }

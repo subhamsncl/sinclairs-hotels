@@ -4,6 +4,7 @@ import { DatePicker } from '@/components/ui/date-picker';
 import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/ui/select';
 import { reservationUrl } from '@/content/site';
 import type { Hotel } from '@/content/types';
+import { pushDataLayerEvent } from '@/lib/analytics';
 import { useState } from 'react';
 
 function todayISO(offsetDays = 0): string {
@@ -20,6 +21,7 @@ export function BookingWidget({ hotels }: { hotels: Hotel[] }) {
 
   function handleSearch(event: React.FormEvent) {
     event.preventDefault();
+    pushDataLayerEvent('begin_checkout', { source: 'homepage_widget', property });
     // Staah runs the actual reservation search end-to-end; property/dates/guests
     // picked here are just for a familiar UI, guests re-select them on Staah.
     window.open(reservationUrl, '_blank', 'noopener,noreferrer');
