@@ -59,6 +59,20 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
     <html lang="en" className={`${inter.variable} ${libreBaskerville.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col bg-cream text-ink">
+        {/* @next/third-parties renders only GTM's two <script> tags, never the
+            <noscript> half of Google's install snippet, so image-pixel tags
+            (Ads remarketing, Floodlight) would never fire for a JS-less client. */}
+        {gtmId && (
+          <noscript>
+            <iframe
+              src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
+              title="Google Tag Manager"
+              height="0"
+              width="0"
+              style={{ display: 'none', visibility: 'hidden' }}
+            />
+          </noscript>
+        )}
         <JsonLd data={organizationJsonLd} />
         {children}
       </body>
