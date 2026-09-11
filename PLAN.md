@@ -70,6 +70,174 @@ Decisions already made (2026-09-01):
   form abuse protection
 - Cross-browser/responsive check in Chrome via claude-in-chrome
 
+## Scope boundary — Phase 1 vs Phase 2
+
+Agreed 2026-09-10. **Phase 1 is everything the site cannot go live without:
+what has already been built, plus the cutover set. Phase 2 is everything that
+comes after launch.** (The numbered build phases 0–4 above are an older,
+unrelated axis; don't confuse them.)
+
+An earlier cut of this section split the phases by done vs remaining. That was
+wrong: it put the entire cutover set in Phase 2, which would have meant
+"Phase 1 complete" and "site still on WordPress" at the same time.
+
+**Commercials and scope are settled on a call before further work starts** —
+covering both the cutover set below and Phase 2.
+
+### Phase 1 — done
+
+- All 9 property pages, plus home, hotels listing, weddings, meetings & events,
+  contact, media and enquiry pages
+- Enquiry system end to end: zod validation, rate limiting, spam guard, Prisma
+  insert, staff notification email, success/error states
+- Voucher module: issue → guest email → office copy → guest-viewable
+  `/v/[token]` page
+- Internal ops dashboard on the `staff.*` host: enquiries, vouchers, payments
+  (with refunds), newsletter, session auth
+- ICICI i-Pay integration in Standard/redirect mode, including refunds, signed
+  callback verification and the amount cross-check
+- Historical data migration: 35,837 enquiries, 13,539 vouchers, 26,258
+  newsletter subscribers, 5,234 legacy payments — verified idempotent
+- GA4/GTM instrumentation with the full conversion funnel
+- On-page SEO: per-page metadata, sitemap, robots, schema.org structured data
+- Security hardening: CSP and the standard headers, rate limiting, timing-safe
+  secret comparison, server-side validation everywhere, staff-host isolation
+- Daily digest email (cron)
+- Design system and shared component library
+- Test suite (68 unit tests + Playwright e2e) and the CI pipeline
+
+### Phase 1 — the cutover set (remaining, launch-blocking)
+
+Finite, and mostly not code — credentials, DNS, one redirect map and a data
+pull. Detail for every line lives in `GO_LIVE_CHECKLIST.md`.
+
+- 301 redirect map from the old WordPress URLs, DNS switch to Vercel, sitemap
+  resubmission in Search Console
+- Resend domain verification, real from/staff addresses, test recipient
+  overrides removed — without this no real guest or staff address receives
+  anything
+- Production environment variables in Vercel: GTM ID, `CRON_SECRET`, production
+  database and admin secrets, and dropping the `SITE_BASE_URL` override
+- ICICI: sandbox round-trip (which also settles the two open questions in their
+  spec), then production credentials and one live test
+- Legacy server credential rotation and clean-rebuild confirmation
+- GA4 verified firing in production *before* cutover, so the before/after
+  baseline exists
+- Final catch-up data import, plus re-confirming the production row counts
+- Per-hotel booking-office details from the legacy `voucher_hotels` table, so
+  vouchers bill correctly
+- The masked-card and unused-legacy-table decisions — they are security
+  questions and they execute at decommission
+- Triage of Preeti's feedback doc: which of those items are launch-blocking
+
+### Phase 2 — after launch
+
+- Legacy host decommission (only possible once cutover is verified)
+- Voucher void/resend and print/PDF — unless the front desk needs them on day
+  one, in which case they move into the cutover set
+- Per-user staff accounts instead of the shared admin password
+- Conversion dashboard (event collection is already done; somewhere to look at
+  it is not launch-blocking)
+- Offers page and pricing dashboard
+- Web check-in
+- Payment/voucher reconciliation (needs a `Voucher` → `Payment` link first)
+- New content: careers, destination guides, F&B
+- The "Sinclairs Yangang" property question — the 1,043 enquiries are imported
+  and safe under either answer, so it changes nothing at launch
+- STAAH integration — unscoped; it changes the site's commercial model and
+  needs its own scoping before it can be estimated
+- AI integration and further visual redesign — parked, refine rather than replace
+
+## Post-launch roadmap ("Phase 2")
+
+Naming note: the numbered phases above are the *build* phases (0–4, all
+delivered). "Phase 1 / Phase 2" as used in stakeholder conversation means
+launch / post-launch — this section is the latter. Status verified against the
+repo on 2026-09-10.
+
+### Already built (landed early, during the launch push)
+
+- **Internal ops dashboard** — `/admin`, reachable only on the `staff.*` host
+  (`proxy.ts` rewrites it to a 404 on the public host), session-cookie auth,
+  sidebar nav. Sections: Enquiries (legacy imported records shown separately),
+  Vouchers (list + create + guest-visible `/v/[token]` link), Payments (with
+  refund dialog), Newsletter. Plus the daily digest cron email.
+  *Remaining:* per-user staff accounts instead of one shared password (see
+  `GO_LIVE_CHECKLIST.md` → Security), and whatever ops asks for after real use.
+- **Conversion tracking (data collection only)** — the GA4 funnel fires
+  end-to-end: `page_view`, `begin_checkout` (booking widget + reservation
+  links), `generate_lead` (enquiry submit), `purchase` / `payment_failed`
+  (i-Pay result). What does not exist is anywhere to *look* at it — see the
+  open decision below.
+
+### Partly done
+
+- **Payment / voucher reconciliation** — `Payment` and `Refund` are modelled
+  and populated only from ICICI's signed callback (`orderId`, `trackingId`/
+  `bankRefNo`, `paymentMode`/`paymentInstId`). But `Voucher` has no `paymentId`
+  or any FK to `Payment`, so nothing can currently say "this voucher was paid
+  by that transaction." Needs: a schema link, ICICI's Transaction Status +
+  Settlement Summary/Details calls (both still deferred in
+  `GO_LIVE_CHECKLIST.md` → i-Pay), and a reconciliation view in `/admin`.
+- **Legacy host decommission** — no work in this repo; blocked entirely on
+  cutover (DNS + final catch-up import). The daily legacy sync script retires
+  at the same moment.
+
+### Not started
+
+- **Offers page + pricing dashboard** — no route, no content file, no model.
+  First feature that genuinely needs ISR rather than plain SSG (see CLAUDE.md's
+  note about an admin-curated offers banner). If pricing is staff-editable this
+  is two features: the marketing page, plus a Prisma model and admin CRUD.
+- **Web check-in** — largest item on this list. New guest-facing flow, new
+  model, identity-document handling (and the retention question that brings),
+  a link from the voucher/confirmation email. Needs scoping before estimating —
+  see the open decision below.
+- **Careers / destination guides / F&B pages** — none exist; `content/` has
+  awards, experiences, hotels, legal, reviews, site. These follow the
+  established pattern (typed content file + page reusing `EditorialRow` and
+  friends), so Careers and F&B are genuinely quick. Destination guides are the
+  outlier: the cost is photography and copy, not code, and the WP uploads
+  folder is gone from this machine (see CLAUDE.md → Source content), so new
+  destination imagery has to come from an external backup or a fresh shoot.
+  Add every new top-level route to `app/sitemap.ts`'s `staticPaths`.
+
+### Needs scoping before it can be placed in a phase
+
+- **STAAH integration** (raised 2026-09-10) — STAAH is a channel manager: rate
+  and inventory distribution to OTAs, plus a booking engine. Nothing in this
+  plan accounts for it, and it changes the premise the current site is built
+  on: today the enquiry form is the only commercial path, and a guest cannot
+  book online. Wiring STAAH in means live availability and rates, a booking
+  flow, and a payment step that belongs to a real reservation rather than the
+  standalone i-Pay page — that is a product decision, not a feature ticket, and
+  it interacts with the i-Pay work already done. Scope it on its own before
+  slotting it anywhere; do not treat it as a Phase 2 line item alongside a
+  careers page.
+
+### Parked, deliberately
+
+- **AI integration** and **further visual redesign**. Position of record: refine
+  the existing design system rather than replace it, and don't scope the
+  redesign question now.
+
+### Open decisions (blocking estimates)
+
+1. **Conversion dashboard: GA4 exploration, or an in-app page?** The events
+   already fire, so a GA4 exploration costs no code. An in-app page is more
+   work but reads our own Postgres — `Enquiry`, `Payment` and `Voucher` are all
+   indexed on `createdAt` + `hotelSlug`, so enquiries→payments by property and
+   date is a straightforward query. Very different amounts of work.
+2. **Web check-in scope** — does it write back into something the front desk
+   actually uses, or is it a standalone form that emails them? And which
+   identity documents, if any, do we store, for how long?
+
+### Suggested order
+
+Content pages (cheap, no dependencies) → offers/pricing → reconciliation →
+conversion dashboard → web check-in. Decommission slots in whenever cutover
+completes.
+
 ## Working agreement
 
 - Commit early and often to `main` (or short-lived branches) on the public

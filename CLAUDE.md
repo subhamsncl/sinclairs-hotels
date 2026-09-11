@@ -228,13 +228,26 @@ dashboard); until then, ship by running `vercel deploy` after pushing.
 
 ## Source content
 
-Reference material was meant to live outside this repo, on the local machine only
-(never commit it): `~/Desktop/sinclairs-wp-backup/` — the old WordPress files,
-uploads, and a DB dump, used only as a one-time source to port real copy/images into
-`content/`. **That path no longer exists on disk** (confirmed missing during this
-session) — whatever hasn't already been imported into `public/images/` is gone from
-this machine. For most properties, the WebP files already in `public/images/hotels/`
-(1600px, see the Images note above) are the only surviving copies; there is no local
-higher-resolution original to fall back to. If better source photos are needed, they
-have to come from wherever the original shoot/export is backed up externally (the
-photographer, an old server, cloud storage) — ask before assuming they're retrievable.
+Reference material lives outside this repo, on the local machine only (never commit
+it): `~/Desktop/sinclairs-wp-backup/`. As of 2026-09-10 that path holds exactly two
+things:
+
+- `legacy-php-site/` — the old PHP booking/voucher/newsletter site, plus
+  `legacy-php-site/dumps/`: the four MySQL dumps the historical import reads
+  (`enquiry.sql`, `voucher_detail.sql`, `newsletter_signup.sql`, `cca_status.sql`)
+  and `migration-report.json`. `scripts/migrate-legacy-data.ts` reads this
+  directory directly, so it is a live dependency of the pre-cutover catch-up
+  import — not just archive material.
+- `prod-db-backup-pre-migration/` — JSON snapshots of the handful of real
+  production rows that existed before the import, used to reconcile counts.
+
+**What is gone from this machine**: the WordPress export itself (`WPCM`,
+`public_html`, `wp-content/uploads`), the WP DB dump, the `QUARANTINE_backdoors/`
+folder, and `sync-legacy-data.sh` (the daily legacy-MySQL sync — it will have to be
+rewritten if the catch-up import needs it). Anything not already imported into
+`public/images/` is therefore unrecoverable locally: for most properties the WebP
+files in `public/images/hotels/` (1600px, see the Images note above) are the only
+surviving copies, with no higher-resolution original to fall back to. If better
+source photos are needed they have to come from an external backup (the
+photographer, an old server, cloud storage) — ask before assuming they're
+retrievable.

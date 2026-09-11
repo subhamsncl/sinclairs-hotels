@@ -1,10 +1,12 @@
 import { getAmenityIcon } from '@/components/amenity-icon';
 import { ClosingCta } from '@/components/closing-cta';
+import { ContactLink } from '@/components/contact-link';
 import { EmailText } from '@/components/email-text';
 import { ExploreSection } from '@/components/explore-section';
 import { FoodStrip } from '@/components/food-strip';
 import { GalleryLightbox } from '@/components/gallery-lightbox';
 import { HeroCarousel } from '@/components/hero-carousel';
+import { HotelViewTracking } from '@/components/hotel-view-tracking';
 import { JsonLd } from '@/components/json-ld';
 import { MeetingsSection } from '@/components/meetings-section';
 import { ReservationLink } from '@/components/reservation-link';
@@ -102,6 +104,7 @@ export default async function HotelPage({ params }: { params: Promise<Params> })
     <div>
       <JsonLd data={hotelJsonLd} />
       <JsonLd data={breadcrumbJsonLd} />
+      <HotelViewTracking slug={hotel.slug} name={hotel.name} />
       <section className="relative flex h-[72vh] min-h-[480px] items-end">
         {hotel.heroGallery?.length ? (
           <HeroCarousel images={hotel.heroGallery} alt={hotel.name} />
@@ -149,8 +152,9 @@ export default async function HotelPage({ params }: { params: Promise<Params> })
             <Stat value={String(hotel.amenities.length)} label="Amenities" />
           </div>
           <ReservationLink
-            source="hotel_stat_bar"
-            params={{ property: hotel.slug }}
+            ctaSource="hotel_stat_bar"
+            params={{ hotel: hotel.slug }}
+            item={{ slug: hotel.slug, name: hotel.name }}
             className="rounded bg-gold px-6 py-3 text-sm uppercase tracking-wider text-forest-dark transition hover:bg-gold-light"
           >
             Check Availability
@@ -225,8 +229,9 @@ export default async function HotelPage({ params }: { params: Promise<Params> })
                       {room.description}
                     </p>
                     <ReservationLink
-                      source="hotel_room_card"
-                      params={{ property: hotel.slug, room: room.name }}
+                      ctaSource="hotel_room_card"
+                      params={{ hotel: hotel.slug, room: room.name }}
+                      item={{ slug: hotel.slug, name: hotel.name, variant: room.name }}
                       className="mt-5 block rounded bg-forest-dark py-2.5 text-center text-xs uppercase tracking-wider text-cream transition hover:bg-forest"
                     >
                       Book Now
@@ -326,23 +331,29 @@ export default async function HotelPage({ params }: { params: Promise<Params> })
                     <div>
                       <dt className="text-xs uppercase tracking-wider text-ink/50">Contact No.</dt>
                       <dd className="mt-2 text-sm text-ink/80">
-                        <a
+                        <ContactLink
+                          method="phone"
                           href={`tel:${hotel.contact.phone.replace(/\s/g, '')}`}
+                          ctaSource="hotel_page"
+                          hotel={hotel.slug}
                           className="hover:text-forest"
                         >
                           {hotel.contact.phone}
-                        </a>
+                        </ContactLink>
                       </dd>
                     </div>
                     <div className="min-w-0">
                       <dt className="text-xs uppercase tracking-wider text-ink/50">Email</dt>
                       <dd className="mt-2 text-sm text-ink/80">
-                        <a
+                        <ContactLink
+                          method="email"
                           href={`mailto:${hotel.contact.email}`}
+                          ctaSource="hotel_page"
+                          hotel={hotel.slug}
                           className="break-words hover:text-forest"
                         >
                           <EmailText email={hotel.contact.email} />
-                        </a>
+                        </ContactLink>
                       </dd>
                     </div>
                   </dl>

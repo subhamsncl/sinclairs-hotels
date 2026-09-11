@@ -1,3 +1,4 @@
+import { ContactLink } from '@/components/contact-link';
 import { hotels } from '@/content/hotels';
 import { siteConfig, socialLinks } from '@/content/site';
 import Link from 'next/link';
@@ -114,20 +115,27 @@ export function Footer() {
               <div>
                 <dt className="text-xs text-cream/50">Toll Free</dt>
                 <dd className="mt-0.5">
-                  <a href="tel:1800120267000" className="transition hover:text-gold-light">
+                  <ContactLink
+                    method="phone"
+                    href="tel:1800120267000"
+                    ctaSource="footer"
+                    className="transition hover:text-gold-light"
+                  >
                     1800 120 267 000
-                  </a>
+                  </ContactLink>
                 </dd>
               </div>
               <div>
                 <dt className="text-xs text-cream/50">Email</dt>
                 <dd className="mt-0.5">
-                  <a
+                  <ContactLink
+                    method="email"
                     href="mailto:reservations@sinclairshotels.com"
+                    ctaSource="footer"
                     className="break-words transition hover:text-gold-light"
                   >
                     <EmailText email="reservations@sinclairshotels.com" />
-                  </a>
+                  </ContactLink>
                 </dd>
               </div>
               <div>

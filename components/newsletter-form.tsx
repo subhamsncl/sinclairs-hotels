@@ -1,12 +1,19 @@
 'use client';
 
 import { subscribeNewsletter } from '@/app/(site)/newsletter/actions';
-import { useActionState } from 'react';
+import { pushDataLayerEvent } from '@/lib/analytics';
+import { useActionState, useEffect } from 'react';
 
 const initialState = { status: 'idle' as const };
 
 export function NewsletterForm() {
   const [state, formAction, pending] = useActionState(subscribeNewsletter, initialState);
+
+  useEffect(() => {
+    if (state.status === 'success') {
+      pushDataLayerEvent('sign_up', { method: 'newsletter' });
+    }
+  }, [state.status]);
 
   if (state.status === 'success') {
     return <p className="text-sm text-gold-light">{state.message ?? 'Thanks for subscribing!'}</p>;

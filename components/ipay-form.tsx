@@ -4,6 +4,7 @@ import { type IpayFormState, initiatePayment } from '@/app/(site)/ipay/actions';
 import { DatePicker } from '@/components/ui/date-picker';
 import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/ui/select';
 import type { Hotel } from '@/content/types';
+import { hotelItem, pushEcommerceEvent } from '@/lib/analytics';
 import { useActionState, useState } from 'react';
 
 const initialState: IpayFormState = { status: 'idle' };
@@ -11,13 +12,33 @@ const initialState: IpayFormState = { status: 'idle' };
 export function IpayForm({ hotels }: { hotels: Hotel[] }) {
   const [state, formAction, pending] = useActionState(initiatePayment, initialState);
   const [hotelSlug, setHotelSlug] = useState('');
+  const [amount, setAmount] = useState('');
   const [checkIn, setCheckIn] = useState('');
   const [checkOut, setCheckOut] = useState('');
 
   const fieldError = (field: string) => state.fieldErrors?.[field]?.[0];
 
   return (
-    <form action={formAction} className="space-y-5">
+    <form
+      action={formAction}
+      onSubmit={() => {
+        // The order id only exists after the server action runs, so this reports
+        // the attempt without one. Its job is the denominator for payment
+        // abandonment: add_payment_info minus (purchase + payment_failed).
+        const value = Number(amount) || 0;
+        const name = hotels.find((hotel) => hotel.slug === hotelSlug)?.name ?? hotelSlug;
+        pushEcommerceEvent(
+          'add_payment_info',
+          {
+            value,
+            currency: 'INR',
+            items: [hotelItem(hotelSlug, name, { price: value, quantity: 1 })],
+          },
+          { hotel: hotelSlug },
+        );
+      }}
+      className="space-y-5"
+    >
       {state.status === 'error' && state.message && (
         <p className="rounded border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-700">
           {state.message}
@@ -48,6 +69,8 @@ export function IpayForm({ hotels }: { hotels: Hotel[] }) {
             min={1}
             step="0.01"
             required
+            value={amount}
+            onChange={(event) => setAmount(event.target.value)}
             className="input"
             aria-invalid={Boolean(fieldError('amount'))}
           />

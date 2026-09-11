@@ -26,21 +26,33 @@ const nextConfig: NextConfig = {
       // still block the exfiltration and embedding vectors that matter most.
       // googletagmanager.com is GTM's own script host, needed once
       // NEXT_PUBLIC_GTM_ID is set (see app/layout.tsx) — GTM then loads GA4
-      // itself from the same host, so no separate google-analytics.com entry
-      // is needed here. 'unsafe-eval' is dev-only: Next/React's Fast Refresh
+      // itself from the same host. googleadservices/doubleclick are separate:
+      // container GTM-NDXBWC also carries Google Ads conversion and
+      // remarketing tags, which load conversion.js from googleadservices.com
+      // and pixel from googleads.g.doubleclick.net. Without these the Ads tags
+      // fail with a console-only CSP error and no visible symptom — the site
+      // looks fine while every ad conversion silently goes unrecorded.
+      // 'unsafe-eval' is dev-only: Next/React's Fast Refresh
       // and dev-mode stack-trace reconstruction use eval(), which a strict
       // script-src otherwise silently blocks (console warning, no visible
       // error) — React itself never calls eval() in production, so prod stays
       // without it.
-      `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV !== 'production' ? " 'unsafe-eval'" : ''} https://www.googletagmanager.com`,
+      `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV !== 'production' ? " 'unsafe-eval'" : ''} https://www.googletagmanager.com https://www.googleadservices.com https://googleads.g.doubleclick.net`,
       // Radix (Select/Popover) and react-day-picker position themselves via
       // inline style attributes, so style-src needs 'unsafe-inline' too.
       "style-src 'self' 'unsafe-inline'",
-      "img-src 'self' data:",
+      // GA4 and Ads fall back to image beacons, and Ads conversion/remarketing
+      // pixels are served from doubleclick and the google.com ccTLDs.
+      "img-src 'self' data: https://www.googletagmanager.com https://www.google-analytics.com https://googleads.g.doubleclick.net https://www.google.com https://www.google.co.in",
       "font-src 'self' data:",
-      // Google Maps iframe on hotel pages, plus GTM's <noscript> fallback iframe.
-      'frame-src https://maps.google.com https://www.google.com https://www.googletagmanager.com',
-      "connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://region1.google-analytics.com",
+      // Google Maps iframe on hotel pages, GTM's <noscript> fallback iframe,
+      // doubleclick's remarketing frame, and tagassistant.google.com — the last
+      // one is what GTM Preview mode uses, so without it the container can't be
+      // debugged against this site at all.
+      'frame-src https://maps.google.com https://www.google.com https://www.googletagmanager.com https://td.doubleclick.net https://bid.g.doubleclick.net https://tagassistant.google.com',
+      // GA4 picks a regional collection host per property (region1..regionN),
+      // so these are wildcarded rather than pinned to one region.
+      "connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://googleads.g.doubleclick.net https://td.doubleclick.net https://www.google.com https://tagassistant.google.com",
       "object-src 'none'",
       "base-uri 'self'",
       "form-action 'self'",

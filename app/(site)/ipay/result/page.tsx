@@ -52,6 +52,7 @@ export default async function IpayResultPage({
         orderId={payment.orderId}
         amount={Number(payment.amount)}
         hotelSlug={payment.hotelSlug}
+        hotelName={hotelName}
       />
       <p className={`font-display text-2xl ${isSuccess ? 'text-forest' : 'text-red-700'}`}>
         {isSuccess ? 'Payment Successful' : 'Payment Not Completed'}

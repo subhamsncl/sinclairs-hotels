@@ -7,6 +7,26 @@ either a security requirement, a data-loss risk, or something that will
 silently misbehave (send no email, misroute traffic) if skipped. Check items
 off as they're actually done, not just started.
 
+**This file is the Phase 1 cutover set** — the launch-blocking remainder, on
+top of everything already built. Phase 2 (post-launch work) and the full split
+live in `PLAN.md` → "Scope boundary". A handful of lines below belong to Phase 2
+and are marked *(Phase 2)* inline — voucher void/resend and print/PDF, per-user
+staff accounts, the Yangang question, and decommissioning the old host (which
+can only happen after cutover). Commercials and scope are agreed on a call
+before this work starts.
+
+**Last verified against the repo: 2026-09-10.** Ticked items were confirmed in
+code/data at that point, not just assumed.
+
+## Preeti's feedback doc
+
+- [ ] **Get the doc and agree which items are in scope for launch.** Named as a
+      Phase 1 bucket ("items, not all") but the document isn't in this repo and
+      has never been reviewed here, so it is the one launch requirement that
+      can't be measured against the code or estimated. Everything else on this
+      list is either done or has a known shape; this doesn't. Resolve it early —
+      it can only grow Phase 1.
+
 ## Email
 
 - [ ] **Verify `sinclairshotels.com` in Resend** (https://resend.com/domains —
@@ -18,6 +38,10 @@ off as they're actually done, not just started.
 - [ ] Set `STAFF_NOTIFY_EMAIL` (Vercel env, production) to the real staff inbox
       (legacy used `reservations@sinclairshotels.com`) — currently pinned to
       `subham@sncl.in` in `.env.local` for end-to-end testing only.
+- [ ] Clear `MAIL_RECIPIENT_OVERRIDE` in production — while it's set, every
+      outbound email (guest voucher copies, enquiry notifications, i-Pay
+      confirmations) is redirected to the test address and no real guest or
+      staff recipient ever receives anything.
 - [ ] Clear `OWNER_BCC_EMAIL` in production once testing is done, unless the
       business wants every outbound email (including guest-facing i-Pay/voucher
       copies) permanently Bcc'd somewhere.
@@ -31,13 +55,16 @@ now the only payment gateway, in Standard/redirect mode (card data is
 captured on ICICI's own domain, never on this app, keeping it at PCI-DSS
 SAQ-A rather than SAQ-D).
 
-- [ ] Get the real `ICICI_MERCHANT_ID` and `ICICI_HMAC_KEY` from ICICI's
-      merchant onboarding and add to `.env.local` / Vercel env. Code is built
-      (`lib/icici.ts`, `app/(site)/ipay/actions.ts`, `app/api/ipay/callback/route.ts`)
-      but has never run against ICICI's own UAT sandbox — no credentials
-      exist yet.
-- [ ] Do at least one real round-trip test against `pgpayuat.icicibank.com`
-      before relying on it for guest payments.
+- [x] **UAT credentials obtained** — real test-merchant `ICICI_MERCHANT_ID`,
+      `ICICI_AGGREGATOR_ID` and `ICICI_HMAC_KEY` from ICICI's onboarding kit
+      (Sept 2026) are in `.env.local` with `ICICI_ENV=uat`. Sandbox only —
+      never promote these to production.
+- [ ] **Do at least one real round-trip test against `pgpayuat.icicibank.com`.**
+      The code (`lib/icici.ts`, `app/(site)/ipay/actions.ts`,
+      `app/api/ipay/callback/route.ts`) has still never run against ICICI's
+      own sandbox — everything below depends on this happening first.
+- [ ] Get the **production** merchant credentials (separate from the UAT set
+      above) and add them to Vercel env, not `.env.local`.
 - [ ] **Resolve the field-naming ambiguity in ICICI's own spec** — Chapter 6
       (Authorize) calls the auth reference `paymentID`, Chapter 7
       (Authorization Redirect) calls the same-looking value `txnAuthID` in
@@ -49,27 +76,136 @@ SAQ-A rather than SAQ-D).
       Implemented as v1 per the doc's own default rule (Note 2); verify this
       is right against a real sandbox response before trusting it with a
       live transaction.
-- [ ] Out of scope so far, deferred until actually needed: Refund/Void,
-      Transaction Status, Settlement Summary/Details reconciliation, Generate
-      QR, Get Card Bin, Get Service Charges, UserCancel. None of these block
-      a guest completing a payment; add them when the business needs
-      refunds or settlement reconciliation through the app itself.
+- [x] Refund/Void — implemented (`callRefund` in `lib/icici.ts`, admin refund
+      dialog with source-account display). **Untested against the real
+      gateway**; covered by the UAT round-trip item above.
+- [ ] Still out of scope, deferred until actually needed: Transaction Status,
+      Settlement Summary/Details reconciliation, Generate QR, Get Card Bin,
+      Get Service Charges, UserCancel. None of these block a guest completing
+      a payment or staff issuing a refund.
+
+## Voucher module
+
+Verified end to end on 2026-09-10 (local): staff login → issue → guest email +
+office copy → guest view page. It works; what's open below is scope, not bugs.
+
+- [x] **Issue flow works end to end.** `createVoucher` writes the row, emails
+      the guest, sends an office copy (Bcc'd to the booking office and
+      `reservations@sinclairshotels.com`), and the guest can open `/v/[token]`.
+      Covered by `e2e/voucher.spec.ts` (login → issue → guest view) plus unit
+      tests for the form, the view and the action.
+- [ ] *(Phase 2)* **Issue-only — there is no edit, void/cancel or resend.** A wrong voucher
+      can only be corrected by issuing a second one, and a guest who loses the
+      email can't be sent it again. Decide: acceptable at launch, or do void +
+      resend go in first?
+- [ ] *(Phase 2)* **No print/PDF output** — the guest gets an HTML email and a web page;
+      the legacy tool printed. Confirm the properties and front desks accept
+      that before cutover.
+- [ ] `reservations@sinclairshotels.com` is hardcoded as the office-copy
+      fallback recipient (`app/admin/(dashboard)/vouchers/actions.ts`). Confirm
+      that mailbox exists and is monitored, or change it.
+- [ ] Per-hotel booking-office details are still incomplete — see Data below.
+
+## Analytics
+
+Full specification, funnels and GA4 config in `docs/analytics-events.md`.
+
+- [x] **Nine events implemented in code**: `view_item`, `form_start`,
+      `generate_lead`, `begin_checkout`, `add_payment_info`, `purchase`,
+      `payment_failed`, `contact_click`, `sign_up` — plus automatic `page_view`.
+      Four funnels, each with a calculable drop-off.
+- [x] CSP widened for Google Ads, doubleclick, the GA4 regional hosts and
+      tagassistant.google.com — without those the Ads tags and GTM Preview are
+      silently blocked on this site.
+- [ ] **Blocker: GTM edit access.** The available Google account has read-only
+      access to container `GTM-NDXBWC`; Edit + Publish at container level is
+      needed before any tag work can start.
+- [ ] Set `NEXT_PUBLIC_GTM_ID=GTM-NDXBWC` in Vercel env (production). Also
+      switches on every "All Pages" legacy tag (Meta pixel, Ads remarketing) for
+      this site — a deliberate decision, not a side effect.
+- [ ] Build the `next-site-cutover` workspace: 12 variables, 9 triggers, 9 GA4
+      tags, 4 Ads conversion tags (copies of the legacy tags with the trigger
+      swapped, since the conversion IDs live in those tags).
+- [ ] GA4 admin: register 9 custom dimensions, mark the 5 key events, confirm
+      enhanced measurement history-change tracking is on. Do this *before*
+      verifying — unregistered parameters look like broken tags.
+- [ ] Verify in GTM Preview + GA4 DebugView against the Vercel deploy, then
+      publish the workspace (publishing touches the container serving the live
+      WordPress site — needs sign-off).
+- [ ] **Every legacy conversion breaks at cutover.** All of them fire on
+      WordPress URLs (`/thank-you/?form=…`, `pay-success`) or Elementor click
+      classes (`bebtn_*`) that don't exist here. Rebuilding them against the
+      events above is what keeps Google Ads reporting conversions at all.
+- [ ] Tell whoever runs Google Ads (TechSol / Web-Connect are both active in the
+      container) before cutover, so spend isn't optimising against zero
+      conversions.
+- [ ] **Do all of the above before DNS cutover**, so there's a genuine
+      before/after baseline rather than a gap at the switch.
+
+## Production environment (Vercel)
+
+Every variable the code actually reads, and its go-live state. Anything unset
+in production either breaks (`DATABASE_URL`, `ADMIN_*`) or silently does
+nothing (`NEXT_PUBLIC_GTM_ID`, `RESEND_API_KEY`).
+
+- [ ] `DATABASE_URL` — production Postgres (Neon/Supabase), not the local Docker one.
+- [ ] `ADMIN_PASSWORD`, `ADMIN_SESSION_SECRET` — fresh production values, not
+      the local dev ones.
+- [ ] `CRON_SECRET` — see Security below.
+- [ ] `RESEND_API_KEY`, `MAIL_FROM_ADDRESS`, `STAFF_NOTIFY_EMAIL`,
+      `DIGEST_TO_EMAIL`, `DIGEST_BCC_EMAIL` — see Email above.
+- [ ] `MAIL_RECIPIENT_OVERRIDE`, `OWNER_BCC_EMAIL` — must be **absent** in
+      production, not set to something harmless.
+- [ ] `ICICI_MERCHANT_ID`, `ICICI_AGGREGATOR_ID`, `ICICI_HMAC_KEY`,
+      `ICICI_ENV=prod` — production merchant credentials, never the UAT set.
+- [ ] `NEXT_PUBLIC_GTM_ID` — see Analytics above. One env var, and the only
+      way to get a before/after baseline; do it before cutover, not after.
+- [ ] `SITE_BASE_URL` — currently overrides the base URL for absolute links in
+      emails/vouchers because `sinclairshotels.com` still serves WordPress
+      (`lib/site-url.ts`). **Remove the override at cutover**, once
+      `siteConfig.url` is genuinely this app.
 
 ## Data
 
+- [x] **Historical data migration — done (2026-09-08): four legacy tables from
+      three MySQL databases.** Re-verified locally 2026-09-10: 35,837
+      enquiries, 13,539 vouchers, 26,258 newsletter subscribers, and 5,234
+      legacy payments (`cca_status`, the old CCAvenue/HDFC gateway log, added
+      in a second pass). Re-running inserts 0 rows. Skips are small and
+      reasoned in `dumps/migration-report.json` — 53 enquiries, 3 vouchers, 40
+      payments, all unmapped-property or unparseable-date.
+- [ ] Confirm those counts in **production**. The figures above were checked
+      against local dev; the production import ran on 2026-09-08 and hasn't
+      been re-counted since.
+- [ ] **Final catch-up import immediately before cutover** — the legacy site is
+      still live and still collecting enquiries/vouchers/signups every day. The
+      import is insert-only, so it picks up new rows but not edits to rows
+      already imported.
 - [ ] Real per-hotel booking-office data (GSTIN, address, phone, email) — the
-      legacy `voucher_hotels` MySQL table has this; pulling it was blocked
-      earlier this session. Needed before vouchers show fully correct billing
-      details.
-- [ ] **Historical data migration** — none of this has been imported yet:
-  - `voucher_detail` (13,528 rows)
-  - `enquiry` (35,829 rows)
-  - `newsletter_signup` (row count unconfirmed)
+      legacy `voucher_hotels` table has this and was never pulled.
+      `content/site.ts` lists the head office only, so vouchers show incomplete
+      billing details.
+- [ ] **Decide what happens to the masked-card table** (`sinclairsltd_hdfcmpgs`)
+      — never imported, and not among the four dumps we hold. Recommendation:
+      import nothing. Masked PAN + expiry is cardholder-adjacent data with no
+      operational use in the new app — ICICI Standard mode means card data
+      never touches us — and importing it would pull a PCI question into a
+      system that currently has none. Whichever way we go, it needs to be
+      explicitly destroyed with the legacy box, not just left behind on it.
+- [ ] **Decide on the unused legacy tables** — `voucher_users`, `voucher_admin`
+      and `admin_pass` (the old staff logins, superseded by `ADMIN_PASSWORD`)
+      are referenced by the legacy PHP but were never imported. Default: don't
+      import. Treat those password hashes as compromised — that box had a
+      webshell — and confirm nobody reuses those credentials elsewhere.
+- [ ] *(Phase 2)* Decide what "Sinclairs Yangang" is (1,043 enquiries + 58 vouchers,
+      confirmed in the local DB) — imported verbatim rather than folded into
+      `gangtok`, pending a call on whether it's a separate property.
 
-  This needs a one-time `mysqldump` + import script (see
-  `/Users/subhamsaha/.claude/plans/encapsulated-swimming-meadow.md`, section E,
-  for the full mapping already worked out) — until this runs, the new site has
-  no memory of any guest history from before cutover.
+Note: legacy free text carries attack payloads — `migration-report.json` shows
+enquiry rows containing PHP object-injection probes submitted to the old form.
+They're stored as inert text and React escapes them on render, so nothing
+executes today. Keep it that way: don't add `dangerouslySetInnerHTML` or a raw
+HTML export to any admin view that shows imported content.
 
 ## Security
 
@@ -77,20 +213,34 @@ SAQ-A rather than SAQ-D).
       locally during migration research but **the live host itself was never
       remediated** — credentials need rotating and the box needs a real scan.
       This is independent of the Next.js rebuild and can't be done from here.
-- [ ] Admin auth is currently a single shared `ADMIN_PASSWORD` for all staff —
+- [ ] *(not launch-blocking)* Generate and set a real `CRON_SECRET` in Vercel
+      env. The route fails closed — with no secret set it returns 401 to
+      everyone, including Vercel's own cron — so the only consequence of
+      skipping it is that the daily digest email never sends. No security hole.
+- [ ] The legacy sync script (`sync-legacy-data.sh`) is **no longer on disk** as
+      of 2026-09-10 — only the dumps it produced remain, under
+      `~/Desktop/sinclairs-wp-backup/legacy-php-site/dumps/`. If the pre-cutover
+      catch-up import needs it, it has to be rewritten; when it is, it holds the
+      legacy MySQL root password in plaintext and SSHes into a compromised box,
+      so delete it (and the dumps) once the import is confirmed complete rather
+      than leaving either lying around post-cutover.
+- [ ] *(Phase 2)* Admin auth is currently a single shared `ADMIN_PASSWORD` —
       fine to launch with, but revisit for real per-user accounts once more
       than a couple of people use `/admin`.
-- [ ] Generate and set a real `CRON_SECRET` (see below) before the digest cron
-      route is reachable in production — without it, the endpoint is unauthenticated.
 
 ## Cutover
 
+- [ ] **301 redirects from the old WordPress URL structure to the new one**,
+      so existing search equity transfers (see `CLAUDE.md` → SEO). Nothing
+      exists yet — `next.config.ts` has no `redirects()` and `proxy.ts` only
+      handles the `staff.*` host split. Needs the live site's real URL
+      inventory (Search Console / old sitemap) mapped to current routes.
+      Highest-risk item on this list: unmapped URLs lose ranking that takes
+      months to rebuild.
 - [ ] DNS: point `sinclairshotels.com` at Vercel once everything above is done.
-- [ ] 301 redirects from the old WordPress URL structure to the new one, so
-      existing search equity transfers (see `CLAUDE.md` → SEO).
 - [ ] Resubmit `sitemap.xml` in Google Search Console after cutover.
 - [ ] Connect the GitHub repo in Vercel for auto-deploy-on-push (currently
       blocked on a one-time manual GitHub login connection in the Vercel
       dashboard) — until then, ship via `vercel deploy --prod`.
-- [ ] Decommission the GoDaddy hosting once DNS has fully cut over and the
-      historical data import (above) is confirmed complete.
+- [ ] *(Phase 2)* Decommission the GoDaddy hosting once DNS has fully cut over and the
+      final catch-up import (above) is confirmed complete.

@@ -1,3 +1,4 @@
+import { ContactLink } from '@/components/contact-link';
 import { EmailText } from '@/components/email-text';
 import { hotels } from '@/content/hotels';
 import { pageMetadata } from '@/lib/seo';
@@ -67,23 +68,27 @@ export default function ContactPage() {
               <div>
                 <dt className="text-xs uppercase tracking-wider text-ink/50">Reservations</dt>
                 <dd className="mt-1">
-                  <a
+                  <ContactLink
+                    method="email"
                     href="mailto:reservations@sinclairshotels.com"
+                    ctaSource="contact_page_reservations"
                     className="break-words hover:text-gold"
                   >
                     <EmailText email="reservations@sinclairshotels.com" />
-                  </a>
+                  </ContactLink>
                 </dd>
               </div>
               <div>
                 <dt className="text-xs uppercase tracking-wider text-ink/50">Sales</dt>
                 <dd className="mt-1">
-                  <a
+                  <ContactLink
+                    method="email"
                     href="mailto:sales@sinclairshotels.com"
+                    ctaSource="contact_page_sales"
                     className="break-words hover:text-gold"
                   >
                     <EmailText email="sales@sinclairshotels.com" />
-                  </a>
+                  </ContactLink>
                 </dd>
               </div>
             </dl>
@@ -112,12 +117,15 @@ export default function ContactPage() {
                       </p>
                     </div>
                     {email && (
-                      <a
+                      <ContactLink
+                        method="email"
                         href={`mailto:${email}`}
+                        ctaSource="contact_page_property"
+                        hotel={hotel.slug}
                         className="shrink-0 break-words text-gold-dark hover:text-gold"
                       >
                         <EmailText email={email} />
-                      </a>
+                      </ContactLink>
                     )}
                   </li>
                 );

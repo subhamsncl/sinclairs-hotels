@@ -5,7 +5,7 @@ import { DatePicker } from '@/components/ui/date-picker';
 import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/ui/select';
 import type { Hotel } from '@/content/types';
 import { pushDataLayerEvent } from '@/lib/analytics';
-import { useActionState, useEffect, useState } from 'react';
+import { useActionState, useEffect, useRef, useState } from 'react';
 
 const initialState = { status: 'idle' as const };
 
@@ -37,13 +37,14 @@ export function EnquiryForm({
     const upper = defaultType?.toUpperCase();
     return ENQUIRY_TYPES.some((t) => t.value === upper) ? (upper as string) : 'GENERAL';
   });
+  const formStarted = useRef(false);
   const [checkIn, setCheckIn] = useState(defaultCheckIn ?? '');
   const [checkOut, setCheckOut] = useState(defaultCheckOut ?? '');
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: only the success transition itself should fire this, not every property/type edit
   useEffect(() => {
     if (state.status === 'success' && state.leadCaptured) {
-      pushDataLayerEvent('generate_lead', { property, enquiry_type: type });
+      pushDataLayerEvent('generate_lead', { hotel: property, enquiry_type: type });
     }
   }, [state.status]);
 
@@ -61,7 +62,18 @@ export function EnquiryForm({
   const fieldError = (field: string) => state.fieldErrors?.[field]?.[0];
 
   return (
-    <form action={formAction} className="space-y-5">
+    <form
+      action={formAction}
+      // Fires once, on the guest's first interaction with any field. Pairs with
+      // generate_lead to give form abandonment — without it, a guest who starts
+      // the form and gives up is indistinguishable from one who never looked.
+      onFocusCapture={() => {
+        if (formStarted.current) return;
+        formStarted.current = true;
+        pushDataLayerEvent('form_start', { hotel: property, enquiry_type: type });
+      }}
+      className="space-y-5"
+    >
       {state.status === 'error' && state.message && (
         <p className="rounded border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-700">
           {state.message}
