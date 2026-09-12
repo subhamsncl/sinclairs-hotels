@@ -1,4 +1,5 @@
 import type { NextConfig } from 'next';
+import { legacyRedirects } from './lib/legacy-redirects';
 
 const nextConfig: NextConfig = {
   images: {
@@ -15,6 +16,9 @@ const nextConfig: NextConfig = {
     // already-compressed 1600px source up to 3840px, so a second lossy pass
     // at 75 compounds into visible haze — those opt into 90 explicitly.
     qualities: [75, 90],
+  },
+  async redirects() {
+    return legacyRedirects();
   },
   async headers() {
     const csp = [

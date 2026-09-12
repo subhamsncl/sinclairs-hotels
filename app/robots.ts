@@ -2,6 +2,10 @@ import { siteConfig } from '@/content/site';
 import { publicSiteUrl } from '@/lib/site-url';
 import type { MetadataRoute } from 'next';
 
+// Never belong in the index, in either state: the admin dashboard and its login,
+// the payment flow, and voucher pages addressed by a one-off token.
+const PRIVATE_PATHS = ['/admin', '/api', '/ipay', '/v'];
+
 export default function robots(): MetadataRoute.Robots {
   // Before DNS cutover this app answers on a Vercel URL while every canonical it
   // emits points at siteConfig.url — which is still the WordPress site, where
@@ -16,7 +20,9 @@ export default function robots(): MetadataRoute.Robots {
   const isCanonicalHost = publicSiteUrl === siteConfig.url;
 
   return {
-    rules: isCanonicalHost ? { userAgent: '*', allow: '/' } : { userAgent: '*', disallow: '/' },
+    rules: isCanonicalHost
+      ? { userAgent: '*', allow: '/', disallow: PRIVATE_PATHS }
+      : { userAgent: '*', disallow: '/' },
     sitemap: `${siteConfig.url}/sitemap.xml`,
   };
 }

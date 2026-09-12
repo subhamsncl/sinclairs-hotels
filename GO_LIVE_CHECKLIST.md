@@ -271,13 +271,32 @@ HTML export to any admin view that shows imported content.
 
 ## Cutover
 
-- [ ] **301 redirects from the old WordPress URL structure to the new one**,
-      so existing search equity transfers (see `CLAUDE.md` → SEO). Nothing
-      exists yet — `next.config.ts` has no `redirects()` and `proxy.ts` only
-      handles the `staff.*` host split. Needs the live site's real URL
-      inventory (Search Console / old sitemap) mapped to current routes.
-      Highest-risk item on this list: unmapped URLs lose ranking that takes
-      months to rebuild.
+- [x] **301 redirects from the old WordPress URL structure to the new one.**
+      Built in `lib/legacy-redirects.ts`, wired via `next.config.ts`'s
+      `redirects()`. All 187 live legacy URLs verified against a production
+      build: 185 redirect to a page that returns 200, and `/` and `/media`
+      already exist at the same path.
+
+      The inventory came from **crawling the live site**, not its sitemap —
+      `sinclairshotels.com/sitemap.xml` is stale third-party output that misses
+      every `/gangtok*` URL, all of `/palace-udaipur*`, and the whole
+      `/reservations.php?ht=…` set. It is committed as
+      `lib/legacy-redirects.fixture.json`, and the test asserts every URL in it
+      lands on a real route, so a future route rename fails CI instead of
+      silently creating 404s.
+
+      Shape of the map: `/<property>` and `/<property>-<anything>` collapse onto
+      `/hotels/<slug>` (rooms, dining, conference, gallery and packages are all
+      sections of one page now); the old booking engine's
+      `?ht=<CODE>` query is decoded back to the property so
+      `/reservations.php?ht=GAN&rm=GDR` keeps its property instead of dumping
+      everyone on `/hotels`; per-property factsheet PDFs go to the property they
+      described. `portblair` → `port-blair` and `palace-udaipur` → `udaipur` are
+      the two prefixes that differ from the slug.
+
+      Legacy query params ride through to the destination
+      (`/hotels/gangtok?ht=GAN`), which is harmless — the canonical tag on the
+      destination is the clean URL either way, verified.
 - [ ] DNS: point `sinclairshotels.com` at Vercel once everything above is done.
       The canonical host is **`https://www.sinclairshotels.com`** — that is what
       `siteConfig.url` emits in every canonical, OG URL and sitemap entry, and
@@ -296,7 +315,16 @@ HTML export to any admin view that shows imported content.
       WordPress URLs that are still 404s (`/weddings`, `/meetings-events`,
       `/enquiry`, every `/hotels/<slug>` — verified 2026-09-12). Leaving it set
       after cutover silently keeps the live site out of Google.
-- [ ] Resubmit `sitemap.xml` in Google Search Console after cutover.
+- [ ] Resubmit `sitemap.xml` in Google Search Console after cutover, and keep
+      the old property in Search Console long enough to watch the 301s being
+      picked up (Coverage → "Page with redirect" should climb as 404s fall).
+- [ ] **No privacy policy, terms or cookie notice exists on the new site.** The
+      old one had `/privacy-policy`, `/policy` and `/tnc`; all three currently
+      301 to the homepage, which is a stopgap, not a mapping. The site collects
+      names, emails and phone numbers through the enquiry form and processes
+      card payments through ICICI, so these pages need to exist before cutover —
+      redirecting a legal page to home is both an SEO soft-404 and the wrong
+      answer to a guest looking for it.
 - [ ] Connect the GitHub repo in Vercel for auto-deploy-on-push (currently
       blocked on a one-time manual GitHub login connection in the Vercel
       dashboard) — until then, ship via `vercel deploy --prod`.

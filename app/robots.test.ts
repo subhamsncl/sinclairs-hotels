@@ -20,16 +20,28 @@ describe('robots', () => {
 
   it('opens up once SITE_BASE_URL is removed at cutover', async () => {
     const robots = await loadRobots(undefined);
-    expect(robots.rules).toEqual({ userAgent: '*', allow: '/' });
+    expect(robots.rules).toMatchObject({ userAgent: '*', allow: '/' });
   });
 
   it('opens up if SITE_BASE_URL is set but already points at the canonical host', async () => {
     const robots = await loadRobots(siteConfig.url);
-    expect(robots.rules).toEqual({ userAgent: '*', allow: '/' });
+    expect(robots.rules).toMatchObject({ userAgent: '*', allow: '/' });
   });
 
   it('always advertises the sitemap on the canonical host, never the staging one', async () => {
     const staging = await loadRobots('https://sinclairs-hotels.vercel.app');
     expect(staging.sitemap).toBe(`${siteConfig.url}/sitemap.xml`);
+  });
+});
+
+describe('robots private paths', () => {
+  afterEach(() => {
+    vi.unstubAllEnvs();
+  });
+
+  it('keeps the admin dashboard, payments and voucher links out of the index after cutover', async () => {
+    const robots = await loadRobots(undefined);
+    const rules = robots.rules as { disallow?: string[] };
+    expect(rules.disallow).toEqual(['/admin', '/api', '/ipay', '/v']);
   });
 });
