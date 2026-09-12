@@ -88,6 +88,7 @@ export async function createVoucher(
 
   await sendMail({
     to: voucher.guestEmail,
+    kind: 'voucher-guest',
     subject: `Your Sinclairs Booking Voucher — #${voucher.voucherNo}`,
     html: voucherGuestHtml({ voucher, hotel, viewUrl }),
   });
@@ -98,6 +99,7 @@ export async function createVoucher(
 
   await sendMail({
     to: hotel?.contact?.email ?? VOUCHER_OFFICE_EMAIL,
+    kind: 'voucher-office',
     bcc: officeCopyBcc,
     subject: `[Office Copy] Voucher #${voucher.voucherNo} — ${voucher.guestName}`,
     html: voucherAdminHtml({ voucher, hotel }),

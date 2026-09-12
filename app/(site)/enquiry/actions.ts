@@ -79,6 +79,7 @@ export async function submitEnquiry(
 
   await sendMail({
     to: STAFF_NOTIFY_EMAIL,
+    kind: 'enquiry-notification',
     replyTo: email,
     subject: `New ${typeLabel} enquiry — ${property} (${name})`,
     html: enquiryNotificationHtml({

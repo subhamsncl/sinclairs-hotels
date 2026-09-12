@@ -83,6 +83,7 @@ export async function GET(request: Request) {
 
   await sendMail({
     to: digestTo,
+    kind: 'daily-digest',
     bcc: process.env.DIGEST_BCC_EMAIL,
     subject: `Sinclairs Hotels online enquiries on ${dayName.toUpperCase()}`,
     html,

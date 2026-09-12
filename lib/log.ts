@@ -16,8 +16,13 @@ export type LogFields = Record<string, string | number | boolean | null | undefi
 // of it belongs in a log line that is retained and searchable by anyone with
 // dashboard access. Logging an id and a property slug answers the operational
 // questions without holding the personal data a second time.
+//
+// `subject` is on the list because mail subjects embed the guest's name —
+// "New Hotel Booking enquiry - gangtok (Jane Doe)" - so logging the subject
+// leaks a name that no individual field ever exposed. Mail sends log `kind`
+// instead, which says which template ran without naming anyone.
 const FORBIDDEN_KEYS =
-  /^(name|email|phone|message|ip|userip|to|bcc|cc|reply_to|replyto|password|token|secret|hash)$/i;
+  /^(name|email|phone|message|subject|ip|userip|to|bcc|cc|reply_to|replyto|password|token|secret|hash)$/i;
 
 function scrub(fields: LogFields): LogFields {
   const safe: LogFields = {};

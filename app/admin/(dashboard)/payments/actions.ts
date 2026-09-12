@@ -141,12 +141,14 @@ export async function refundPayment(
 
   await sendMail({
     to: payment.guestEmail,
+    kind: 'refund-guest',
     subject,
     html: refundConfirmationHtml(emailData),
   });
 
   await sendMail({
     to: STAFF_NOTIFY_EMAIL,
+    kind: 'refund-staff',
     subject: `${subject} — ${hotelName}`,
     html: refundConfirmationHtml(emailData),
   });

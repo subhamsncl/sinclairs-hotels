@@ -88,3 +88,22 @@ describe('errorFields', () => {
     expect(errorFields('socket hang up')).toEqual({ error: 'socket hang up' });
   });
 });
+
+describe('log redaction of embedded identity', () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  it('redacts a mail subject, because subjects embed the guest name', () => {
+    const spy = vi.spyOn(console, 'log').mockImplementation(() => {});
+    log.info('mail.sent', {
+      subject: 'New Hotel Booking enquiry — gangtok (Jane Doe)',
+      kind: 'enquiry-notification',
+    });
+
+    expect(spy.mock.calls[0]?.[0]).not.toContain('Jane Doe');
+    expect(captured(spy).subject).toBe('[redacted]');
+    // `kind` is the safe replacement and must survive.
+    expect(captured(spy).kind).toBe('enquiry-notification');
+  });
+});

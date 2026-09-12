@@ -34,9 +34,10 @@ describe('sendMail', () => {
     ).resolves.toBeUndefined();
 
     const line = JSON.parse(logSpy.mock.calls[0]?.[0] as string);
-    expect(line).toMatchObject({ event: 'mail.skipped_no_provider', subject: 'Test' });
-    // The address must not survive into the log line, only the fact of the skip.
+    expect(line).toMatchObject({ event: 'mail.skipped_no_provider', recipients: 1 });
+    // Neither the address nor the subject may survive into the log line.
     expect(logSpy.mock.calls[0]?.[0]).not.toContain('guest@example.com');
+    expect(logSpy.mock.calls[0]?.[0]).not.toContain('Test');
 
     logSpy.mockRestore();
   });
@@ -53,14 +54,15 @@ describe('sendMail', () => {
       html: '<p>Hi</p>',
     });
 
-    // The rewritten subject is what carries the real recipient now that the
-    // log line no longer repeats the address.
-    expect(JSON.parse(logSpy.mock.calls[0]?.[0] as string)).toMatchObject({
+    // The log records that an override was in force, never who it redirected
+    // to or from — the rewritten subject is visible on the email itself.
+    const line = JSON.parse(logSpy.mock.calls[0]?.[0] as string);
+    expect(line).toMatchObject({
       event: 'mail.skipped_no_provider',
-      subject: '[TEST → guest@example.com] Your Sinclairs Booking Voucher — #1',
       recipient_override: true,
       recipients: 1,
     });
+    expect(logSpy.mock.calls[0]?.[0]).not.toContain('guest@example.com');
 
     logSpy.mockRestore();
   });

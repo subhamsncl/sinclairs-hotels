@@ -48,12 +48,16 @@ export async function sendMail({
   replyTo,
   subject,
   html,
+  kind,
 }: {
   to: string | string[];
   bcc?: string | string[];
   replyTo?: string;
   subject: string;
   html: string;
+  // Names the template for the log line, so delivery is traceable without
+  // putting the subject (and the guest name inside it) into retained logs.
+  kind?: string;
 }): Promise<void> {
   const finalTo = RECIPIENT_OVERRIDE ?? to;
   const finalBcc = RECIPIENT_OVERRIDE ? undefined : withOwnerBcc(bcc);
@@ -66,7 +70,7 @@ export async function sendMail({
     // warn rather than a dev-only debug line: staff notifications are silently
     // not being sent, which looks identical to nobody enquiring.
     log.warn('mail.skipped_no_provider', {
-      subject: finalSubject,
+      kind,
       recipients: Array.isArray(finalTo) ? finalTo.length : 1,
       recipient_override: RECIPIENT_OVERRIDE !== undefined,
     });
@@ -82,12 +86,12 @@ export async function sendMail({
     html,
   });
   if (error) {
-    log.error('mail.send_failed', { subject: finalSubject, ...errorFields(error) });
+    log.error('mail.send_failed', { kind, ...errorFields(error) });
   } else {
     // Resend accepting the request (an id back, no error) isn't the same as
     // the email actually landing — an id here with no inbox delivery points
     // at a Resend-side/recipient-side issue (e.g. the onboarding@resend.dev
     // sandbox sender's real-recipient restriction), not a bug in this code.
-    log.info('mail.sent', { message_id: data?.id ?? null, subject: finalSubject });
+    log.info('mail.sent', { kind, message_id: data?.id ?? null });
   }
 }

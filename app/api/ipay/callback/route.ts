@@ -134,12 +134,14 @@ export async function POST(request: Request): Promise<NextResponse> {
 
   await sendMail({
     to: updated.guestEmail,
+    kind: 'ipay-guest',
     subject,
     html: ipayConfirmationHtml(emailData),
   });
 
   await sendMail({
     to: STAFF_NOTIFY_EMAIL,
+    kind: 'ipay-staff',
     subject: `${subject} — ${hotelName}`,
     html: ipayConfirmationHtml(emailData),
   });

@@ -62,6 +62,7 @@ export async function subscribeNewsletter(
 
   await sendMail({
     to: STAFF_NOTIFY_EMAIL,
+    kind: 'newsletter-notification',
     subject: 'New newsletter subscriber',
     html: newsletterNotificationHtml({ email: parsed.data.email }),
   });
