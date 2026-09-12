@@ -7,7 +7,7 @@ import { ADMIN_COOKIE_NAME, verifySessionCookieValue } from '@/lib/admin-auth';
 import { prisma } from '@/lib/db';
 import { voucherAdminHtml } from '@/lib/email-templates/voucher-admin';
 import { voucherGuestHtml } from '@/lib/email-templates/voucher-guest';
-import { sendMail } from '@/lib/mail';
+import { VOUCHER_OFFICE_EMAIL, sendMail } from '@/lib/mail';
 import { clientIp, isRateLimited } from '@/lib/rate-limit';
 import { publicSiteUrl } from '@/lib/site-url';
 import { voucherSchema } from '@/lib/validation';
@@ -92,12 +92,12 @@ export async function createVoucher(
     html: voucherGuestHtml({ voucher, hotel, viewUrl }),
   });
 
-  const officeCopyBcc = [office?.email, 'reservations@sinclairshotels.com'].filter(
+  const officeCopyBcc = [office?.email, VOUCHER_OFFICE_EMAIL].filter(
     (email, index, all): email is string => Boolean(email) && all.indexOf(email) === index,
   );
 
   await sendMail({
-    to: hotel?.contact?.email ?? 'reservations@sinclairshotels.com',
+    to: hotel?.contact?.email ?? VOUCHER_OFFICE_EMAIL,
     bcc: officeCopyBcc,
     subject: `[Office Copy] Voucher #${voucher.voucherNo} — ${voucher.guestName}`,
     html: voucherAdminHtml({ voucher, hotel }),

@@ -29,6 +29,7 @@ vi.mock('next/headers', () => ({
 vi.mock('@/lib/mail', () => ({
   sendMail: vi.fn(),
   STAFF_NOTIFY_EMAIL: 'staff@example.com',
+  VOUCHER_OFFICE_EMAIL: 'office@example.com',
 }));
 
 // A distinctive, non-routable guest email so cleanup can safely target only

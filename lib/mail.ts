@@ -17,9 +17,16 @@ const FROM_ADDRESS = process.env.MAIL_FROM_ADDRESS || 'Sinclairs Hotels <onboard
 export const STAFF_NOTIFY_EMAIL =
   process.env.STAFF_NOTIFY_EMAIL || 'reservations@sinclairshotels.com';
 
-// Every outbound mail is also Bcc'd here — lets whoever's testing as "the business"
-// see guest-facing sends (i-Pay confirmations, voucher copies) too, not just the
-// staff-notification ones. Blank by default so production doesn't Bcc anyone.
+// The booking office that receives a copy of every voucher. Agreed with the
+// business on 2026-09-12; kept in env rather than inlined at the call site so it
+// can be changed without a deploy. Distinct from the public reservations@
+// address on the contact page and in the footer, which is what guests write to.
+export const VOUCHER_OFFICE_EMAIL =
+  process.env.VOUCHER_OFFICE_EMAIL || 'kolkata@sinclairshotels.com';
+
+// Every outbound mail is also Bcc'd here. Originally a testing aid; the business
+// has since asked for a permanent archive copy of all correspondence, which is
+// the same mechanism. Blank by default so a fresh environment Bccs nobody.
 const OWNER_BCC_EMAIL = process.env.OWNER_BCC_EMAIL || undefined;
 
 // Pre-launch safety valve: real guest/hotel addresses typed into the Voucher and
