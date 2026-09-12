@@ -120,6 +120,14 @@ Full specification, funnels and GA4 config in `docs/analytics-events.md`.
 - [ ] **Blocker: GTM edit access.** The available Google account has read-only
       access to container `GTM-NDXBWC`; Edit + Publish at container level is
       needed before any tag work can start.
+- [x] **Worked around, not resolved.** Verified against production 2026-09-12
+      that the container forwards *none* of the nine events — a hotel page fires
+      `view_item`, `contact_click` and `form_start` and the only GA4 hit on the
+      wire is `en=page_view`. `lib/analytics.ts` now also sends all nine to
+      `G-7Y4FZLC5MW` directly via `gtag.js`, which needs no container access.
+      Set `NEXT_PUBLIC_GA4_ID` to switch it on. **Unset it the moment the
+      workspace below is published, or every event is counted twice.**
+      See docs/analytics-events.md § Transport.
 - [ ] Set `NEXT_PUBLIC_GTM_ID=GTM-NDXBWC` in Vercel env (production). Also
       switches on every "All Pages" legacy tag (Meta pixel, Ads remarketing) for
       this site — a deliberate decision, not a side effect.
@@ -142,6 +150,36 @@ Full specification, funnels and GA4 config in `docs/analytics-events.md`.
 - [ ] **Do all of the above before DNS cutover**, so there's a genuine
       before/after baseline rather than a gap at the switch.
 
+## Server logs (Vercel)
+
+`lib/log.ts` writes one line of JSON per server event, which Vercel indexes into
+filterable fields — search these in the project's Logs tab (or `vercel logs`).
+This is the server-side record of the funnel, independent of GA4: it survives ad
+blockers, a guest closing the tab, and the GTM container blocker above, so when
+GA4 and the database disagree this is the tiebreaker.
+
+| Event | Fires when | Client counterpart |
+|---|---|---|
+| `enquiry.created` | lead committed to Postgres | `generate_lead` |
+| `enquiry.invalid` / `enquiry.spam_blocked` / `enquiry.rate_limited` | submission rejected | *(none — rejected leads fire nothing)* |
+| `newsletter.subscribed` / `newsletter.duplicate` / `newsletter.spam_blocked` | subscribe outcome | `sign_up` |
+| `ipay.initiated` | Payment row created, before the gateway call | `add_payment_info` |
+| `ipay.settled` | ICICI's signed callback verified and applied | `purchase` / `payment_failed` |
+| `ipay.callback.replayed` | duplicate callback ignored | *(explains a duplicate purchase)* |
+| `ipay.callback.rejected` | bad signature, unknown order, missing id | *(security signal)* |
+| `ipay.callback.amount_mismatch` | gateway amount ≠ order amount | *(tamper/replay signal)* |
+| `ipay.gateway_unreachable` / `ipay.gateway_rejected` | initiateSale failed | *(none — guest never reaches ICICI)* |
+| `mail.sent` / `mail.send_failed` / `mail.skipped_no_provider` | staff/guest notification | — |
+
+Guest data never reaches a log line: `lib/log.ts` redacts `name`, `email`,
+`phone`, `message`, IPs and mail recipients by key name, so an accidental
+`log.info('x', { email })` prints `[redacted]` rather than the address. Log ids
+and slugs, and join to Postgres when the personal detail is actually needed.
+
+- [ ] After cutover, spot-check `enquiry.created` count against the `Enquiry`
+      table and against GA4's `generate_lead` for the same day. Three sources
+      agreeing is the only real proof the funnel is wired end to end.
+
 ## Production environment (Vercel)
 
 Every variable the code actually reads, and its go-live state. Anything unset
@@ -160,6 +198,9 @@ nothing (`NEXT_PUBLIC_GTM_ID`, `RESEND_API_KEY`).
       `ICICI_ENV=prod` — production merchant credentials, never the UAT set.
 - [ ] `NEXT_PUBLIC_GTM_ID` — see Analytics above. One env var, and the only
       way to get a before/after baseline; do it before cutover, not after.
+- [ ] `NEXT_PUBLIC_GA4_ID` — `G-7Y4FZLC5MW`. The direct-to-GA4 workaround for
+      the container blocker above. Mutually exclusive with published GTM tags
+      for the same events.
 - [ ] `SITE_BASE_URL` — currently overrides the base URL for absolute links in
       emails/vouchers because `sinclairshotels.com` still serves WordPress
       (`lib/site-url.ts`). **Remove the override at cutover**, once

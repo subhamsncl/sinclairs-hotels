@@ -8,6 +8,7 @@ import {
   rawFormFields,
   verifyHashV1,
 } from '@/lib/icici';
+import { log } from '@/lib/log';
 import { STAFF_NOTIFY_EMAIL, sendMail } from '@/lib/mail';
 import { NextResponse } from 'next/server';
 
@@ -24,7 +25,7 @@ export async function POST(request: Request): Promise<NextResponse> {
 
   const { hmacKey } = iciciConfig();
   if (!hmacKey) {
-    console.error('[ipay:callback] ICICI_HMAC_KEY not configured');
+    log.error('ipay.callback.misconfigured', { reason: 'ICICI_HMAC_KEY not set' });
     return NextResponse.redirect(`${baseUrl}/ipay/result?order=unknown`, 303);
   }
 
@@ -33,6 +34,7 @@ export async function POST(request: Request): Promise<NextResponse> {
   const orderId = resp.merchantTxnNo;
 
   if (!orderId) {
+    log.error('ipay.callback.rejected', { reason: 'no_order_id' });
     return NextResponse.redirect(`${baseUrl}/ipay/result?order=unknown`, 303);
   }
 
@@ -45,19 +47,24 @@ export async function POST(request: Request): Promise<NextResponse> {
   // by payment method (UPI/card/netbanking each include different fields).
   const { secureHash, ...rawFields } = rawFormFields(formData);
   if (!verifyHashV1(rawFields, secureHash ?? '', hmacKey)) {
-    console.error('[ipay:callback] secureHash mismatch for order', orderId);
+    // A signature that does not verify is either a tampered response or a
+    // forged callback; both are security events, not payment outcomes.
+    log.error('ipay.callback.rejected', { order_id: orderId, reason: 'hash_mismatch' });
     return NextResponse.redirect(`${baseUrl}/ipay/result?order=${orderId}`, 303);
   }
 
   const payment = await prisma.payment.findUnique({ where: { orderId } });
   if (!payment) {
-    console.error('[ipay:callback] no matching Payment row for order', orderId);
+    log.error('ipay.callback.rejected', { order_id: orderId, reason: 'unknown_order' });
     return NextResponse.redirect(`${baseUrl}/ipay/result?order=${orderId}`, 303);
   }
 
   // Idempotent: the callback (or a guest's back button) can arrive more than
   // once — only the first delivery should update state and send mail.
   if (payment.status !== 'INITIATED') {
+    // Expected, not an error: ICICI retries and guests use the back button.
+    // Worth a line so a duplicate purchase in GA4 can be traced to a replay.
+    log.info('ipay.callback.replayed', { order_id: orderId, status: payment.status });
     return NextResponse.redirect(`${baseUrl}/ipay/result?order=${orderId}`, 303);
   }
 
@@ -68,14 +75,11 @@ export async function POST(request: Request): Promise<NextResponse> {
   const amountMismatch =
     resp.amount !== undefined && Number(resp.amount) !== Number(payment.amount);
   if (amountMismatch) {
-    console.error(
-      '[ipay:callback] amount mismatch for order',
-      orderId,
-      'expected',
-      payment.amount.toFixed(2),
-      'got',
-      resp.amount,
-    );
+    log.error('ipay.callback.amount_mismatch', {
+      order_id: orderId,
+      expected: payment.amount.toFixed(2),
+      reported: resp.amount ?? null,
+    });
   }
 
   const status: 'SUCCESS' | 'FAILURE' =
@@ -96,6 +100,18 @@ export async function POST(request: Request): Promise<NextResponse> {
             : resp.respDescription || resp.responseCode
           : null,
     },
+  });
+
+  // The server-side counterpart of the client's purchase / payment_failed
+  // event: this line exists for every settled payment, including the ones where
+  // the guest closed the tab before /ipay/result ever loaded and GA4 saw nothing.
+  log.info('ipay.settled', {
+    order_id: orderId,
+    status,
+    amount: updated.amount.toNumber(),
+    hotel: updated.hotelSlug,
+    payment_mode: updated.paymentMode,
+    response_code: resp.responseCode ?? null,
   });
 
   const hotelName = getHotelBySlug(updated.hotelSlug)?.name ?? updated.hotelSlug;

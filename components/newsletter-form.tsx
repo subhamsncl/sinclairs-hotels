@@ -9,8 +9,9 @@ const initialState = { status: 'idle' as const };
 export function NewsletterForm() {
   const [state, formAction, pending] = useActionState(subscribeNewsletter, initialState);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: only the success transition itself should fire this
   useEffect(() => {
-    if (state.status === 'success') {
+    if (state.status === 'success' && state.subscribed) {
       pushDataLayerEvent('sign_up', { method: 'newsletter' });
     }
   }, [state.status]);

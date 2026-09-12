@@ -2,6 +2,7 @@
 
 import { prisma } from '@/lib/db';
 import { newsletterNotificationHtml } from '@/lib/email-templates/newsletter-notification';
+import { log } from '@/lib/log';
 import { STAFF_NOTIFY_EMAIL, sendMail } from '@/lib/mail';
 import { clientIp, isRateLimited } from '@/lib/rate-limit';
 import { newsletterSchema } from '@/lib/validation';
@@ -12,6 +13,11 @@ export type NewsletterFormState = {
   status: 'idle' | 'success' | 'error';
   message?: string;
   fieldErrors?: Record<string, string[]>;
+  // Mirrors EnquiryFormState.leadCaptured: the honeypot's silent fake-success
+  // and an already-subscribed address both return success to the visitor, and
+  // neither is a new subscriber. Without this the client fires sign_up for
+  // every bot and every repeat submit.
+  subscribed?: boolean;
 };
 
 export async function subscribeNewsletter(
@@ -22,6 +28,7 @@ export async function subscribeNewsletter(
   const ip = clientIp(headerList);
 
   if (isRateLimited(`newsletter:${ip}`)) {
+    log.warn('newsletter.rate_limited');
     return { status: 'error', message: 'Too many requests. Please try again in a minute.' };
   }
 
@@ -37,6 +44,7 @@ export async function subscribeNewsletter(
   }
 
   if (parsed.data.company) {
+    log.warn('newsletter.spam_blocked');
     return { status: 'success' };
   }
 
@@ -44,10 +52,13 @@ export async function subscribeNewsletter(
     await prisma.newsletter.create({ data: { email: parsed.data.email, ip } });
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
+      log.info('newsletter.duplicate');
       return { status: 'success', message: 'You are already subscribed.' };
     }
     throw error;
   }
+
+  log.info('newsletter.subscribed');
 
   await sendMail({
     to: STAFF_NOTIFY_EMAIL,
@@ -55,5 +66,5 @@ export async function subscribeNewsletter(
     html: newsletterNotificationHtml({ email: parsed.data.email }),
   });
 
-  return { status: 'success', message: 'Thanks for subscribing!' };
+  return { status: 'success', message: 'Thanks for subscribing!', subscribed: true };
 }

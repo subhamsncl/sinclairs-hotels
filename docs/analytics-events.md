@@ -13,6 +13,39 @@ cutover — that continuity is what makes a before/after baseline possible at al
 
 ---
 
+## Transport — how events reach GA4 today
+
+Two senders run in parallel, because the container half is blocked.
+
+| | dataLayer → GTM | `gtag.js` direct |
+|---|---|---|
+| Switch | `NEXT_PUBLIC_GTM_ID` | `NEXT_PUBLIC_GA4_ID` |
+| Sends | `page_view`, legacy Ads/remarketing tags | the nine events in §2 |
+| Needs | container edit access | nothing |
+
+The container is shared with the legacy WordPress site and we hold **read-only**
+access, so the tags and triggers §11–12 specify were never built. Verified
+against production on 2026-09-12: all nine events reach `dataLayer` and stop
+there — a hotel page fires `view_item`, `contact_click` and `form_start`, and the
+only GA4 hit on the wire is `en=page_view`. Matches for these event names inside
+the container's JS belong to legacy WordPress tags, not to triggers bound to our
+pushes, so their presence there is not evidence of forwarding.
+
+`lib/analytics.ts` therefore also sends every event straight to `G-7Y4FZLC5MW`
+via `gtag.js`, on its own `gaDirectLayer` queue so it cannot collide with the one
+GTM reads, and with `send_page_view: false` so the pageview GTM already sends is
+not doubled. The dataLayer pushes are unchanged and still feed the container.
+
+**This is temporary and the two senders must never both carry the same event.**
+When the `next-site-cutover` workspace is published, unset `NEXT_PUBLIC_GA4_ID`
+in Vercel — that is the whole handover, and until it happens the container
+workspace can be built and previewed without disturbing anything here.
+
+Google Ads is unaffected either way: conversion tags live in the container and
+`gtag.js` here is configured for the GA4 property only.
+
+---
+
 ## 1. Naming rules
 
 1. **Use GA4's recommended event name whenever one exists.** `generate_lead`,

@@ -26,24 +26,24 @@ describe('sendMail', () => {
   });
 
   it('resolves without making a network call when RESEND_API_KEY is unset', async () => {
-    const logSpy = vi.spyOn(console, 'log').mockImplementation(() => undefined);
+    const logSpy = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
     const { sendMail } = await import('./mail');
 
     await expect(
       sendMail({ to: 'guest@example.com', subject: 'Test', html: '<p>Hi</p>' }),
     ).resolves.toBeUndefined();
 
-    expect(logSpy).toHaveBeenCalledWith(
-      '[mail:dev-fallback]',
-      expect.objectContaining({ to: 'guest@example.com', subject: 'Test' }),
-    );
+    const line = JSON.parse(logSpy.mock.calls[0]?.[0] as string);
+    expect(line).toMatchObject({ event: 'mail.skipped_no_provider', subject: 'Test' });
+    // The address must not survive into the log line, only the fact of the skip.
+    expect(logSpy.mock.calls[0]?.[0]).not.toContain('guest@example.com');
 
     logSpy.mockRestore();
   });
 
   it('redirects to MAIL_RECIPIENT_OVERRIDE and keeps the real recipient in the subject', async () => {
     process.env.MAIL_RECIPIENT_OVERRIDE = 'owner@example.com';
-    const logSpy = vi.spyOn(console, 'log').mockImplementation(() => undefined);
+    const logSpy = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
     const { sendMail } = await import('./mail');
 
     await sendMail({
@@ -53,14 +53,14 @@ describe('sendMail', () => {
       html: '<p>Hi</p>',
     });
 
-    expect(logSpy).toHaveBeenCalledWith(
-      '[mail:dev-fallback]',
-      expect.objectContaining({
-        to: 'owner@example.com',
-        bcc: undefined,
-        subject: '[TEST → guest@example.com] Your Sinclairs Booking Voucher — #1',
-      }),
-    );
+    // The rewritten subject is what carries the real recipient now that the
+    // log line no longer repeats the address.
+    expect(JSON.parse(logSpy.mock.calls[0]?.[0] as string)).toMatchObject({
+      event: 'mail.skipped_no_provider',
+      subject: '[TEST → guest@example.com] Your Sinclairs Booking Voucher — #1',
+      recipient_override: true,
+      recipients: 1,
+    });
 
     logSpy.mockRestore();
   });

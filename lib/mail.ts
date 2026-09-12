@@ -1,3 +1,4 @@
+import { errorFields, log } from '@/lib/log';
 import { Resend } from 'resend';
 
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
@@ -54,11 +55,13 @@ export async function sendMail({
     : subject;
 
   if (!resend) {
-    console.log('[mail:dev-fallback]', {
-      to: finalTo,
-      bcc: finalBcc,
-      replyTo,
+    // Reached in production too if RESEND_API_KEY is ever unset, so this is a
+    // warn rather than a dev-only debug line: staff notifications are silently
+    // not being sent, which looks identical to nobody enquiring.
+    log.warn('mail.skipped_no_provider', {
       subject: finalSubject,
+      recipients: Array.isArray(finalTo) ? finalTo.length : 1,
+      recipient_override: RECIPIENT_OVERRIDE !== undefined,
     });
     return;
   }
@@ -72,12 +75,12 @@ export async function sendMail({
     html,
   });
   if (error) {
-    console.error('[mail:send-failed]', error);
+    log.error('mail.send_failed', { subject: finalSubject, ...errorFields(error) });
   } else {
     // Resend accepting the request (an id back, no error) isn't the same as
     // the email actually landing — an id here with no inbox delivery points
     // at a Resend-side/recipient-side issue (e.g. the onboarding@resend.dev
     // sandbox sender's real-recipient restriction), not a bug in this code.
-    console.log('[mail:sent]', { id: data?.id, to: finalTo, subject: finalSubject });
+    log.info('mail.sent', { message_id: data?.id ?? null, subject: finalSubject });
   }
 }

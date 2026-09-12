@@ -3,6 +3,7 @@
 import crypto from 'node:crypto';
 import { prisma } from '@/lib/db';
 import { callInitiateSale, iciciConfig, iciciTimestamp, initiateSaleAccepted } from '@/lib/icici';
+import { errorFields, log } from '@/lib/log';
 import { clientIp, isRateLimited } from '@/lib/rate-limit';
 import { ipaySchema } from '@/lib/validation';
 import { headers } from 'next/headers';
@@ -70,7 +71,7 @@ export async function initiatePayment(
   const { merchantId, aggregatorID, hmacKey, baseUrl: iciciBaseUrl } = iciciConfig();
 
   if (!merchantId || !hmacKey) {
-    console.log('[ipay:dev-fallback] ICICI credentials not configured — cannot process payment');
+    log.error('ipay.misconfigured', { reason: 'ICICI merchant credentials not set' });
     return {
       status: 'error',
       message: 'Online payment is temporarily unavailable. Please contact the hotel directly.',
@@ -106,6 +107,11 @@ export async function initiatePayment(
     },
   });
 
+  // Server-side counterpart of the client's add_payment_info: the denominator
+  // for payment abandonment, and unlike the client event it cannot be lost to a
+  // blocked tag.
+  log.info('ipay.initiated', { order_id: orderId, hotel: hotelSlug, amount });
+
   let saleResponse: Awaited<ReturnType<typeof callInitiateSale>>;
   try {
     saleResponse = await callInitiateSale(
@@ -127,7 +133,7 @@ export async function initiatePayment(
       iciciBaseUrl,
     );
   } catch (err) {
-    console.error('[ipay] initiateSale request failed', err);
+    log.error('ipay.gateway_unreachable', { order_id: orderId, ...errorFields(err) });
     await prisma.payment.update({
       where: { orderId },
       data: { status: 'FAILURE', failureMessage: 'initiateSale request failed' },
@@ -139,7 +145,11 @@ export async function initiatePayment(
   }
 
   if (!initiateSaleAccepted(saleResponse)) {
-    console.error('[ipay] initiateSale rejected', saleResponse);
+    log.error('ipay.gateway_rejected', {
+      order_id: orderId,
+      response_code: saleResponse.responseCode ?? null,
+      response_message: saleResponse.responseDescription ?? null,
+    });
     await prisma.payment.update({
       where: { orderId },
       data: {

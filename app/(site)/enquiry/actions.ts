@@ -2,6 +2,7 @@
 
 import { prisma } from '@/lib/db';
 import { enquiryNotificationHtml } from '@/lib/email-templates/enquiry-notification';
+import { log } from '@/lib/log';
 import { STAFF_NOTIFY_EMAIL, sendMail } from '@/lib/mail';
 import { clientIp, isRateLimited } from '@/lib/rate-limit';
 import { enquirySchema } from '@/lib/validation';
@@ -31,6 +32,7 @@ export async function submitEnquiry(
   const ip = clientIp(headerList);
 
   if (isRateLimited(ip)) {
+    log.warn('enquiry.rate_limited');
     return { status: 'error', message: 'Too many requests. Please try again in a minute.' };
   }
 
@@ -38,6 +40,9 @@ export async function submitEnquiry(
   const parsed = enquirySchema.safeParse(raw);
 
   if (!parsed.success) {
+    log.warn('enquiry.invalid', {
+      fields: Object.keys(parsed.error.flatten().fieldErrors).join(','),
+    });
     return {
       status: 'error',
       message: 'Please check the highlighted fields.',
@@ -46,13 +51,14 @@ export async function submitEnquiry(
   }
 
   if (parsed.data.company) {
+    log.warn('enquiry.spam_blocked', { property: parsed.data.property, type: parsed.data.type });
     return { status: 'success' };
   }
 
   const { name, email, phone, property, type, checkIn, checkOut, guests, message } = parsed.data;
   const typeLabel = ENQUIRY_TYPE_LABELS[type] ?? type;
 
-  await prisma.enquiry.create({
+  const enquiry = await prisma.enquiry.create({
     data: {
       name,
       email,
@@ -66,6 +72,10 @@ export async function submitEnquiry(
       userIp: ip,
     },
   });
+
+  // The lead is already committed at this point, so this is the line that says
+  // a generate_lead in GA4 should exist for this submission.
+  log.info('enquiry.created', { enquiry_id: enquiry.id, property, type, guests: guests ?? null });
 
   await sendMail({
     to: STAFF_NOTIFY_EMAIL,
