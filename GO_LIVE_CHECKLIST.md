@@ -284,6 +284,43 @@ HTML export to any admin view that shows imported content.
       fine to launch with, but revisit for real per-user accounts once more
       than a couple of people use `/admin`.
 
+## Unresolved legacy tables — decide before cutover
+
+Checking the legacy databases directly (rather than the four tables the import
+script happens to read) turned up two that were never migrated. The import's own
+header records that `cca_status` was "missed in the first migration pass and
+added later", so a second omission is plausible rather than unlikely.
+
+- [ ] **`ipay_entries` — 6,651 rows**, in `sinclairsltd_hdfcmpgs`. More rows than
+      the entire Payment table we did import. **i-Pay is ICICI's product — the
+      gateway the new site uses** — while the `cca_status` we imported is
+      CCAvenue, the gateway that was retired. There is a real possibility we
+      imported the old gateway's history and skipped the current one's. If it
+      holds real transactions, the Payments dashboard is showing an incomplete
+      financial history, which matters for disputes, refunds on older payments,
+      and bank reconciliation.
+- [ ] **`hdfc_itsbook` — 13,404 rows**, in `sinclairsltd_official`. Close in size
+      to `voucher_detail` (13,560), which could mean it is the booking records
+      vouchers were issued against — already represented — or a parallel ledger
+      vouchers only partly cover.
+
+Also unmigrated, deliberately, but worth a decision before the old host is
+decommissioned: `pr_cv` (215 job applications — real applicants' personal data),
+`sin_pressclip` (303 press clippings, possibly better than the hand-curated
+`/media` list), and the old staff login tables, which are the record of who had
+access if per-user accounts are ever built.
+
+To inspect:
+
+```
+ssh -p 5822 root@<legacy-host> 'for t in sinclairsltd_hdfcmpgs.ipay_entries sinclairsltd_official.hdfc_itsbook; do db=${t%%.*}; tb=${t##*.}; echo "=== $t ==="; mysql -N -e "SHOW COLUMNS FROM $db.$tb;"; mysql -e "SELECT * FROM $db.$tb ORDER BY 1 DESC LIMIT 1\G"; done'
+```
+
+Three likely outcomes: duplicates under different gateway names (nothing to do);
+genuinely missing payment history (extend `scripts/migrate-legacy-data.ts`, same
+idempotent pattern); or attempt logs rather than settled records (import only if
+the abandonment metrics are wanted).
+
 ## Cutover
 
 - [x] **301 redirects from the old WordPress URL structure to the new one.**
