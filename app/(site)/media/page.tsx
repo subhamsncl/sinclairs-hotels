@@ -22,7 +22,7 @@ export default function MediaPage() {
       <section className="relative flex h-[42vh] min-h-[320px] items-end overflow-hidden">
         <div className="absolute inset-0 animate-hero-zoom">
           <Image
-            src="/images/hotels/gangtok/destination/SinclairsGangtoknightview.jpg"
+            src="/images/hotels/gangtok/destination/SinclairsGangtoknightview.webp"
             alt="Sinclairs Gangtok at night"
             fill
             priority

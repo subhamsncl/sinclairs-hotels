@@ -8,7 +8,7 @@ const FALLBACK_BANQUET_IMAGE: Record<string, { src: string; alt: string }> = {
     alt: 'The lobby lounge at Sinclairs Burdwan',
   },
   siliguri: {
-    src: '/images/hotels/siliguri/accommodations/premier-suite/Sinclairs-Siliguri-Premier-Suite.jpg',
+    src: '/images/hotels/siliguri/accommodations/premier-suite/Sinclairs-Siliguri-Premier-Suite.webp',
     alt: 'The Premier Suite interior at Sinclairs Siliguri',
   },
   udaipur: {

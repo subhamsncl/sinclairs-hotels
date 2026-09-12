@@ -36,25 +36,34 @@ current phase.
 - **All content lives in code** (`content/`), typed via a shared `Hotel`, `Page`, etc.
   interface in `content/types.ts`. Editing a hotel's copy means editing a `.ts` file
   and opening a PR — there is no admin CMS in this phase.
-- **Images**: pulled once from the WP `uploads/` export into `public/images/` (or an
-  image CDN if size becomes a problem), referenced via `next/image`. Don't hotlink
-  the old WordPress site. The WP-era import pipeline (`content/hotels/convert-to-webp.js`)
-  caps everything at 1600px wide / WebP quality 65 — fine for cards and thumbnails, but
-  that's the real resolution ceiling for most properties' photos, and stretching one
-  across a full-bleed hero (`sizes="100vw"`) forces the browser to upscale, which reads
-  as soft/hazy on large screens. Only Gangtok (and Darjeeling's room shots) have true
-  high-res (6048px) originals from a more recent shoot — check actual pixel dimensions
-  with `sips -g pixelWidth` before assuming a "foggy" hero is a code bug rather than a
-  source-asset limit. Every full-bleed hero `<Image>` (`journey-hero.tsx`,
-  `hero-carousel.tsx`, `closing-cta.tsx`, and the two direct hero images on `/hotels`
-  and `/meetings-events`) sets `quality={90}` (declared in `next.config.ts`'s
+- **Images**: `public/images/` is **WebP only** — no JPEG, PNG (one favicon
+  exception) or anything else. This is a hard rule, not tidiness: every Vercel
+  deployment uploads `public/` in full and Vercel *retains every deployment*, so
+  one 27 MB JPEG is 27 MB multiplied by every build ever made. That is how
+  deployment storage reached 20 GB against a 10 GB allowance in eleven days.
+  Convert before committing:
+  `cwebp -q 82 -m 6 -resize 2400 0 in.jpg -o out.webp` (use `3840` for
+  full-bleed heroes — the widest Next ever serves; anything larger is bytes no
+  browser will ever request).
+  Most properties' photos came through the WP-era pipeline at 1600px wide /
+  quality 65 — fine for cards and thumbnails, but that is the real resolution
+  ceiling, and stretching one across a full-bleed hero (`sizes="100vw"`) forces
+  the browser to upscale, which reads as soft on large screens. Only Gangtok
+  (and Darjeeling's room shots) have true high-res originals; the 6048px Gangtok
+  set now lives at `~/Desktop/sinclairs-wp-backup/hires-originals/` and is
+  **archived, never deleted** — those are the only copies. Check actual pixel
+  dimensions with `sips -g pixelWidth` before assuming a "foggy" hero is a code
+  bug rather than a source-asset limit.
+  Every full-bleed hero `<Image>` (`journey-hero.tsx`, `hero-carousel.tsx`,
+  `closing-cta.tsx`, and the two direct hero images on `/hotels` and
+  `/meetings-events`) sets `quality={90}` (declared in `next.config.ts`'s
   `images.qualities`) so Next's own re-encode at serve time doesn't compound the
   source's existing compression loss — it can't add resolution that was never
-  captured, only avoid making it worse. A `fill` image's *direct* parent div must have
-  a `position` class (`relative`/`absolute`) — Next warns in the server log
-  (`"has fill and parent element with invalid position"`) but doesn't fail the build,
-  so this is easy to miss; it did creep into `journey-hero.tsx`/`hero-carousel.tsx`
-  once already.
+  captured, only avoid making it worse. A `fill` image's *direct* parent div must
+  have a `position` class (`relative`/`absolute`) — Next warns in the server log
+  (`"has fill and parent element with invalid position"`) but doesn't fail the
+  build, so this is easy to miss; it did creep into
+  `journey-hero.tsx`/`hero-carousel.tsx` once already.
 - **Forms write to Postgres via Prisma**, validated server-side (zod) before insert.
   Never trust client input. Rate-limit the enquiry endpoint.
 - **Security**: this rebuild exists partly *because* the WordPress install was found
@@ -143,6 +152,79 @@ with a keyword-matching `getAmenityIcon(label)` for the varied real amenity stri
 across all 9 properties). Follow that pattern for new icon needs rather than adding
 `lucide-react` or similar.
 
+## Environments and deploying
+
+Three environments. Dev and production run the **same code from the same `main`
+branch** — the split is by Vercel deployment target and environment variables,
+not by git branch. There is no way to stage unreleased code in dev; if you need
+that, create a `develop` branch and repoint the `dev.*` domains at it.
+
+| | Host | Database | Email |
+|---|---|---|---|
+| Local | `localhost:3000`, `staff.localhost:3000` | local Postgres | logged, not sent |
+| Dev | `dev.sinclairshotels.com`, `staff.dev.sinclairshotels.com` | Neon branch `dev` | redirected to one inbox |
+| Production | `sinclairs-hotels.vercel.app`, `staff.sinclairshotels.com` | Neon branch `main` | real recipients |
+
+```bash
+vercel deploy          # dev only
+vercel deploy --prod   # production only
+```
+
+**`--prod` does not also update dev**, and a Vercel env change does nothing until
+the environment is rebuilt — env is snapshotted at build time. Change a variable,
+and you must deploy *both* sides or one keeps running the old value. This has
+already caused a dev test to write to the production database, because dev was
+still running a build from before `DATABASE_URL` was split.
+
+`DATABASE_URL` is scoped **per environment** and must stay that way: exactly two
+rows, one Preview, one Production (`vercel env ls | grep DATABASE_URL`). The Neon
+integration originally set a single value covering both, which silently pointed
+dev at production data; if the integration re-syncs it may recreate that. Check
+before cutover.
+
+Migrations apply themselves — the build command is
+`prisma migrate deploy && next build`, so deploying an environment migrates its
+database. Never hand-edit a Neon branch's schema. To refresh dev data, use Neon's
+**Reset from parent** rather than recreating the branch.
+
+## Server logging
+
+`lib/log.ts` emits one line of JSON per server event; Vercel indexes the fields,
+so `vercel logs <url>` is filterable rather than greppable. This is the
+server-side record of the funnel in `docs/analytics-events.md`, and unlike the
+client events it survives ad blockers and a guest closing the tab — when GA4 and
+Postgres disagree, this is the tiebreaker.
+
+Use `log.info/warn/error(event, fields)` with a dotted event name
+(`enquiry.created`, `ipay.settled`, `refund.rejected`). No bare `console.*` in
+`app/` or `lib/` — the logger is the only place those appear.
+
+**Guest data must never reach a log line.** `lib/log.ts` redacts by field name:
+`name`, `email`, `phone`, `message`, `subject`, IPs and mail recipients all
+become `[redacted]`. `subject` is on that list because mail subjects embed the
+guest's name ("… — gangtok (Jane Doe)") — that leak was shipped once and found by
+reading real log output, not by a test. `sendMail` takes a `kind`
+(`voucher-guest`, `ipay-staff`, …) and logs that instead; it is also more useful
+than a subject, being constant per template and therefore groupable.
+
+## Legacy URL redirects
+
+`lib/legacy-redirects.ts` holds the 301 map from the WordPress URL structure,
+wired through `next.config.ts`'s `redirects()`. 187 live legacy URLs, verified
+against a production build.
+
+The inventory came from **crawling the live site**, not its sitemap —
+`sinclairshotels.com/sitemap.xml` is stale third-party output missing every
+`/gangtok*` URL, all of `/palace-udaipur*`, and the whole `/reservations.php?ht=`
+set. It is committed as `lib/legacy-redirects.fixture.json` and the test asserts
+every URL in it still lands on a real route, so renaming a route fails CI instead
+of quietly producing 404s. If you rename or remove a route, expect that test to
+fail — fix the map, don't weaken the test.
+
+Uses `statusCode: 301` rather than `permanent: true` (which emits 308): both are
+honoured by Google, but 301 is unambiguous to every other crawler and downgrades
+a stray POST to `/reservations.php` into a GET.
+
 ## SEO
 
 - **The production domain is not live yet.** `sinclairshotels.com` still serves the
@@ -160,6 +242,16 @@ across all 9 properties). Follow that pattern for new icon needs rather than add
 - `app/sitemap.ts` / `app/robots.ts` (Next's native `MetadataRoute` file convention,
   no extra dependency) list every static page and hotel slug — add new top-level
   routes to `sitemap.ts`'s `staticPaths` array.
+- **`robots.txt` is decided per request from the `Host` header**, not from an env
+  var, because one deployment answers on several hostnames at once
+  (`sinclairs-hotels.vercel.app`, `dev.*`, `staff.dev.*`, every preview URL).
+  Only the canonical host is ever crawlable; everything else returns
+  `Disallow: /`. So it opens by itself when DNS points `www.sinclairshotels.com`
+  here, and the dev subdomain never becomes a crawlable duplicate of the live
+  site. `/admin`, `/api`, `/ipay` and `/v` are disallowed even on the canonical
+  host. Before this was host-based, the pre-cutover deployment was serving
+  `Allow: /` while its canonicals pointed at WordPress URLs that 404 — and Google
+  discards a canonical resolving to a 404 and indexes the crawled URL instead.
 - `components/json-ld.tsx`'s `JsonLd` component renders schema.org structured data as
   a plain `<script>` child (not `dangerouslySetInnerHTML` — script/style are the only
   elements React lets you pass raw text children to). Root layout renders an

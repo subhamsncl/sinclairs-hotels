@@ -39,13 +39,13 @@ export const pressMentions = [
     date: 'July 2023',
     outlet: 'The Telegraph',
     title: 'Sinclairs Gangtok that offers amazing ambience with bespoke hospitality',
-    image: '/images/press/gangtok-telegraph.jpg',
+    image: '/images/press/gangtok-telegraph.webp',
   },
   {
     date: 'July 2023',
     outlet: 'The Telegraph',
     title: 'Glimpse of Sinclairs Retreat situated amid the lush green hilltops of Chalsa, Dooars',
-    image: '/images/press/dooars-telegraph.jpg',
+    image: '/images/press/dooars-telegraph.webp',
   },
   {
     date: 'February 2023',

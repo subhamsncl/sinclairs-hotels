@@ -173,7 +173,7 @@ export const kalimpongHotel: Hotel = {
       alt: 'A quiet lounge corner in the lobby',
     },
     {
-      src: '/images/hotels/kalimpong/amenities/Kalimpong-wedding-in-natural-settings.jpg',
+      src: '/images/hotels/kalimpong/amenities/Kalimpong-wedding-in-natural-settings.webp',
       alt: "A wedding celebration set up amid the resort's natural garden surroundings",
     },
     {

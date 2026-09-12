@@ -10,11 +10,11 @@ export const gangtokHotel: Hotel = {
     "Strategically located at the Cherry complex in the Zero Point development area, less than a kilometre from M G Marg, Sinclairs Gangtok offers a spectacular view of the entire town against the backdrop of the Kanchenjunga range. The cozy boutique hotel has 60 rooms, including four large suites, four family rooms and four Valentine Rooms ideal for honeymooners, with the majority of rooms overlooking the alluring Himalayan range. Guests can relish authentic and international cuisine at the multi-cuisine restaurant Magnolia, unwind with a drink at the Guras Bar & Lounge, or relax by the infinity swimming pool with its adjoining kids' pool.",
   history:
     "The group's Himalayan property since 2020, in a town that grew from a 19th-century monastery settlement into the capital of Sikkim after the kingdom became India's 22nd state in 1975.",
-  heroImage: '/images/hotels/gangtok/destination/SinclairsGangtoknightview.jpg',
+  heroImage: '/images/hotels/gangtok/destination/SinclairsGangtoknightview.webp',
   heroGallery: [
-    '/images/hotels/gangtok/destination/Sinclairs-Gangtok-with-Pool.jpg',
+    '/images/hotels/gangtok/destination/Sinclairs-Gangtok-with-Pool.webp',
     '/images/hotels/gangtok/destination/GangtokFacade1.webp',
-    '/images/hotels/gangtok/destination/SinclairsGangtoknightview.jpg',
+    '/images/hotels/gangtok/destination/SinclairsGangtoknightview.webp',
     '/images/hotels/gangtok/amenities/OutdoorDeck4.webp',
   ],
   thumbnailImage: '/images/hotels/gangtok/destination/GangtokFacade1.webp',
@@ -54,7 +54,7 @@ export const gangtokHotel: Hotel = {
       description:
         'The ideal solution for privacy while keeping family members close in complete comfort and style, the Family Room consists of two adjoining double rooms with two toilets, together spanning 554 sq. ft.',
       images: [
-        '/images/hotels/gangtok/accommodations/deluxe-family-room/Sinclairs-Gangtok-Deluxe-Family-Room.jpg',
+        '/images/hotels/gangtok/accommodations/deluxe-family-room/Sinclairs-Gangtok-Deluxe-Family-Room.webp',
         '/images/hotels/gangtok/accommodations/deluxe-family-room/Deluxe Family Room1.webp',
         '/images/hotels/gangtok/accommodations/deluxe-family-room/Deluxe Family Room2.webp',
         '/images/hotels/gangtok/accommodations/deluxe-family-room/Deluxe Family Room Washroom.webp',
@@ -153,7 +153,7 @@ export const gangtokHotel: Hotel = {
       alt: 'Infinity-edge swimming pool at Sinclairs Gangtok overlooking the Himalayan foothills',
     },
     {
-      src: '/images/hotels/gangtok/destination/SinclairsGangtoknightview.jpg',
+      src: '/images/hotels/gangtok/destination/SinclairsGangtoknightview.webp',
       alt: 'Dusk view of the Gangtok town skyline from Sinclairs Gangtok',
     },
     {
@@ -189,7 +189,7 @@ export const gangtokHotel: Hotel = {
       alt: 'The indoor games and lounge corner at Sinclairs Gangtok',
     },
     {
-      src: '/images/hotels/gangtok/amenities/CommonArea1.jpg',
+      src: '/images/hotels/gangtok/amenities/CommonArea1.webp',
       alt: 'Staircase leading up to The Cherry Hall banquet venue',
     },
     {
