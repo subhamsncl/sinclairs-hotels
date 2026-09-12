@@ -279,6 +279,23 @@ HTML export to any admin view that shows imported content.
       Highest-risk item on this list: unmapped URLs lose ranking that takes
       months to rebuild.
 - [ ] DNS: point `sinclairshotels.com` at Vercel once everything above is done.
+      The canonical host is **`https://www.sinclairshotels.com`** — that is what
+      `siteConfig.url` emits in every canonical, OG URL and sitemap entry, and
+      what the legacy site already 301s `http://` apex and `http://www` to.
+- [ ] **Serve the apex, don't just park it.** `https://sinclairshotels.com`
+      (apex, TLS) currently answers `200` on the old stack instead of
+      redirecting to `www` — so the legacy site is reachable under two HTTPS
+      hostnames with no redirect between them. Add both domains in Vercel with
+      apex → `www` as a redirect, or the same split carries over to the new
+      stack.
+- [ ] **Remove `SITE_BASE_URL` from Vercel production.** One variable, two
+      effects: absolute links in emails/vouchers switch to the real domain
+      (`lib/site-url.ts`), and `robots.txt` flips from `Disallow: /` to
+      `Allow: /` (`app/robots.ts`). Until it is removed the new site stays
+      deliberately un-indexable, because every canonical it emits points at
+      WordPress URLs that are still 404s (`/weddings`, `/meetings-events`,
+      `/enquiry`, every `/hotels/<slug>` — verified 2026-09-12). Leaving it set
+      after cutover silently keeps the live site out of Google.
 - [ ] Resubmit `sitemap.xml` in Google Search Console after cutover.
 - [ ] Connect the GitHub repo in Vercel for auto-deploy-on-push (currently
       blocked on a one-time manual GitHub login connection in the Vercel
