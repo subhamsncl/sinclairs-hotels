@@ -1,47 +1,52 @@
 import { siteConfig } from '@/content/site';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
-async function loadRobots(siteBaseUrl?: string) {
-  vi.resetModules();
-  vi.stubEnv('SITE_BASE_URL', siteBaseUrl ?? '');
-  const mod = await import('./robots');
-  return mod.default();
+const mockHeaders = vi.hoisted(() => vi.fn());
+vi.mock('next/headers', () => ({ headers: mockHeaders }));
+
+async function robotsFor(host: string) {
+  mockHeaders.mockResolvedValue(new Headers(host ? { host } : {}));
+  const { default: robots } = await import('./robots');
+  return robots();
 }
 
+const CANONICAL_HOST = new URL(siteConfig.url).host;
+
 describe('robots', () => {
-  afterEach(() => {
-    vi.unstubAllEnvs();
+  it('lets crawlers in only on the canonical host', async () => {
+    const result = await robotsFor(CANONICAL_HOST);
+    expect(result.rules).toMatchObject({ userAgent: '*', allow: '/' });
   });
 
-  it('keeps crawlers out while the app is served from somewhere other than its canonical host', async () => {
-    const robots = await loadRobots('https://sinclairs-hotels.vercel.app');
-    expect(robots.rules).toEqual({ userAgent: '*', disallow: '/' });
+  it.each([
+    ['sinclairs-hotels.vercel.app', 'the Vercel deployment URL'],
+    ['dev.sinclairshotels.com', 'the dev subdomain'],
+    ['staff.dev.sinclairshotels.com', 'the staff dev subdomain'],
+    ['sinclairs-hotels-abc123-subham-5497.vercel.app', 'a preview deployment'],
+    ['sinclairshotels.com', 'the apex, which redirects to www'],
+  ])('keeps crawlers out of %s (%s)', async (host) => {
+    const result = await robotsFor(host);
+    expect(result.rules).toEqual({ userAgent: '*', disallow: '/' });
   });
 
-  it('opens up once SITE_BASE_URL is removed at cutover', async () => {
-    const robots = await loadRobots(undefined);
-    expect(robots.rules).toMatchObject({ userAgent: '*', allow: '/' });
+  it('stays closed when the host header is missing entirely', async () => {
+    const result = await robotsFor('');
+    expect(result.rules).toEqual({ userAgent: '*', disallow: '/' });
   });
 
-  it('opens up if SITE_BASE_URL is set but already points at the canonical host', async () => {
-    const robots = await loadRobots(siteConfig.url);
-    expect(robots.rules).toMatchObject({ userAgent: '*', allow: '/' });
+  it('ignores host casing, which is not case-sensitive in DNS', async () => {
+    const result = await robotsFor(CANONICAL_HOST.toUpperCase());
+    expect(result.rules).toMatchObject({ allow: '/' });
   });
 
-  it('always advertises the sitemap on the canonical host, never the staging one', async () => {
-    const staging = await loadRobots('https://sinclairs-hotels.vercel.app');
-    expect(staging.sitemap).toBe(`${siteConfig.url}/sitemap.xml`);
-  });
-});
-
-describe('robots private paths', () => {
-  afterEach(() => {
-    vi.unstubAllEnvs();
-  });
-
-  it('keeps the admin dashboard, payments and voucher links out of the index after cutover', async () => {
-    const robots = await loadRobots(undefined);
-    const rules = robots.rules as { disallow?: string[] };
+  it('keeps the admin dashboard, payments and voucher links out of the index', async () => {
+    const result = await robotsFor(CANONICAL_HOST);
+    const rules = result.rules as { disallow?: string[] };
     expect(rules.disallow).toEqual(['/admin', '/api', '/ipay', '/v']);
+  });
+
+  it('always advertises the sitemap on the canonical host, never the host it was asked on', async () => {
+    const result = await robotsFor('dev.sinclairshotels.com');
+    expect(result.sitemap).toBe(`${siteConfig.url}/sitemap.xml`);
   });
 });

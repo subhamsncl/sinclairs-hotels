@@ -301,20 +301,25 @@ HTML export to any admin view that shows imported content.
       The canonical host is **`https://www.sinclairshotels.com`** — that is what
       `siteConfig.url` emits in every canonical, OG URL and sitemap entry, and
       what the legacy site already 301s `http://` apex and `http://www` to.
-- [ ] **Serve the apex, don't just park it.** `https://sinclairshotels.com`
-      (apex, TLS) currently answers `200` on the old stack instead of
-      redirecting to `www` — so the legacy site is reachable under two HTTPS
-      hostnames with no redirect between them. Add both domains in Vercel with
-      apex → `www` as a redirect, or the same split carries over to the new
-      stack.
-- [ ] **Remove `SITE_BASE_URL` from Vercel production.** One variable, two
-      effects: absolute links in emails/vouchers switch to the real domain
-      (`lib/site-url.ts`), and `robots.txt` flips from `Disallow: /` to
-      `Allow: /` (`app/robots.ts`). Until it is removed the new site stays
-      deliberately un-indexable, because every canonical it emits points at
-      WordPress URLs that are still 404s (`/weddings`, `/meetings-events`,
-      `/enquiry`, every `/hotels/<slug>` — verified 2026-09-12). Leaving it set
-      after cutover silently keeps the live site out of Google.
+- [x] **Apex → `www` is already configured in Vercel** (`sinclairshotels.com`
+      → `www.sinclairshotels.com`, 308, verified 2026-09-12), along with
+      `staff.`, `dev.` and `staff.dev.`. The apex currently answering `200`
+      without redirecting is the *old* stack's behaviour and disappears when DNS
+      moves — nothing to do here.
+- [ ] **`staff.sinclairshotels.com` has no DNS record yet.** The domain is
+      attached in Vercel and `proxy.ts` routes it, but nothing resolves, so the
+      admin/voucher tool will be unreachable on the production domain until an
+      A/CNAME record is added alongside the apex and `www` ones.
+      `staff.dev.sinclairshotels.com` already resolves and works, so this is the
+      prod record only.
+- [ ] **Remove `SITE_BASE_URL` from Vercel production**, so absolute links in
+      emails and vouchers point at the real domain rather than the Vercel one
+      (`lib/site-url.ts`). This no longer affects `robots.txt`: that is decided
+      per request from the `Host` header (`app/robots.ts`), so it opens by
+      itself the moment DNS points `www.sinclairshotels.com` here, and stays
+      `Disallow: /` on `dev.`, `staff.`, the `.vercel.app` URL and every preview
+      — which would otherwise have become crawlable duplicates of the live site
+      at cutover.
 - [ ] Resubmit `sitemap.xml` in Google Search Console after cutover, and keep
       the old property in Search Console long enough to watch the 301s being
       picked up (Coverage → "Page with redirect" should climb as 404s fall).
