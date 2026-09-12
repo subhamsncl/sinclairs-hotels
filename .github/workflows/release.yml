@@ -1,0 +1,59 @@
+name: Tag production release
+
+# Vercel forgets old deployments — we prune them deliberately, and Hobby has no
+# retention policy — so deploy history is not a rollback story. Git is. This
+# stamps every production release with a dated tag at the moment it goes live,
+# so "put back what we had on Friday" resolves to an exact commit instead of
+# archaeology through the log.
+on:
+  push:
+    branches: [prod]
+
+permissions:
+  contents: write
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Work out the version
+        id: version
+        run: |
+          DATE=$(date -u +'%Y.%m.%d')
+          # Several releases in a day are normal; suffix them .1, .2 rather than
+          # failing on a duplicate tag.
+          N=$(git tag -l "v${DATE}*" | wc -l | tr -d ' ')
+          if [ "$N" -eq 0 ]; then TAG="v${DATE}"; else TAG="v${DATE}.${N}"; fi
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "Tagging this release as $TAG"
+
+      - name: Collect what changed since the last release
+        id: notes
+        run: |
+          PREV=$(git tag -l 'v*' --sort=-creatordate | head -1)
+          {
+            echo 'body<<RELEASE_NOTES'
+            if [ -n "$PREV" ]; then
+              echo "Changes since ${PREV}:"
+              echo
+              git log "${PREV}..HEAD" --no-merges --pretty='- %s'
+            else
+              echo 'First tagged production release.'
+            fi
+            echo
+            echo "Deployed to https://www.sinclairshotels.com"
+            echo 'RELEASE_NOTES'
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Create the tag and release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "${{ steps.version.outputs.tag }}" \
+            --title "${{ steps.version.outputs.tag }}" \
+            --notes "${{ steps.notes.outputs.body }}" \
+            --target "$GITHUB_SHA"

@@ -1,0 +1,41 @@
+# Anything listed here needs a review from an owner before it can merge.
+#
+# The split is deliberate: content, copy and photography are safe to change
+# because the worst case is a page that looks wrong, which is visible and
+# revertible. Everything below is a live integration — the payment gateway, the
+# database, outbound email, security headers, environment config. A mistake
+# there is not visible on the page: it silently stops guests receiving vouchers,
+# or takes payments that never settle.
+#
+# Requires branch protection on `main` with "Require review from Code Owners"
+# enabled, otherwise this file only requests reviewers and does not block.
+
+# ---------------------------------------------------------------------------
+# Backend and integrations — owners only
+# ---------------------------------------------------------------------------
+
+/lib/                       @subhamsncl
+/prisma/                    @subhamsncl
+/app/api/                   @subhamsncl
+/app/admin/                 @subhamsncl
+/scripts/                   @subhamsncl
+/proxy.ts                   @subhamsncl
+/next.config.ts             @subhamsncl
+/package.json               @subhamsncl
+/pnpm-lock.yaml             @subhamsncl
+/.github/                   @subhamsncl
+/vercel.json                @subhamsncl
+/.env.example               @subhamsncl
+
+# Server actions that write to the database or send mail
+/app/(site)/enquiry/actions.ts      @subhamsncl
+/app/(site)/newsletter/actions.ts   @subhamsncl
+/app/(site)/ipay/actions.ts         @subhamsncl
+
+# ---------------------------------------------------------------------------
+# Not listed, and therefore open to any collaborator:
+#   content/      hotel copy, descriptions, amenities, offers
+#   public/       photography (WebP only — enforced by pnpm check:images)
+#   components/   page layout and styling
+#   app/(site)/   marketing pages
+# ---------------------------------------------------------------------------
