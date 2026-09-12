@@ -6,6 +6,7 @@ import { ADMIN_COOKIE_NAME, verifySessionCookieValue } from '@/lib/admin-auth';
 import { prisma } from '@/lib/db';
 import { refundConfirmationHtml } from '@/lib/email-templates/refund-confirmation';
 import { callRefund, iciciConfig, isRefundAccepted } from '@/lib/icici';
+import { errorFields, log } from '@/lib/log';
 import { STAFF_NOTIFY_EMAIL, sendMail } from '@/lib/mail';
 import { clientIp, isRateLimited } from '@/lib/rate-limit';
 import { refundSchema } from '@/lib/validation';
@@ -67,6 +68,7 @@ export async function refundPayment(
   }
 
   if (payment.status !== 'SUCCESS') {
+    log.warn('refund.rejected', { order_id: orderId, reason: 'payment_not_successful' });
     return { status: 'error', message: 'Only a successful payment can be refunded.' };
   }
 
@@ -74,6 +76,12 @@ export async function refundPayment(
   const remaining = Number(payment.amount) - alreadyRefunded;
 
   if (amount > remaining) {
+    log.warn('refund.rejected', {
+      order_id: orderId,
+      reason: 'exceeds_balance',
+      requested: amount,
+      remaining,
+    });
     return {
       status: 'error',
       message: `Amount exceeds the refundable balance (INR ${remaining.toFixed(2)}).`,
@@ -82,6 +90,7 @@ export async function refundPayment(
 
   const { merchantId, aggregatorID, hmacKey, baseUrl } = iciciConfig();
   if (!merchantId || !hmacKey) {
+    log.error('refund.misconfigured', { reason: 'ICICI merchant credentials not set' });
     return { status: 'error', message: 'ICICI credentials not configured.' };
   }
 
@@ -102,7 +111,12 @@ export async function refundPayment(
       baseUrl,
     );
   } catch (err) {
-    console.error('[refund] request failed', err);
+    log.error('refund.gateway_unreachable', {
+      order_id: orderId,
+      refund_txn_no: merchantTxnNo,
+      amount,
+      ...errorFields(err),
+    });
     return {
       status: 'error',
       message: 'We could not reach the payment gateway. Please try again shortly.',
@@ -122,6 +136,19 @@ export async function refundPayment(
       respDescription: refundResponse.respDescription,
       txnID: refundResponse.txnID,
     },
+  });
+
+  // Refunds move money out, so the settled outcome needs a server-side record
+  // of its own — the Refund row says what was stored, this says what the
+  // gateway actually answered.
+  log[accepted ? 'info' : 'error']('refund.settled', {
+    order_id: orderId,
+    refund_txn_no: merchantTxnNo,
+    status,
+    amount,
+    hotel: payment.hotelSlug,
+    response_code: refundResponse.responseCode ?? null,
+    gateway_txn_id: refundResponse.txnID ?? null,
   });
 
   const hotelName = getHotelBySlug(payment.hotelSlug)?.name ?? payment.hotelSlug;

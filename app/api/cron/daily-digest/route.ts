@@ -2,6 +2,7 @@ import { getHotelBySlug } from '@/content/hotels';
 import { constantTimeEqual } from '@/lib/admin-auth';
 import { prisma } from '@/lib/db';
 import { dailyDigestHtml } from '@/lib/email-templates/daily-digest';
+import { log } from '@/lib/log';
 import { sendMail } from '@/lib/mail';
 import { NextResponse } from 'next/server';
 
@@ -41,7 +42,9 @@ export async function GET(request: Request) {
 
   const digestTo = process.env.DIGEST_TO_EMAIL;
   if (!digestTo) {
-    console.error('[cron:daily-digest] DIGEST_TO_EMAIL not configured, skipping send');
+    // Reached in production today: DIGEST_TO_EMAIL is unset there, so the cron
+    // runs, finds nobody to send to, and the digest silently never arrives.
+    log.error('digest.skipped', { reason: 'DIGEST_TO_EMAIL not configured' });
     return NextResponse.json({ error: 'DIGEST_TO_EMAIL not configured' }, { status: 500 });
   }
 
