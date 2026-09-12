@@ -738,6 +738,19 @@ async function migratePayment(): Promise<Report> {
 
 // ---------------------------------------------------------------------------
 
+// Voucher.voucherNo is `@default(autoincrement())`, but this import writes the
+// legacy numbers explicitly — and an explicit value does not advance Postgres's
+// sequence. Left alone the counter stays at 0 while the imported rows occupy
+// 21455-35001, so the first voucher issued after an import is #1: it breaks the
+// continuity of the business's voucher series immediately, and collides with a
+// real imported number once it counts that far up.
+async function syncVoucherSequence(): Promise<void> {
+  const [row] = await prisma.$queryRaw<{ sequence_now: bigint }[]>`
+    SELECT setval('"Voucher_voucherNo_seq"', (SELECT COALESCE(max("voucherNo"), 1) FROM "Voucher")) AS sequence_now
+  `;
+  console.log(`\nVoucher sequence advanced to ${row?.sequence_now ?? 'unknown'}`);
+}
+
 async function main() {
   const reports = [
     await migrateEnquiry(),
@@ -745,6 +758,8 @@ async function main() {
     await migrateNewsletter(),
     await migratePayment(),
   ];
+
+  await syncVoucherSequence();
 
   for (const r of reports) {
     console.log(`\n=== ${r.table} ===`);
