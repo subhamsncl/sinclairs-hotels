@@ -225,6 +225,32 @@ Uses `statusCode: 301` rather than `permanent: true` (which emits 308): both are
 honoured by Google, but 301 is unambiguous to every other crawler and downgrades
 a stray POST to `/reservations.php` into a GET.
 
+## Deployments and storage
+
+Vercel **retains every deployment**, each holding a full copy of `public/`, and
+Hobby has no retention policy. Deployment storage is therefore
+`deploy size x number of deploys ever made` — it only ever grows. It reached
+20.79 GB against a 10 GB allowance in eleven days, from 84 retained builds.
+
+Three things keep it bounded, and all three matter:
+
+1. **`pnpm check:images`** runs inside `pnpm verify:ci`, before the build. It
+   fails if `public/` contains anything but WebP/SVG/PNG/ico/text, if any single
+   file exceeds 4 MB, or if `public/` exceeds a 170 MB budget. If a real need
+   pushes past the budget, move images to a CDN rather than raising the ceiling —
+   the ceiling is the mechanism.
+2. **`.vercelignore`** keeps tests, docs, e2e and one-off scripts out of the
+   upload entirely.
+3. **`pnpm prune:deployments`** (`vercel remove --safe --yes`) deletes every
+   deployment that is not currently serving an alias, keeping the live production
+   and `dev.*` builds. Run it when the Deployments list grows past ~10. It is
+   irreversible, so it deletes rollback targets — that is the trade being made
+   deliberately, not a side effect.
+
+Rollback still works: the retained aliased deployments can be promoted from the
+Vercel dashboard, and anything older is rebuildable from git, which is the real
+rollback story. Storage is not a place to keep history.
+
 ## SEO
 
 - **The production domain is not live yet.** `sinclairshotels.com` still serves the

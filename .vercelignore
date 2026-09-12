@@ -1,0 +1,13 @@
+# Everything here is uploaded on every deploy and retained per deployment, so
+# exclude anything the running site never needs. See CLAUDE.md → Deployments.
+e2e
+docs
+*.md
+scripts/migrate-legacy-data.ts
+scripts/check-image-budget.mjs
+content/hotels/convert-to-webp.js
+**/*.test.ts
+**/*.test.tsx
+playwright.config.ts
+vitest.config.ts
+vitest.setup.ts

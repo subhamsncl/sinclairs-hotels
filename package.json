@@ -16,8 +16,10 @@
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:migrate:deploy": "prisma migrate deploy",
-    "verify:ci": "pnpm prisma:migrate:deploy && pnpm lint && pnpm typecheck && pnpm test:ci-local && pnpm build",
-    "postinstall": "prisma generate"
+    "verify:ci": "pnpm prisma:migrate:deploy && pnpm check:images && pnpm lint && pnpm typecheck && pnpm test:ci-local && pnpm build",
+    "postinstall": "prisma generate",
+    "check:images": "node scripts/check-image-budget.mjs",
+    "prune:deployments": "vercel remove sinclairs-hotels --safe --yes"
   },
   "dependencies": {
     "@next/third-parties": "^16.3.4",

@@ -131,6 +131,11 @@ Event reference: `GO_LIVE_CHECKLIST.md` → Server logs.
 - `pnpm test` / `pnpm test:watch` — Vitest
 - `pnpm test:e2e` — Playwright smoke suite
 - `pnpm verify:ci` — the exact CI job, runnable locally. **Run before pushing.**
+- `pnpm check:images` — enforces the WebP-only rule and the `public/` size budget
+  (also runs inside `verify:ci`)
+- `pnpm prune:deployments` — deletes unaliased Vercel deployments. Vercel retains
+  every build, so storage grows forever without this; run it when the Deployments
+  list passes ~10. Irreversible.
 - `pnpm prisma studio` — inspect the database locally
 
 See `PLAN.md` for the full migration/execution plan, `CLAUDE.md` for project
