@@ -59,10 +59,18 @@ SAQ-A rather than SAQ-D).
       `ICICI_AGGREGATOR_ID` and `ICICI_HMAC_KEY` from ICICI's onboarding kit
       (Sept 2026) are in `.env.local` with `ICICI_ENV=uat`. Sandbox only —
       never promote these to production.
-- [ ] **Do at least one real round-trip test against `pgpayuat.icicibank.com`.**
-      The code (`lib/icici.ts`, `app/(site)/ipay/actions.ts`,
-      `app/api/ipay/callback/route.ts`) has still never run against ICICI's
-      own sandbox — everything below depends on this happening first.
+- [x] **Real round-trip tested against ICICI UAT** (2026-09-12, and previously
+      on 2026-09-08). Order `26091240EF2DECF3`, ₹1, card: initiateSale accepted,
+      guest redirected, signed callback verified by `verifyHashV1`, amount echo
+      matched, row moved `INITIATED → SUCCESS` (`response_code 0000`,
+      `payment_mode Card`), both confirmation emails sent, `purchase` fired once
+      with the right ecommerce payload, and a page refresh did **not** duplicate
+      it. Refund of the same order also succeeded end to end.
+- [x] **Hash version settled empirically**: v1 is correct for `initiateSale` —
+      a wrong hash is rejected outright, and this redirected.
+- [x] **`paymentID` vs `txnAuthID` settled**: ICICI populated *both*
+      `trackingId` and `bankRefNo` on the real response, so the defensive
+      "accept either" handling in `lib/icici.ts` stays.
 - [ ] Get the **production** merchant credentials (separate from the UAT set
       above) and add them to Vercel env, not `.env.local`.
 - [ ] **Resolve the field-naming ambiguity in ICICI's own spec** — Chapter 6
@@ -105,6 +113,13 @@ office copy → guest view page. It works; what's open below is scope, not bugs.
       fallback recipient (`app/admin/(dashboard)/vouchers/actions.ts`). Confirm
       that mailbox exists and is monitored, or change it.
 - [ ] Per-hotel booking-office details are still incomplete — see Data below.
+      Only "Sinclairs Hotels — Head Office" is selectable in the voucher form.
+- [x] **Voucher numbering fixed.** The legacy import wrote `voucherNo`
+      explicitly, which does not advance Postgres's sequence, so the counter sat
+      near zero while imported rows occupy 21455-35001 — the first voucher
+      issued came out as #3. Both databases corrected with `setval` to 35001 on
+      2026-09-12 (next voucher is #35002), and `scripts/migrate-legacy-data.ts`
+      now advances the sequence itself so a re-import cannot reintroduce it.
 
 ## Analytics
 
